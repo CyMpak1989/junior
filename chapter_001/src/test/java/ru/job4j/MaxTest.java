@@ -22,4 +22,14 @@ public class MaxTest {
         int result = maxim.max(1, 2);
         assertThat(result, is(2));
     }
+
+    /**
+     * Method maximumOfThree. Тестируем метод max с тремя параметрами.
+     */
+    @Test
+    public void maximumOfThree() {
+        Max maxim = new Max();
+        int result = maxim.max(1, 5, 3);
+        assertThat(result, is(5));
+    }
 }
