@@ -9,7 +9,7 @@ package ru.job4j.loop;
  */
 public class Counter {
     /**
-     * Method max. Принимает на вход 2 параметра на выходе вернет максимально число.
+     * Method max. Принимает на вход 2 параметра на выходе вернет Сумму четных чисел.
      *
      * @param start  первое число
      * @param finish второе число
