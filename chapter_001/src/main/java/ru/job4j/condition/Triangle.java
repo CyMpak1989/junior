@@ -104,6 +104,6 @@ public class Triangle {
      * @return Если можно построить треугольник с такими длинами сторон вернем true.
      */
     private boolean exist(double ab, double ac, double bc) {
-        return (ab + ac <= bc || ab + bc <= ac || bc + ac <= ab) ? false : true;
+        return (ab + ac > bc || ab + bc > ac || bc + ac > ab) ? true : false;
     }
 }
