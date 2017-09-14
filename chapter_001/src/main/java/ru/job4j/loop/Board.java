@@ -14,7 +14,7 @@ public class Board {
      * @param height высота доски
      * @return вернем StringBuilder в виде строки.
      */
-    public static String paint(int width, int height) {
+    public String paint(int width, int height) {
         StringBuilder board = new StringBuilder();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
