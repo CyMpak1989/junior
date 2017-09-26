@@ -17,4 +17,14 @@ public class Teacher extends Profession {
     public String teach(Student student) {
         return "Преподаватель " + getName() + " учит студента " + student.getName();
     }
+
+    /**
+     * Метод aboutMe расскажет о себе.
+     *
+     * @return вернет текст
+     */
+    public String aboutMe() {
+        return ("Меня зовут " + getName() + ". Мой возраст " + getAge()
+                + ". Мой диплом " + getDiploma() + ". Мой профиль " + getProfile());
+    }
 }

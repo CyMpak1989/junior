@@ -15,6 +15,16 @@ public class Doctor extends Profession {
      * @return вернем сообщение
      */
     public String medicate(Patient patient) {
-        return "Доктор " + getName() + " вылечил пациента " + patient.getName() + " от заболевания " + patient.getDisease();
+        return "Доктор " + getName() + " вылечил пациента " + patient.getName()
+                + " от заболевания " + patient.getDisease();
+    }
+
+    /**
+     * Метод aboutMe расскажет о себе.
+     * @return вернет текст
+     */
+    public String aboutMe() {
+        return ("Меня зовут " + getName() + ". Мой возраст " + getAge()
+                + ". Мой диплом " + getDiploma() + ". Мой профиль " + getProfile());
     }
 }

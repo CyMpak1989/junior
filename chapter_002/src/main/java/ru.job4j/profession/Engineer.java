@@ -14,4 +14,14 @@ public class Engineer extends Profession {
     public void repair() {
         System.out.println("Инженер " + getName() + " ремонтирует кран.");
     }
+
+    /**
+     * Метод aboutMe расскажет о себе.
+     *
+     * @return вернет текст
+     */
+    public String aboutMe() {
+        return ("Меня зовут " + getName() + ". Мой возраст " + getAge()
+                + ". Мой диплом " + getDiploma() + ". Мой профиль " + getProfile());
+    }
 }
