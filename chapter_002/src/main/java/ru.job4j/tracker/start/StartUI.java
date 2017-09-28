@@ -1,6 +1,6 @@
-package ru.job4j.Tracker.start;
+package ru.job4j.tracker.start;
 
-import ru.job4j.Tracker.models.*;
+import ru.job4j.tracker.models.*;
 
 public class StartUI {
     public static void main(String[] args) {
