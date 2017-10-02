@@ -28,14 +28,25 @@ public class Item {
     /**
      * Контруктор для объекта Item.
      *
-     * @param name имя
+     * @param name        имя
      * @param description дескриптор
-     * @param create create
+     * @param create      create
      */
     public Item(String name, String description, long create) {
         this.name = name;
         this.description = description;
         this.create = create;
+    }
+
+    /**
+     * Контруктор для объекта Item.
+     *
+     * @param name        имя
+     * @param description дескриптор
+     */
+    public Item(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     /**
