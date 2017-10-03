@@ -98,7 +98,8 @@ public class Tracker {
     public void delete(Item item) {
         for (int i = 0; i < this.position; i++) {
             if (this.items[i].getId().equals(item.getId())) {
-                this.items[i] = null;
+                //this.items[i] = null;
+                System.arraycopy(this.items, i + 1, this.items, i, this.items.length - (i + 1));
                 break;
             }
         }
@@ -106,6 +107,7 @@ public class Tracker {
 
     /**
      * Метод findByName ищет в массиве все задачи по имени.
+     *
      * @param key принимаем имя задачи в виде String1
      * @return вернем массив найденных задач
      */
@@ -132,6 +134,7 @@ public class Tracker {
 
     /**
      * Массив findAll ищет все задачи.
+     *
      * @return вернем массив задач без пустых ссылок
      */
     public Item[] findAll() {
