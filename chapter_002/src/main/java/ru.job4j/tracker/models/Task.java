@@ -9,7 +9,7 @@ package ru.job4j.tracker.models;
  */
 public class Task extends Item {
     /**
-     * Контруктор для объекта Task.v
+     * Контруктор для объекта Task.
      *
      * @param name        имя
      * @param description дескриптор
