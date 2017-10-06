@@ -93,4 +93,10 @@ public class Item {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Id: " + getId() + " Name: " + getName()
+                + " Description: " + getDescription() + " Create: " + getCreate();
+    }
 }
