@@ -16,6 +16,10 @@ public class StartUI {
      */
     private Input input;
     /**
+     * Ссылка.
+     */
+    private Tracker tracker;
+    /**
      * Константа.
      */
     private static final String ADD_NEW_ITEM = "0";
@@ -59,9 +63,11 @@ public class StartUI {
      * Инициализаяция.
      *
      * @param input принимаем любую реализацию интерфейса.
+     * @param tracker Принимаем обект трекера.
      */
-    public StartUI(Input input) {
+    public StartUI(Input input, Tracker tracker) {
         this.input = input;
+        this.tracker = tracker;
     }
 
     /**
@@ -70,14 +76,13 @@ public class StartUI {
      * @param args входящие параметры
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput()).init();
+        new StartUI(new ConsoleInput(), new Tracker()).init();
     }
 
     /**
      * Инициализаяция.
      */
     public void init() {
-        Tracker tracker = new Tracker();
         while (!EXIT_PROGRAM.equals(this.input.ask(MENU))) {
             if (ADD_NEW_ITEM.equals(this.input.getKey())) {
                 addNewItem(this.input, tracker);

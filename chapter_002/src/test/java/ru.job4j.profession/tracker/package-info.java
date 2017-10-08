@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 29.09.2017
  */
-package ru.job4j.profession;
+package ru.job4j.profession.tracker;
