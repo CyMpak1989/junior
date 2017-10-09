@@ -31,5 +31,5 @@ public class CalculateTest {
         Calculate calc = new Calculate();
         String result = calc.echo(input);
         assertThat(result, is(expect));
-    }
+}
 }
