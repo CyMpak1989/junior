@@ -91,6 +91,8 @@ public class StartUI {
             int key = Integer.valueOf(input.ask("Select: "));
             menuTracker.select(key);
         } while (!"Y".equals(this.input.ask("Exit? (Y/N): ")));
+
+
 //        while (!EXIT_PROGRAM.equals(this.input.ask(MENU))) {
 //            if (ADD_NEW_ITEM.equals(this.input.getKey())) {
 //                addNewItem(this.input, tracker);
