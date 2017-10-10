@@ -83,21 +83,29 @@ public class StartUI {
      * Инициализаяция.
      */
     public void init() {
-        while (!EXIT_PROGRAM.equals(this.input.ask(MENU))) {
-            if (ADD_NEW_ITEM.equals(this.input.getKey())) {
-                addNewItem(this.input, tracker);
-            } else if (SHOW_ALL_ITEM.equals(this.input.getKey())) {
-                showAllItem(tracker);
-            } else if (EDIT_ITEM.equals(this.input.getKey())) {
-                editItem(this.input, tracker);
-            } else if (DELETE_ITEM.equals(this.input.getKey())) {
-                deleteItem(this.input, tracker);
-            } else if (FIND_ITEM_BY_ID.equals(this.input.getKey())) {
-                findItemById(this.input, tracker);
-            } else if (FIND_ITEM_BY_NAME.equals(this.input.getKey())) {
-                findItemByName(this.input, tracker);
-            }
-        }
+        Tracker tracker = new Tracker();
+        MenuTracker menuTracker = new MenuTracker(this.input, tracker);
+        menuTracker.fillActions();
+        do {
+            menuTracker.show();
+            int key = Integer.valueOf(input.ask("Select: "));
+            menuTracker.select(key);
+        } while (!"Y".equals(this.input.ask("Exit? (Y/N): ")));
+//        while (!EXIT_PROGRAM.equals(this.input.ask(MENU))) {
+//            if (ADD_NEW_ITEM.equals(this.input.getKey())) {
+//                addNewItem(this.input, tracker);
+//            } else if (SHOW_ALL_ITEM.equals(this.input.getKey())) {
+//                showAllItem(tracker);
+//            } else if (EDIT_ITEM.equals(this.input.getKey())) {
+//                editItem(this.input, tracker);
+//            } else if (DELETE_ITEM.equals(this.input.getKey())) {
+//                deleteItem(this.input, tracker);
+//            } else if (FIND_ITEM_BY_ID.equals(this.input.getKey())) {
+//                findItemById(this.input, tracker);
+//            } else if (FIND_ITEM_BY_NAME.equals(this.input.getKey())) {
+//                findItemByName(this.input, tracker);
+//            }
+//        }
     }
 
     /**
