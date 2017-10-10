@@ -14,6 +14,6 @@ public class Paint {
      * @param shape выводим на экран фигуру.
      */
     public void draw(Shape shape) {
-        System.out.println(shape);
+        System.out.println(shape.pic());
     }
 }
