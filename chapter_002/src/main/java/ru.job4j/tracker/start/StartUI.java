@@ -11,7 +11,6 @@ import ru.job4j.tracker.models.Task;
  * @since 07.10.2017
  */
 public class StartUI {
-    private int[] ranges = new int[]{1, 2, 3, 4};
     /**
      * Ссылка.
      */
@@ -89,7 +88,7 @@ public class StartUI {
         menuTracker.fillActions();
         do {
             menuTracker.show();
-            menuTracker.select(input.ask("Select: ", ranges));
+            menuTracker.select(input.ask("Select: ", menuTracker.getRanges()));
         } while (!"Y".equals(this.input.ask("Exit? (Y/N): ")));
 
 

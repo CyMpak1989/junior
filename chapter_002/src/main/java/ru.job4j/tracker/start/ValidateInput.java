@@ -1,6 +1,15 @@
 package ru.job4j.tracker.start;
 
+/**
+ * Унаследованный клас от ConsoleInput.
+ */
 public class ValidateInput extends ConsoleInput {
+    /**
+     * Переопределяем метод ask для обработки ошибок ввода.
+     * @param question принимаем сообщение.
+     * @param range принимаем массив доступных ответов.
+     * @return вернем значение меню.
+     */
     @Override
     public int ask(String question, int[] range) {
         boolean invalid = true;

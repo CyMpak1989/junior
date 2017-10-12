@@ -12,6 +12,10 @@ import ru.job4j.tracker.models.Task;
  */
 public class MenuTracker {
     /**
+     * Массив ответов.
+     */
+    private int[] ranges = new int[]{0, 1, 2, 3, 4, 5, 6};
+    /**
      * Приветная переменная для объекта Input.
      */
     private Input input;
@@ -26,12 +30,21 @@ public class MenuTracker {
 
     /**
      * Конструкторм класса MenuTracker.
-     * @param input принимаем ссылку на объект Input.
+     *
+     * @param input   принимаем ссылку на объект Input.
      * @param tracker принимаем ссылку на объект Tracker.
      */
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
+    }
+
+    /**
+     * Геттер для массива.
+     * @return вернем ссылку на массив.
+     */
+    public int[] getRanges() {
+        return ranges;
     }
 
     /**
@@ -48,7 +61,8 @@ public class MenuTracker {
 
     /**
      * Метод для вызова необходимой реализации интерфейса из массива.
-      * @param key принимае номер пункта меню.
+     *
+     * @param key принимае номер пункта меню.
      */
     public void select(int key) {
         this.actions[key].execute(this.input, this.tracker);
