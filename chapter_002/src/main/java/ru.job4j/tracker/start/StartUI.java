@@ -11,6 +11,7 @@ import ru.job4j.tracker.models.Task;
  * @since 07.10.2017
  */
 public class StartUI {
+    private int[] ranges = new int[]{1, 2, 3, 4};
     /**
      * Ссылка.
      */
@@ -62,7 +63,7 @@ public class StartUI {
     /**
      * Инициализаяция.
      *
-     * @param input принимаем любую реализацию интерфейса.
+     * @param input   принимаем любую реализацию интерфейса.
      * @param tracker Принимаем обект трекера.
      */
     public StartUI(Input input, Tracker tracker) {
@@ -76,7 +77,7 @@ public class StartUI {
      * @param args входящие параметры
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 
     /**
@@ -88,8 +89,7 @@ public class StartUI {
         menuTracker.fillActions();
         do {
             menuTracker.show();
-            int key = Integer.valueOf(input.ask("Select: "));
-            menuTracker.select(key);
+            menuTracker.select(input.ask("Select: ", ranges));
         } while (!"Y".equals(this.input.ask("Exit? (Y/N): ")));
 
 

@@ -14,6 +14,13 @@ public interface Input {
      * @return вернем String.
      */
     String ask(String question);
+    /**
+     * Метод без реализации.
+     * @param question Принимаем String.
+     * @param range Принимаем массив int.
+     * @return вернем int.
+     */
+    int ask(String question, int[] range);
 
     /**
      * Метод без реализации.

@@ -37,6 +37,12 @@ public class StubInput implements Input {
         return answers[position++];
     }
 
+    @Override
+    public int ask(String question, int[] range) {
+        //throw new UnsupportedOperationException("Unsupported operation");
+        return -1;
+    }
+
     /**
      * Метод getKey.
      *
