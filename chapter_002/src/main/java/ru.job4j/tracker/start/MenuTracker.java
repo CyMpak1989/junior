@@ -27,6 +27,10 @@ public class MenuTracker {
      * Массив для реализаций интерфейсов.
      */
     private UserAction[] actions = new UserAction[6];
+    /**
+     * Индекс массива.
+     */
+    private int position = 0;
 
     /**
      * Конструкторм класса MenuTracker.
@@ -41,6 +45,7 @@ public class MenuTracker {
 
     /**
      * Геттер для массива.
+     *
      * @return вернем ссылку на массив.
      */
     public int[] getRanges() {
@@ -51,12 +56,12 @@ public class MenuTracker {
      * Метод для инициализации массива.
      */
     public void fillActions() {
-        this.actions[0] = new AddItem();
-        this.actions[1] = new ShowItems();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new FindItemById();
-        this.actions[5] = new FindItemByName();
+        this.actions[position++] = new AddItem("Add new Item.", 0);
+        this.actions[position++] = new ShowItems("Show all items.", 1);
+        this.actions[position++] = new EditItem("Edit item.", 2);
+        this.actions[position++] = new DeleteItem("Delete item.", 3);
+        this.actions[position++] = new FindItemById("Find item by Id.", 4);
+        this.actions[position++] = new FindItemByName("Find items by name.", 5);
     }
 
     /**
@@ -82,11 +87,15 @@ public class MenuTracker {
     /**
      * Реализация пункта меню Add new Item.
      */
-    private static class AddItem implements UserAction {
-
-        @Override
-        public int key() {
-            return 0;
+    private static class AddItem extends BaseAction {
+        /**
+         * Конструктор для класса.
+         *
+         * @param menuName принимаем имя меню.
+         * @param key      принимаем номер меню.
+         */
+        private AddItem(String menuName, int key) {
+            super(menuName, key);
         }
 
         @Override
@@ -95,21 +104,20 @@ public class MenuTracker {
             String desc = input.ask("Пожалуйста введите дескрипшион: ");
             tracker.add(new Task(name, desc));
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Add new Item.");
-        }
     }
 
     /**
      * Реализация пункта меню Show all items.
      */
-    private static class ShowItems implements UserAction {
-
-        @Override
-        public int key() {
-            return 1;
+    private static class ShowItems extends BaseAction {
+        /**
+         * Конструктор для класса.
+         *
+         * @param menuName принимаем имя меню.
+         * @param key      принимаем номер меню.
+         */
+        private ShowItems(String menuName, int key) {
+            super(menuName, key);
         }
 
         @Override
@@ -118,21 +126,20 @@ public class MenuTracker {
                 System.out.println(String.format("%s. %s", item.getId(), item.getName()));
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Show all items.");
-        }
     }
 
     /**
      * Реализация пункта меню Edit item.
      */
-    private static class EditItem implements UserAction {
-
-        @Override
-        public int key() {
-            return 2;
+    private static class EditItem extends BaseAction {
+        /**
+         * Конструктор для класса.
+         *
+         * @param menuName принимаем имя меню.
+         * @param key      принимаем номер меню.
+         */
+        private EditItem(String menuName, int key) {
+            super(menuName, key);
         }
 
         @Override
@@ -142,21 +149,20 @@ public class MenuTracker {
             newItem.setId(item.getId());
             tracker.update(newItem);
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Edit item.");
-        }
     }
 
     /**
      * Реализация пункта меню Delete item.
      */
-    private static class DeleteItem implements UserAction {
-
-        @Override
-        public int key() {
-            return 3;
+    private static class DeleteItem extends BaseAction {
+        /**
+         * Конструктор для класса.
+         *
+         * @param menuName принимаем имя меню.
+         * @param key      принимаем номер меню.
+         */
+        private DeleteItem(String menuName, int key) {
+            super(menuName, key);
         }
 
         @Override
@@ -164,21 +170,20 @@ public class MenuTracker {
             Item item = tracker.findById(input.ask("Введите id заявки которую необходимо удалить: "));
             tracker.delete(item);
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Delete item.");
-        }
     }
 
     /**
      * Реализация пункта меню Find item by Id.
      */
-    private static class FindItemById implements UserAction {
-
-        @Override
-        public int key() {
-            return 4;
+    private static class FindItemById extends BaseAction {
+        /**
+         * Конструктор для класса.
+         *
+         * @param menuName принимаем имя меню.
+         * @param key      принимаем номер меню.
+         */
+        private FindItemById(String menuName, int key) {
+            super(menuName, key);
         }
 
         @Override
@@ -186,21 +191,20 @@ public class MenuTracker {
             Item item = tracker.findById(input.ask("Введите id для поиска заявки: "));
             System.out.println(item.toString());
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by Id.");
-        }
     }
 
     /**
      * Реализация пункта меню Find items by name.
      */
-    private static class FindItemByName implements UserAction {
-
-        @Override
-        public int key() {
-            return 5;
+    private static class FindItemByName extends BaseAction {
+        /**
+         * Конструктор для класса.
+         *
+         * @param menuName принимаем имя меню.
+         * @param key      принимаем номер меню.
+         */
+        private FindItemByName(String menuName, int key) {
+            super(menuName, key);
         }
 
         @Override
@@ -209,11 +213,6 @@ public class MenuTracker {
             for (Item item : items) {
                 System.out.println(item.toString());
             }
-        }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find items by name.");
         }
     }
 

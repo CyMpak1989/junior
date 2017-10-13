@@ -89,7 +89,7 @@ public class StartUI {
         do {
             menuTracker.show();
             menuTracker.select(input.ask("Select: ", menuTracker.getRanges()));
-        } while (!"Y".equals(this.input.ask("Exit? (Y/N): ")));
+        } while (!"y".equals(this.input.ask("Exit? (y/n): ")));
 
 
 //        while (!EXIT_PROGRAM.equals(this.input.ask(MENU))) {
