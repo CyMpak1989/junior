@@ -83,7 +83,7 @@ public class StartUI {
      * Инициализаяция.
      */
     public void init() {
-        Tracker tracker = new Tracker();
+
         MenuTracker menuTracker = new MenuTracker(this.input, tracker);
         menuTracker.fillActions();
         do {
@@ -92,19 +92,19 @@ public class StartUI {
         } while (!"y".equals(this.input.ask("Exit? (y/n): ")));
 
 
-//        while (!EXIT_PROGRAM.equals(this.input.ask(MENU))) {
-//            if (ADD_NEW_ITEM.equals(this.input.getKey())) {
-//                addNewItem(this.input, tracker);
-//            } else if (SHOW_ALL_ITEM.equals(this.input.getKey())) {
+//        while (!EXIT_PROGRAM.equals(this.Input.ask(MENU))) {
+//            if (ADD_NEW_ITEM.equals(this.Input.getKey())) {
+//                addNewItem(this.Input, tracker);
+//            } else if (SHOW_ALL_ITEM.equals(this.Input.getKey())) {
 //                showAllItem(tracker);
-//            } else if (EDIT_ITEM.equals(this.input.getKey())) {
-//                editItem(this.input, tracker);
-//            } else if (DELETE_ITEM.equals(this.input.getKey())) {
-//                deleteItem(this.input, tracker);
-//            } else if (FIND_ITEM_BY_ID.equals(this.input.getKey())) {
-//                findItemById(this.input, tracker);
-//            } else if (FIND_ITEM_BY_NAME.equals(this.input.getKey())) {
-//                findItemByName(this.input, tracker);
+//            } else if (EDIT_ITEM.equals(this.Input.getKey())) {
+//                editItem(this.Input, tracker);
+//            } else if (DELETE_ITEM.equals(this.Input.getKey())) {
+//                deleteItem(this.Input, tracker);
+//            } else if (FIND_ITEM_BY_ID.equals(this.Input.getKey())) {
+//                findItemById(this.Input, tracker);
+//            } else if (FIND_ITEM_BY_NAME.equals(this.Input.getKey())) {
+//                findItemByName(this.Input, tracker);
 //            }
 //        }
     }
