@@ -3,6 +3,9 @@ package ru.job4j.automat.menu;
 import ru.job4j.automat.Automat;
 import ru.job4j.automat.input.Input;
 
+/**
+ * Class ToBuyCookies.
+ */
 public class ToBuyCookies extends BaseAction {
     /**
      * Конструктор.

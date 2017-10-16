@@ -3,14 +3,17 @@ package ru.job4j.automat.menu;
 import ru.job4j.automat.Automat;
 import ru.job4j.automat.input.Input;
 
-public class showMoneyAutomat extends BaseAction {
+/**
+ * Class showMoneyAutomat.
+ */
+public class ShowMoneyAutomat extends BaseAction {
     /**
      * Конструктор.
      *
      * @param menuName принимаем название меню.
      * @param key      принимаем номер меню.
      */
-    showMoneyAutomat(String menuName, int key) {
+    ShowMoneyAutomat(String menuName, int key) {
         super(menuName, key);
     }
 

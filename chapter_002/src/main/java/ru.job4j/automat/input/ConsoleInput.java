@@ -2,6 +2,9 @@ package ru.job4j.automat.input;
 
 import java.util.Scanner;
 
+/**
+ * Class ConsoleInput.
+ */
 public class ConsoleInput implements Input {
     /**
      * Объект сканер принимающий ответ от бользователя.
