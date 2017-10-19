@@ -16,7 +16,6 @@ public class AddCoins extends BaseAction {
     AddCoins(String menuName, int key) {
         super(menuName, key);
     }
-
     @Override
     public void execute(Input input, Automat automat) {
         do {

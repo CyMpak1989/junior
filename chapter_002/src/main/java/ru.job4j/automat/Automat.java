@@ -94,22 +94,12 @@ public class Automat {
     public void toGiveACoin() {
         resetArray();
         while (this.summaInput != 0) {
-            if ((this.summaInput / 10) >= 1) {
-                userCoins[position++] = 10;
-                this.summaInput = this.summaInput - 10;
-                ten--;
-            } else if ((this.summaInput / 5) >= 1) {
-                userCoins[position++] = 5;
-                this.summaInput = this.summaInput - 5;
-                five--;
-            } else if ((this.summaInput / 2) >= 1) {
-                userCoins[position++] = 2;
-                this.summaInput = this.summaInput - 2;
-                two--;
-            } else if ((this.summaInput / 1) >= 1) {
-                userCoins[position++] = 1;
-                this.summaInput = this.summaInput - 1;
-                one--;
+            int[] arrey = new int[]{10, 5, 2, 1};
+            for (int m : arrey) {
+                if ((this.summaInput / m) >= 1) {
+                    userCoins[position++] = m;
+                    this.summaInput = this.summaInput - m;
+                }
             }
         }
         for (int coin : userCoins) {
@@ -129,4 +119,5 @@ public class Automat {
         }
         position = 0;
     }
+
 }
