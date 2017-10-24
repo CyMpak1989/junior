@@ -11,5 +11,7 @@ public class Board {
         this.figures = figures;
     }
 
-    boolean move(Cell source, Cell dist) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException
+    boolean move(Cell source, Cell dist) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException{
+        return false;
+    }
 }
