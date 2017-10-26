@@ -39,7 +39,7 @@ public class TimeCollection {
     public long delete(Collection<String> collection, int amount) {
         this.startTime = new Date().getTime();
         for (int i = 0; i < amount; i++) {
-            collection.remove(i);
+            collection.remove(i + "Тест.");
         }
         this.endTime = new Date().getTime();
         return endTime - startTime;
