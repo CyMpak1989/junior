@@ -1,13 +1,10 @@
-package java.ru.job4j.collection;
+package ru.job4j.collection;
 
 import org.junit.Test;
-import ru.job4j.collection.ConvertList;
 
 import static org.hamcrest.core.Is.is;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertThat;
 
@@ -24,9 +21,7 @@ public class TestConvertList {
         int[][] mas = {{7, 6, 5}, {4, 3, 2}, {1, 0, 0}};
         List<Integer> expectedList = new ArrayList<>();
         Collections.addAll(expectedList, 7, 6, 5, 4, 3, 2, 1, 0, 0);
-        ConvertList convert = new ConvertList();
-        List<Integer> resultList = convert.toList(mas);
-        assertThat(resultList, is(expectedList));
+        assertThat(new ConvertList().toList(mas), is(expectedList));
     }
 
     /**
@@ -36,10 +31,8 @@ public class TestConvertList {
     @Test
     public void whenConvertArrayThenGetList() {
         int[][] expectedMas = {{7, 6, 5}, {4, 3, 2}, {1, 0, 0}};
-        ConvertList convert = new ConvertList();
         List<Integer> list = new ArrayList<>();
         Collections.addAll(list, 7, 6, 5, 4, 3, 2, 1);
-        int[][] resultMas = convert.toArray(list, 3);
-        assertThat(resultMas, is(expectedMas));
+        assertThat(new ConvertList().toArray(list, 3), is(expectedMas));
     }
 }
