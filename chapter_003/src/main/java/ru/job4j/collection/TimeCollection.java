@@ -58,13 +58,13 @@ public class TimeCollection {
         Collection<String> stringTreeSet = new TreeSet<>();
         //Вывод на в консоль.
         System.out.println("ArrayList");
-        System.out.println(timeCollection.add(stringArrayList, 10000));
-        System.out.println(timeCollection.delete(stringArrayList, 10000));
+        System.out.println(timeCollection.add(stringArrayList, 100000));
+        System.out.println(timeCollection.delete(stringArrayList, 100000));
         System.out.println("LinkedList");
-        System.out.println(timeCollection.add(stringLinkedList, 10000));
-        System.out.println(timeCollection.delete(stringLinkedList, 10000));
+        System.out.println(timeCollection.add(stringLinkedList, 100000));
+        System.out.println(timeCollection.delete(stringLinkedList, 100000));
         System.out.println("TreeSet");
-        System.out.println(timeCollection.add(stringTreeSet, 10000));
-        System.out.println(timeCollection.add(stringTreeSet, 10000));
+        System.out.println(timeCollection.add(stringTreeSet, 100000));
+        System.out.println(timeCollection.add(stringTreeSet, 100000));
     }
 }

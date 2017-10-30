@@ -46,4 +46,30 @@ public class TestConvertList {
         Collections.addAll(list, 1, 2, 3, null, 4, 5, 6);
         assertThat(new ConvertList().toArray(list, 3), is(expectedMas));
     }
+
+    /**
+     * Проверим конвертацию и списка массивов в обычный список.
+     */
+    @Test
+    public void convertListArrayToList() {
+        List<int[]> listArray = new ArrayList<>();
+        listArray.add(new int[]{1, 2});
+        listArray.add(new int[]{3, 4, 5, 6});
+        List<Integer> list = new ArrayList<>();
+        Collections.addAll(list, 1, 2, 3, 4, 5, 6);
+        assertThat(new ConvertList().convert(listArray), is(list));
+    }
+    /**
+     * Проверим конвертацию и списка массивов с null в обычный список.
+     */
+    @Test
+    public void convertListArrayToListIsNull() {
+        List<int[]> listArray = new ArrayList<>();
+        listArray.add(new int[]{1, 2});
+        listArray.add(new int[]{3, 4, 5, 6});
+        listArray.add(null);
+        List<Integer> list = new ArrayList<>();
+        Collections.addAll(list, 1, 2, 3, 4, 5, 6);
+        assertThat(new ConvertList().convert(listArray), is(list));
+    }
 }

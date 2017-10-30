@@ -24,9 +24,10 @@ public class ConvertList {
     }
 
     /**
-     * @param list
-     * @param rows
-     * @return
+     * Метод toArray. Конвертирует из List в двмерный массив в n количество строк.
+     * @param list List<Integer>.
+     * @param rows количество строк.
+     * @return двумерный массив.
      */
     public int[][] toArray(List<Integer> list, int rows) {
         int length;
@@ -51,5 +52,24 @@ public class ConvertList {
             }
         }
         return array;
+    }
+
+    /**
+     * Метод convert. Конвертирует из списка массивов. В обычный список.
+     * @param list List<int[]>.
+     * @return List<Integer>.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> resault = new ArrayList<>();
+        Iterator<int[]> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            int[] array = iterator.next();
+            if (array != null) {
+                for (int i = 0; i < array.length; i++) {
+                    resault.add(array[i]);
+                }
+            }
+        }
+        return resault;
     }
 }
