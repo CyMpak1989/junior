@@ -35,4 +35,15 @@ public class TestConvertList {
         Collections.addAll(list, 7, 6, 5, 4, 3, 2, 1);
         assertThat(new ConvertList().toArray(list, 3), is(expectedMas));
     }
+    /**
+     * whenConvertArrayThenGetListNull.
+     * Из листа в двумерный массив c null.
+     */
+    @Test
+    public void whenConvertArrayThenGetListNull() {
+        int[][] expectedMas = {{1, 2, 3}, {0, 4, 5}, {6, 0, 0}};
+        List<Integer> list = new ArrayList<>();
+        Collections.addAll(list, 1, 2, 3, null, 4, 5, 6);
+        assertThat(new ConvertList().toArray(list, 3), is(expectedMas));
+    }
 }

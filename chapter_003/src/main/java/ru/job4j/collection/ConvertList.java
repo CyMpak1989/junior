@@ -42,7 +42,11 @@ public class ConvertList {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < length; j++) {
                 if ((i * length + j) < list.size()) {
-                    array[i][j] = iterator.next();
+                    try {
+                        array[i][j] = iterator.next();
+                    } catch (NullPointerException e) {
+                        array[i][j] = 0;
+                    }
                 } else {
                     array[i][j] = 0;
                 }
