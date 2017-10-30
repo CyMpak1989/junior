@@ -8,6 +8,7 @@ import java.util.*;
 public class ConvertList {
     /**
      * Конвертируем в List.
+     *
      * @param array принимаем массив int[][].
      * @return вернем ArrayList.
      */
@@ -23,7 +24,6 @@ public class ConvertList {
     }
 
     /**
-     *
      * @param list
      * @param rows
      * @return
@@ -38,17 +38,15 @@ public class ConvertList {
         }
 
         int[][] array = new int[rows][length];
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < length; j++) {
-                if ((i * length + j) < list.size()) {
-                    try {
-                        array[i][j] = iterator.next();
-                    } catch (NullPointerException e) {
+                if (iterator.hasNext()) {
+                    Integer temp = iterator.next();
+                    if (temp != null) {
+                        array[i][j] = temp;
+                    } else {
                         array[i][j] = 0;
                     }
-                } else {
-                    array[i][j] = 0;
                 }
             }
         }
