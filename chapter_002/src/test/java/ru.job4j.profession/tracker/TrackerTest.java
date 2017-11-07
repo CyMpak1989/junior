@@ -5,6 +5,8 @@ import ru.job4j.tracker.models.Item;
 import ru.job4j.tracker.models.Task;
 import ru.job4j.tracker.start.Tracker;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -43,7 +45,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
-        assertThat(tracker.getAll()[0], is(item));
+        assertThat(tracker.getAll().get(0), is(item));
     }
 
     /**
@@ -53,10 +55,9 @@ public class TrackerTest {
     public void deleteItemTracker() {
         Tracker tracker = new Tracker();
         Item item = new Item("test1", "testDescription", 123L);
-        Item result = null;
         tracker.add(item);
         tracker.delete(item);
-        assertThat(tracker.getAll()[0], is(result));
+        assertThat(tracker.getAll().isEmpty(), is(true));
     }
 
     /**
@@ -68,7 +69,7 @@ public class TrackerTest {
         tracker.add(new Item("test1", "testDescription1", 123L));
         tracker.add(new Item("test2", "testDescription2", 1234L));
         tracker.add(new Item("test3", "testDescription3", 12345L));
-        assertThat(tracker.getAll().length, is(3));
+        assertThat(tracker.getAll().size(), is(3));
     }
 
     /**
@@ -80,7 +81,7 @@ public class TrackerTest {
         tracker.add(new Item("test1", "testDescription1", 123L));
         tracker.add(new Item("test1", "testDescription1", 123L));
         tracker.add(new Item("test3", "testDescription3", 12345L));
-        assertThat(tracker.findByName("test1").length, is(2));
+        assertThat(tracker.findByName("test1").size(), is(2));
     }
 
     /**
@@ -90,9 +91,9 @@ public class TrackerTest {
     public void getItemOfId() {
         Tracker tracker = new Tracker();
         tracker.add(new Item("test1", "testDescription1", 123L));
-        Item[] item = tracker.findByName("test1");
-        String source = tracker.findById(item[0].getId()).getId();
-        assertThat(source, is(item[0].getId()));
+        ArrayList<Item> item = tracker.findByName("test1");
+        String source = tracker.findById(item.get(0).getId()).getId();
+        assertThat(source, is(item.get(0).getId()));
     }
 
     /**
@@ -103,6 +104,6 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("test1", "testDescription1", 123L));
         tracker.add(new Item("test1", "testDescription1", 123L));
-        assertThat(tracker.findAll().length, is(2));
+        assertThat(tracker.findAll().size(), is(2));
     }
 }

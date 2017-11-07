@@ -2,6 +2,7 @@ package ru.job4j.tracker.start;
 
 import ru.job4j.tracker.models.Item;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -13,13 +14,10 @@ import java.util.Random;
  */
 public class Tracker {
     /**
-     * Массив заявок.
+     * Лист заявок.
      */
-    private Item[] items = new Item[100];
-    /**
-     * Позиция следующего элемента для массива.
-     */
-    private int position = 0;
+    private ArrayList<Item> items = new ArrayList<>();
+
     /**
      * Статическая ссылка на объект рандом.
      */
@@ -33,7 +31,7 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(generateId());
-        this.items[position++] = item;
+        this.items.add(item);
         return item;
     }
 
@@ -68,10 +66,10 @@ public class Tracker {
      *
      * @return вернет массив задач
      */
-    public Item[] getAll() {
-        Item[] result = new Item[position];
-        for (int i = 0; i != this.position; i++) {
-            result[i] = this.items[i];
+    public ArrayList<Item> getAll() {
+        ArrayList<Item> result = new ArrayList<>();
+        for (Item item : items) {
+            result.add(item);
         }
         return result;
     }
@@ -82,9 +80,9 @@ public class Tracker {
      * @param item входящий параметр объект задачи
      */
     public void update(Item item) {
-        for (int i = 0; i < this.position; i++) {
-            if (this.items[i].getId().equals(item.getId())) {
-                this.items[i] = item;
+        for (int i = 0; i < items.size(); i++) {
+            if (item != null && items.get(i).getId().equals(item.getId())) {
+                items.set(i, item);
                 break;
             }
         }
@@ -96,10 +94,9 @@ public class Tracker {
      * @param item входящий параметр в виде объекта Item
      */
     public void delete(Item item) {
-        for (int i = 0; i < this.position; i++) {
-            if (this.items[i].getId().equals(item.getId())) {
-                //this.items[i] = null;
-                System.arraycopy(this.items, i + 1, this.items, i, this.items.length - (i + 1));
+        for (int i = 0; i < items.size(); i++) {
+            if (item != null && items.get(i).getId().equals(item.getId())) {
+                items.remove(i);
                 break;
             }
         }
@@ -111,21 +108,12 @@ public class Tracker {
      * @param key принимаем имя задачи в виде String1
      * @return вернем массив найденных задач
      */
-    public Item[] findByName(String key) {
-        int arrayIndex = 0;
-        int index = 0;
+    public ArrayList<Item> findByName(String key) {
+        ArrayList<Item> result = new ArrayList<>();
 
-        for (Item item : this.items) {
+        for (Item item : items) {
             if (item != null && item.getName().equals(key)) {
-                arrayIndex++;
-            }
-        }
-
-        Item[] result = new Item[arrayIndex];
-
-        for (Item item : this.items) {
-            if (item != null && item.getName().equals(key)) {
-                result[index++] = item;
+                result.add(item);
             }
         }
 
@@ -137,19 +125,11 @@ public class Tracker {
      *
      * @return вернем массив задач без пустых ссылок
      */
-    public Item[] findAll() {
-
-        int arrayIndex = 0;
-        int index = 0;
-        for (Item item : this.items) {
+    public ArrayList<Item> findAll() {
+        ArrayList<Item> itemsNew = new ArrayList<>();
+        for (Item item : items) {
             if (item != null) {
-                arrayIndex++;
-            }
-        }
-        Item[] itemsNew = new Item[arrayIndex];
-        for (Item item : this.items) {
-            if (item != null) {
-                itemsNew[index++] = item;
+                itemsNew.add(item);
             }
         }
 

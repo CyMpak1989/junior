@@ -3,6 +3,8 @@ package ru.job4j.tracker.start;
 import ru.job4j.tracker.models.Item;
 import ru.job4j.tracker.models.Task;
 
+import java.util.ArrayList;
+
 /**
  * Class StartUI.
  *
@@ -127,7 +129,7 @@ public class StartUI {
      * @param tracker ссылка на объект Tracker.
      */
     public void showAllItem(Tracker tracker) {
-        Item[] items = tracker.findAll();
+        ArrayList<Item> items = tracker.findAll();
         for (Item item : items) {
             System.out.println(item.toString());
         }
@@ -179,7 +181,7 @@ public class StartUI {
      * @param tracker ссылка на объект Tracker.
      */
     public void findItemByName(Input input, Tracker tracker) {
-        Item[] items = tracker.findByName(input.ask("Введите имя заявки которую хотите найти: "));
+        ArrayList<Item> items = tracker.findByName(input.ask("Введите имя заявки которую хотите найти: "));
         for (Item item : items) {
             System.out.println(item.toString());
         }

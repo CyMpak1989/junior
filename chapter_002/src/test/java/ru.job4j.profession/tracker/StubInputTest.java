@@ -26,7 +26,7 @@ public class StubInputTest {
         Tracker tracker = new Tracker();     // создаём Tracker
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});   //создаём StubInput с последовательностью действий
         new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
-        assertThat(tracker.getAll()[0].getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+        assertThat(tracker.getAll().get(0).getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
     }
 
     /**
@@ -40,7 +40,7 @@ public class StubInputTest {
         tracker.add(new Item("test3", "testDescription3", 12345L));
         Input input = new StubInput(new String[]{"1", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.getAll().length, is(3));
+        assertThat(tracker.getAll().size(), is(3));
     }
 
     /**
@@ -67,10 +67,10 @@ public class StubInputTest {
     public void deleteItem() {
         Tracker tracker = new Tracker();
         tracker.add(new Item("test1", "testDescription1"));
-        Input input = new StubInput(new String[]{"3", tracker.getAll()[0].getId(), "6"});
+        Input input = new StubInput(new String[]{"3", tracker.getAll().get(0).getId(), "6"});
         new StartUI(input, tracker).init();
         Item resault = null;
-        assertThat(tracker.getAll()[0], is(resault));
+        assertThat(tracker.getAll().get(0), is(resault));
     }
 
     /**
@@ -80,9 +80,9 @@ public class StubInputTest {
     public void getItemOfId() {
         Tracker tracker = new Tracker();
         tracker.add(new Item("test1", "testDescription1"));
-        Input input = new StubInput(new String[]{"4", tracker.getAll()[0].getId(), "6"});
+        Input input = new StubInput(new String[]{"4", tracker.getAll().get(0).getId(), "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findById(tracker.getAll()[0].getId()).getId(), is(tracker.findAll()[0].getId()));
+        assertThat(tracker.findById(tracker.getAll().get(0).getId()).getId(), is(tracker.findAll().get(0).getId()));
     }
 
     /**
@@ -95,6 +95,6 @@ public class StubInputTest {
         Input input = new StubInput(new String[]{"5", "test1", "6"});
         new StartUI(input, tracker).init();
 
-        assertThat(tracker.findByName("test1")[0].getName(), is("test1"));
+        assertThat(tracker.findByName("test1").get(0).getName(), is("test1"));
     }
 }

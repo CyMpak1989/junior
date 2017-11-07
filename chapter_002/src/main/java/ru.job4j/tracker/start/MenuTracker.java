@@ -3,6 +3,8 @@ package ru.job4j.tracker.start;
 import ru.job4j.tracker.models.Item;
 import ru.job4j.tracker.models.Task;
 
+import java.util.ArrayList;
+
 /**
  * Class MenuTracker.
  *
@@ -14,7 +16,7 @@ public class MenuTracker {
     /**
      * Массив ответов.
      */
-    private int[] ranges = new int[]{0, 1, 2, 3, 4, 5, 6};
+    private ArrayList<Integer> ranges = new ArrayList<>();
     /**
      * Приветная переменная для объекта Input.
      */
@@ -23,14 +25,11 @@ public class MenuTracker {
      * Приватная переменная для объекта Tracker.
      */
     private Tracker tracker;
+
     /**
-     * Массив для реализаций интерфейсов.
+     * Лист для реализаций интерфейсов.
      */
-    private UserAction[] actions = new UserAction[6];
-    /**
-     * Индекс массива.
-     */
-    private int position = 0;
+    private ArrayList<UserAction> actions = new ArrayList<>();
 
     /**
      * Конструкторм класса MenuTracker.
@@ -48,7 +47,10 @@ public class MenuTracker {
      *
      * @return вернем ссылку на массив.
      */
-    public int[] getRanges() {
+    public ArrayList<Integer> getRanges() {
+        for (UserAction action : actions) {
+            ranges.add(action.key());
+        }
         return ranges;
     }
 
@@ -56,12 +58,12 @@ public class MenuTracker {
      * Метод для инициализации массива.
      */
     public void fillActions() {
-        this.actions[position++] = new AddItem("Add new Item.", 0);
-        this.actions[position++] = new ShowItems("Show all items.", 1);
-        this.actions[position++] = new EditItem("Edit item.", 2);
-        this.actions[position++] = new DeleteItem("Delete item.", 3);
-        this.actions[position++] = new FindItemById("Find item by Id.", 4);
-        this.actions[position++] = new FindItemByName("Find items by name.", 5);
+        this.actions.add(new AddItem("Add new Item.", 0));
+        this.actions.add(new ShowItems("Show all items.", 1));
+        this.actions.add(new EditItem("Edit item.", 2));
+        this.actions.add(new DeleteItem("Delete item.", 3));
+        this.actions.add(new FindItemById("Find item by Id.", 4));
+        this.actions.add(new FindItemByName("Find items by name.", 5));
     }
 
     /**
@@ -70,7 +72,7 @@ public class MenuTracker {
      * @param key принимае номер пункта меню.
      */
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        this.actions.get(key).execute(this.input, this.tracker);
     }
 
     /**
@@ -209,7 +211,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            Item[] items = tracker.findByName(input.ask("Введите имя заявки которую хотите найти: "));
+            ArrayList<Item> items = tracker.findByName(input.ask("Введите имя заявки которую хотите найти: "));
             for (Item item : items) {
                 System.out.println(item.toString());
             }

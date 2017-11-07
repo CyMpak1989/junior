@@ -1,5 +1,7 @@
 package ru.job4j.tracker.start;
 
+import java.util.ArrayList;
+
 /**
  * Унаследованный клас от ConsoleInput.
  */
@@ -11,7 +13,7 @@ public class ValidateInput extends ConsoleInput {
      * @return вернем значение меню.
      */
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, ArrayList<Integer> range) {
         boolean invalid = true;
         int value = -1;
         do {
