@@ -1,6 +1,8 @@
 package ru.job4j.collection;
 
 import org.junit.Test;
+import ru.job4j.collection.User;
+import ru.job4j.collection.UserConvert;
 
 import static org.hamcrest.core.Is.is;
 

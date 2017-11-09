@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 27.10.2017
  */
-package ru.job4j.collection;
+package java.ru.job4j.collection;
