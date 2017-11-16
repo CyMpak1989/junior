@@ -21,4 +21,10 @@ public class TestSortUser {
     public void sortTreeSetTheFirstIsEqualToSecond() {
         assertThat(new User("Vova", 30).compareTo(new User("Roma", 30)), is(0));
     }
+
+    @Test
+    public void sortNameLenght() {
+        assertThat(new User("Vyacheslav", 30).compareTo(new User("Roma", 30)), is(-1));
+    }
+
 }

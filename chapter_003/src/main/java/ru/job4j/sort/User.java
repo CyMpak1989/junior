@@ -1,18 +1,43 @@
 package ru.job4j.sort;
 
-public class User implements Comparable<User>{
+/**
+ * Класс User.
+ */
+public class User implements Comparable<User> {
+    /**
+     * Переменная name. Имя.
+     */
     private String name;
+    /**
+     * Переменная age. Возрост.
+     */
     private int age;
 
+    /**
+     * Конструктор для объекта.
+     *
+     * @param name имя.
+     * @param age  возраст.
+     */
     public User(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
+    /**
+     * Геттер для имени.
+     *
+     * @return вернем имя.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Геттре для возраста.
+     *
+     * @return вернем возраст.
+     */
     public int getAge() {
         return age;
     }
