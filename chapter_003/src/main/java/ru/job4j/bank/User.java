@@ -1,21 +1,43 @@
 package ru.job4j.bank;
 
+/**
+ *
+ */
 public class User {
+    /**
+     *
+     */
     public String name;
-    public int pasword;
+    /**
+     *
+     */
+    public int passport;
 
-    public User(String name, int pasword) {
+    /**
+     *
+     * @param name
+     * @param passport
+     */
+    public User(String name, int passport) {
         this.name = name;
-        this.pasword = pasword;
+        this.passport = passport;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (passport != user.passport) return false;
+        return name != null ? name.equals(user.name) : user.name == null;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + passport;
+        return result;
     }
 }
