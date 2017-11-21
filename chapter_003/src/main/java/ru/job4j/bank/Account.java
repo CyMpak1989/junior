@@ -1,54 +1,59 @@
 package ru.job4j.bank;
 
 /**
- *
+ * Класс Account.
  */
 public class Account {
     /**
-     *
+     * Колличество денег на счету.
      */
-    public double value;
+    private double value;
     /**
-     *
+     * Номер счета.
      */
-    public int requisites;
+    private int requisites;
 
     /**
+     * Получим количество денег на счету.
      *
-     * @return
+     * @return получим количество денег на счету.
      */
     public double getValue() {
         return value;
     }
 
     /**
+     * Зададим количество денег на счет.
      *
-     * @param value
+     * @param value зададим колличество денег на счет.
      */
     public void setValue(double value) {
         this.value = value;
     }
 
     /**
+     * Получим номер счета.
      *
-     * @return
+     * @return получим номер счета.
      */
     public int getRequisites() {
         return requisites;
     }
 
     /**
+     * Зададим номер счета.
      *
-     * @param requisites
+     * @param requisites зададим номер счета.
      */
     public void setRequisites(int requisites) {
         this.requisites = requisites;
     }
 
     /**
+     * Конструктор для счета.
      *
-     * @param value
-     * @param requisites
+     * @param value      количество денег.
+     * @param requisites номер счета.
      */
     public Account(int value, int requisites) {
 

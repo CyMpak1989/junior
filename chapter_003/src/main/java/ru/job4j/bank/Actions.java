@@ -1,74 +1,90 @@
 package ru.job4j.bank;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Класс Actions.
  */
 public class Actions {
     /**
-     *
+     * Коллекция Map.
      */
-    private Map<User, List<Account>> clients;
+    private Map<User, List<Account>> clients = new HashMap<>();
 
     /**
+     * Получим коллекцию пользователей и счетов.
+     * @return получим коллекцию пользователей и счетов.
+     */
+    public Map<User, List<Account>> getClients() {
+        return clients;
+    }
+
+    /**
+     * Метод добавления пользователя в коллекцию.
      *
-     * @param user
+     * @param user пользователь.
      */
     public void addUser(User user) {
         clients.put(user, new ArrayList<Account>());
     }
 
     /**
+     * Метод удаления из коллекции.
      *
-     * @param user
+     * @param user пользователь.
      */
     public void deleteUser(User user) {
         clients.remove(user);
     }
 
     /**
+     * Метод добавления счетов пользователю.
      *
-     * @param user
-     * @param account
+     * @param user    пользователь.
+     * @param account счет.
      */
     public void addAccountToUser(User user, Account account) {
         clients.get(user).add(account);
     }
 
     /**
+     * Метод удаления счета у пользователя.
      *
-     * @param user
-     * @param account
+     * @param user    пользователь.
+     * @param account счет.
      */
     public void deleteAccountFromUser(User user, Account account) {
         List<Account> list = clients.get(user);
-        for (Account a : list) {
-            if (a.equals(account)) {
-                list.remove(a);
-            }
-        }
+        list.remove(list.indexOf(account));
+//        for (Account a : list) {
+//            if (a.equals(account)) {
+//                list.remove(a);
+//            }
+//        }
     }
 
     /**
+     * Метод получения списка четов у пользователя.
      *
-     * @param user
-     * @return
+     * @param user пользователь.
+     * @return вернем список счетов пользователя.
      */
     public List<Account> getUserAccounts(User user) {
         return clients.get(user);
     }
 
     /**
+     * Метод денежных переводов между пользователями.
      *
-     * @param srcUser
-     * @param srcAccount
-     * @param dstUser
-     * @param dstAccount
-     * @param amount
-     * @return
+     * @param srcUser    исходный пользователь.
+     * @param srcAccount исходный счет пользователя.
+     * @param dstUser    конечный пользователь.
+     * @param dstAccount конечный счет пользователя.
+     * @param amount     сумма перевода.
+     * @return вернем true(false) в зависимости от успешности.
      */
     public boolean transferMoney(User srcUser, Account srcAccount, User dstUser, Account dstAccount, double amount) {
         boolean transfer = false;

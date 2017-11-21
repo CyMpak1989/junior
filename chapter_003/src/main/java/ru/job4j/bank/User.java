@@ -1,22 +1,23 @@
 package ru.job4j.bank;
 
 /**
- *
+ * Класс User.
  */
 public class User {
     /**
-     *
+     * Имя.
      */
-    public String name;
+    private String name;
     /**
-     *
+     * Паспорт.
      */
-    public int passport;
+    private int passport;
 
     /**
+     * Конструктор класса.
      *
-     * @param name
-     * @param passport
+     * @param name     имя.
+     * @param passport паспорт.
      */
     public User(String name, int passport) {
         this.name = name;
