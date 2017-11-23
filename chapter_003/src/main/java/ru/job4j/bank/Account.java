@@ -63,12 +63,18 @@ public class Account {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Account account = (Account) o;
 
-        if (Double.compare(account.value, value) != 0) return false;
+        if (Double.compare(account.value, value) != 0) {
+            return false;
+        }
         return requisites == account.requisites;
     }
 
