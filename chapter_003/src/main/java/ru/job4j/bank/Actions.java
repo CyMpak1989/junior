@@ -16,6 +16,7 @@ public class Actions {
 
     /**
      * Получим коллекцию пользователей и счетов.
+     *
      * @return получим коллекцию пользователей и счетов.
      */
     public Map<User, List<Account>> getClients() {
@@ -59,11 +60,6 @@ public class Actions {
     public void deleteAccountFromUser(User user, Account account) {
         List<Account> list = clients.get(user);
         list.remove(list.indexOf(account));
-//        for (Account a : list) {
-//            if (a.equals(account)) {
-//                list.remove(a);
-//            }
-//        }
     }
 
     /**
@@ -89,16 +85,13 @@ public class Actions {
     public boolean transferMoney(User srcUser, Account srcAccount, User dstUser, Account dstAccount, double amount) {
         boolean transfer = false;
         if (clients.containsKey(srcUser) && clients.containsKey(dstUser)) {
-            for (Account account : clients.get(srcUser)) {
-                if (account.equals(srcAccount) && account.getValue() >= amount) {
-                    account.setValue(account.getValue() - amount);
-                }
-            }
-
-            for (Account account : clients.get(dstUser)) {
-                if (account.equals(dstAccount)) {
-                    account.setValue(account.getValue() + amount);
-                }
+            List<Account> listSrc = clients.get(srcUser);
+            Account accountSrc = listSrc.get(listSrc.indexOf(srcAccount));
+            List<Account> listDst = clients.get(dstUser);
+            Account accountDst = listDst.get(listDst.indexOf(dstAccount));
+            if (accountSrc.getValue() >= amount) {
+                accountSrc.setValue(accountSrc.getValue() - amount);
+                accountDst.setValue(accountDst.getValue() + amount);
             }
             transfer = true;
         }
