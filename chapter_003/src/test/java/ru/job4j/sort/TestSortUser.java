@@ -34,7 +34,7 @@ public class TestSortUser {
      */
     @Test
     public void sortTreeSetTheFirstIsEqualToSecond() {
-        assertThat(new User("Vova", 30).compareTo(new User("Roma", 30)), is(0));
+        assertThat(new User("Vova", 30).compareTo(new User("Roma", 30)), is(-1));
     }
 
     /**
@@ -47,8 +47,8 @@ public class TestSortUser {
         users.add(new User("Vyacheslav", 30));
         users.add(new User("Roma", 30));
         List<User> resault = sortUser.sortNameLenght(users);
-        assertEquals("Roma", resault.get(0).getName().length());
-        assertEquals("Vyacheslav", resault.get(1).getName().length());
+        assertEquals(4, resault.get(0).getName().length());
+        assertEquals(10, resault.get(1).getName().length());
     }
 
     /**
