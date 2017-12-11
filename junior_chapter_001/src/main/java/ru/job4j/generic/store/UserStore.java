@@ -1,4 +1,10 @@
 package ru.job4j.generic.store;
 
-public class UserStore {
+import ru.job4j.generic.base.User;
+
+public class UserStore extends AbstractStore<User> {
+
+    public UserStore(int size) {
+        super(size);
+    }
 }
