@@ -7,26 +7,28 @@ package ru.job4j.list;
  */
 public class Stack<T> implements SimpleStackAndQueue<T> {
     /**
-     * Ссылка на следующий объект.
+     * Ссылка на текущий объект.
      */
-    private Node<T> temp;
+    private Node<T> current;
 
     @Override
     public T poll() {
         // Присваем переменной ссылку на временный объект.
-        Node<T> node = this.temp;
-        // Узнаем у текущего объекта ссылку на предыдущий объект. И присваиваем её объекту temp.
-        this.temp = node.getNextNode();
-        // Удаляем ссылку на объект у текущего.
-        node.setNextNode(null);
+        Node<T> node = this.current;
+        // Узнаем у текущего объекта ссылку на предыдущий объект. И присваиваем её объекту current.
+        this.current = node.getBack();
         // Возвращаем значение текущего объекта.
         return node.getValue();
     }
 
     @Override
     public void push(T value) {
-        // Добавляем временному объекту ссылку на новый объект.
-        this.temp = new Node<T>(value, this.temp);
+        // Создаем новый объект.
+        Node<T> node = new Node<>(value);
+        // Передаем новому объекту ссылку текущего объекта.
+        node.setBack(current);
+        // Присваиваем переменной текущего объекта ссылку на новый объект.
+        this.current = node;
     }
 
     /**
@@ -42,17 +44,15 @@ public class Stack<T> implements SimpleStackAndQueue<T> {
         /**
          * Ссылка на следующий объект.
          */
-        private Node<T> nextNode;
+        private Node<T> back;
 
         /**
          * Конструктор объекта.
          *
-         * @param value    значение объекта.
-         * @param nextNode ссылка на следующий объект.
+         * @param value значение объекта.
          */
-        public Node(T value, Node<T> nextNode) {
+        public Node(T value) {
             this.value = value;
-            this.nextNode = nextNode;
         }
 
         /**
@@ -65,21 +65,21 @@ public class Stack<T> implements SimpleStackAndQueue<T> {
         }
 
         /**
-         * Геттер для ссылки на следующий объект.
+         * Геттер для ссылки на предшествующий объект.
          *
-         * @return вернет ссылку на следующий объект.
+         * @return вернет ссылку на предшествующий объект.
          */
-        public Node<T> getNextNode() {
-            return nextNode;
+        public Node<T> getBack() {
+            return back;
         }
 
         /**
-         * Сеттер задаем ссылку на следующий объект.
+         * Сеттер задаем ссылку на предшествующий объект.
          *
-         * @param nextNode ссылка на следующий объект.
+         * @param back ссылка на предшествующий объект.
          */
-        public void setNextNode(Node<T> nextNode) {
-            this.nextNode = nextNode;
+        public void setBack(Node<T> back) {
+            this.back = back;
         }
     }
 }

@@ -13,6 +13,8 @@ public class StackTest {
         stack.push("Test2");
         stack.push("Test3");
         assertThat(stack.poll(), is("Test3"));
+        stack.push("Test4");
+        assertThat(stack.poll(), is("Test4"));
         assertThat(stack.poll(), is("Test2"));
         assertThat(stack.poll(), is("Test1"));
     }
