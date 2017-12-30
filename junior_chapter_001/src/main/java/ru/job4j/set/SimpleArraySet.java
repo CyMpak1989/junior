@@ -29,18 +29,6 @@ public class SimpleArraySet<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            Iterator<T> iterator = ts.iterator();
-
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
-            }
-
-            @Override
-            public T next() {
-                return iterator.next();
-            }
-        };
+        return ts.iterator();
     }
 }

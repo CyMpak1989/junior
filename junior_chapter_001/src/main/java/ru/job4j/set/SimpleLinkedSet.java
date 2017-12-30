@@ -29,18 +29,6 @@ public class SimpleLinkedSet<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            Iterator<T> it = dll.iterator();
-
-            @Override
-            public boolean hasNext() {
-                return it.hasNext();
-            }
-
-            @Override
-            public T next() {
-                return it.next();
-            }
-        };
+        return dll.iterator();
     }
 }
