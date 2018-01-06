@@ -1,7 +1,5 @@
 package ru.job4j.set;
 
-import java.util.Arrays;
-
 public class SimpleHashSet<E> {
     private Node<Integer, E>[] arrayNode;
     private int counts = 0;
@@ -34,7 +32,12 @@ public class SimpleHashSet<E> {
 
     private void checkContainerSize() {
         if (this.counts == this.arrayNode.length) {
-            this.arrayNode = Arrays.copyOf(this.arrayNode, this.arrayNode.length * 2);
+            Node<Integer, E>[] newArrayNode = new Node[arrayNode.length * 2];
+            for (int i = 0; i < arrayNode.length; i++) {
+                int position = arrayNode[i].value.hashCode() % newArrayNode.length;
+                newArrayNode[position] = arrayNode[i];
+            }
+            arrayNode = newArrayNode;
         }
     }
 
