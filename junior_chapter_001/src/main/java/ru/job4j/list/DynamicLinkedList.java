@@ -1,16 +1,20 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-
+@ThreadSafe
 public class DynamicLinkedList<E> implements SimpleContainer<E> {
+    @GuardedBy("this")
     private int modCount = 0;
 
     private Node<E> first;
     private Node<E> last;
 
     @Override
-    public void add(E value) {
+    public synchronized void add(E value) {
         Node<E> newElement = new Node<E>(value);
         if (this.first != null) {
             this.first.setNext(newElement);
@@ -25,7 +29,7 @@ public class DynamicLinkedList<E> implements SimpleContainer<E> {
     }
 
     @Override
-    public E get(int index) {
+    public synchronized E get(int index) {
         E value = null;
 
         Iterator<E> iterator = this.iterator();
@@ -36,13 +40,13 @@ public class DynamicLinkedList<E> implements SimpleContainer<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public synchronized Iterator<E> iterator() {
         return new Iterator<E>() {
             private Node<E> element = last;
             private final int expectedModCount = modCount;
 
             @Override
-            public boolean hasNext() {
+            public synchronized boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException("Ops");
                 }
@@ -50,7 +54,7 @@ public class DynamicLinkedList<E> implements SimpleContainer<E> {
             }
 
             @Override
-            public E next() {
+            public synchronized E next() {
                 E value = null;
                 if (hasNext()) {
                     value = this.element.getValue();
@@ -61,7 +65,7 @@ public class DynamicLinkedList<E> implements SimpleContainer<E> {
         };
     }
 
-    private static class Node<E> {
+    private  static class Node<E> {
         private final E value;
         private Node<E> next;
 
