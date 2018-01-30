@@ -9,13 +9,14 @@ import java.util.Iterator;
 public class DynamicLinkedList<E> implements SimpleContainer<E> {
     @GuardedBy("this")
     private int modCount = 0;
-
+    @GuardedBy("this")
     private Node<E> first;
+    @GuardedBy("this")
     private Node<E> last;
 
     @Override
     public synchronized void add(E value) {
-        Node<E> newElement = new Node<E>(value);
+        Node<E> newElement = new Node<>(value);
         if (this.first != null) {
             this.first.setNext(newElement);
         }
@@ -46,26 +47,30 @@ public class DynamicLinkedList<E> implements SimpleContainer<E> {
             private final int expectedModCount = modCount;
 
             @Override
-            public synchronized boolean hasNext() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException("Ops");
+            public boolean hasNext() {
+                synchronized (first) {
+                    if (expectedModCount != modCount) {
+                        throw new ConcurrentModificationException("Ops");
+                    }
+                    return this.element != null;
                 }
-                return this.element != null;
             }
 
             @Override
-            public synchronized E next() {
-                E value = null;
-                if (hasNext()) {
-                    value = this.element.getValue();
-                    this.element = this.element.getNext();
+            public E next() {
+                synchronized (first) {
+                    E value = null;
+                    if (hasNext()) {
+                        value = this.element.getValue();
+                        this.element = this.element.getNext();
+                    }
+                    return value;
                 }
-                return value;
             }
         };
     }
 
-    private  static class Node<E> {
+    private static class Node<E> {
         private final E value;
         private Node<E> next;
 

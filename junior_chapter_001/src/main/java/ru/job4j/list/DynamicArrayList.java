@@ -29,22 +29,26 @@ public class DynamicArrayList<E> implements SimpleContainer<E> {
             private int iteratorIndex = 0;
 
             @Override
-            public synchronized boolean hasNext() {
-                for (int i = iteratorIndex; i < container.length; i++) {
-                    if (container[i] != null) {
-                        iteratorIndex = i;
-                        return true;
+            public boolean hasNext() {
+                synchronized (container) {
+                    for (int i = iteratorIndex; i < container.length; i++) {
+                        if (container[i] != null) {
+                            iteratorIndex = i;
+                            return true;
+                        }
                     }
+                    return false;
                 }
-                return false;
             }
 
             @Override
-            public synchronized E next() {
-                if (hasNext()) {
-                    return (E) container[iteratorIndex++];
-                } else {
-                    throw new NoSuchElementException("NoSuchElementException!");
+            public E next() {
+                synchronized (container) {
+                    if (hasNext()) {
+                        return (E) container[iteratorIndex++];
+                    } else {
+                        throw new NoSuchElementException("NoSuchElementException!");
+                    }
                 }
             }
         };
