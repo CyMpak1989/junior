@@ -49,12 +49,13 @@ public class Optimization {
     public void insertTable() {
         try {
             connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO test (field) VALUES (?)");
             for (int i = 1; i < element + 1; i++) {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO test (field) VALUES (?)");
                 ps.setInt(1, i);
-                ps.executeUpdate();
-                connection.commit();
+                ps.addBatch();
             }
+            ps.executeBatch();
+            connection.commit();
 
         } catch (SQLException e) {
             try {
@@ -103,4 +104,9 @@ public class Optimization {
         }
     }
 
+    public int parsing() {
+
+
+        return 0;
+    }
 }
