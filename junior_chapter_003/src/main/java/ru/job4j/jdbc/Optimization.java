@@ -1,8 +1,13 @@
 package ru.job4j.jdbc;
 
+import org.xml.sax.SAXException;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -10,31 +15,60 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс Optimization.
+ *
+ * @author Vladimir Lembikov (cympak2009@mail.ru) on 12.03.2018.
+ * @version 1.0.
+ * @since 0.1.
+ */
 public class Optimization {
-    private ConnectionSQL connectionSQL;
+    /**
+     * Ссылка на подключения к БД.
+     */
     private Connection connection;
+    /**
+     * Количество элементов для операции.
+     */
     private int element;
 
-    public Optimization(int element) {
+    /**
+     * Конструктор класса.
+     *
+     * @param element       количество элементов для операции.
+     * @param connectionSQL ссылка на объект подключения к БД.
+     */
+    public Optimization(int element, ConnectionSQL connectionSQL) {
         this.element = element;
-        this.connectionSQL = new ConnectionSQL("jdbc:postgresql://localhost:5432/java_a_from_z",
-                "postgres", "postgres");
         this.connection = connectionSQL.getConnection();
     }
 
-
+    /**
+     * Основная точка входа в программу.
+     *
+     * @param args аргументы.
+     */
     public static void main(String[] args) {
-        Optimization optimization = new Optimization(10);
+        ConnectionSQL connectionSQL = new ConnectionSQL("jdbc:postgresql://localhost:5432/java_a_from_z",
+                "postgres", "postgres");
+        Optimization optimization = new Optimization(1000000, connectionSQL);
         optimization.dropAndCreateTable();
         optimization.insertTable();
         optimization.createJAXB();
         optimization.createXSLB();
+        optimization.parsingSAX();
+        connectionSQL.closeConnection();
     }
 
+    /**
+     * Метод dropAndCreateTable. Удаляем таблицу из БД если она есть.
+     * Создаем новую таблицу.
+     */
     public void dropAndCreateTable() {
         try {
             Statement statement = connection.createStatement();
@@ -46,6 +80,9 @@ public class Optimization {
         }
     }
 
+    /**
+     * Добавляем необходимое количество данных в таблицу.
+     */
     public void insertTable() {
         try {
             connection.setAutoCommit(false);
@@ -67,6 +104,9 @@ public class Optimization {
         }
     }
 
+    /**
+     * Запрашиваем данные из БДи формируем xml с помошью JAXB.
+     */
     public void createJAXB() {
         Entries entries = new Entries();
         List<EntryXML> listEntryXML = new ArrayList<>();
@@ -92,6 +132,9 @@ public class Optimization {
         }
     }
 
+    /**
+     * Берем файл и преобразуем по средствам XSLT в другой формат.
+     */
     public void createXSLB() {
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer(new StreamSource(new File("template.xsl")));
@@ -104,9 +147,21 @@ public class Optimization {
         }
     }
 
-    public int parsing() {
-
-
-        return 0;
+    /**
+     * Парсим файл и выводим арифметическую сумму в консоль.
+     */
+    public void parsingSAX() {
+        SAXHandler saxHandler = new SAXHandler();
+        try {
+            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+            saxParser.parse(new File("2.xml"), saxHandler);
+            System.out.println(String.format("Арифметическую сумму значений всех атрибутов: %s", saxHandler.getAmount()));
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
