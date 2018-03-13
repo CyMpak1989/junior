@@ -48,24 +48,20 @@ public class DynamicLinkedList<E> implements SimpleContainer<E> {
 
             @Override
             public boolean hasNext() {
-                synchronized (first) {
                     if (expectedModCount != modCount) {
                         throw new ConcurrentModificationException("Ops");
                     }
                     return this.element != null;
-                }
             }
 
             @Override
             public E next() {
-                synchronized (first) {
                     E value = null;
                     if (hasNext()) {
                         value = this.element.getValue();
                         this.element = this.element.getNext();
                     }
                     return value;
-                }
             }
         };
     }

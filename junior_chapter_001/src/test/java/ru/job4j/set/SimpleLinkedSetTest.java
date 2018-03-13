@@ -1,5 +1,6 @@
 package ru.job4j.set;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -9,9 +10,15 @@ import static org.junit.Assert.*;
 
 public class SimpleLinkedSetTest {
 
+    private SimpleLinkedSet<String> ssl;
+
+    @Before
+    public void setUp() {
+        ssl = new SimpleLinkedSet<>();
+    }
+
     @Test
-    public void testAddLinkedList() {
-        SimpleLinkedSet<String> ssl = new SimpleLinkedSet<>();
+    public void testAddLinkedList() throws NullPointerException {
         ssl.add("Test1");
         ssl.add("Test2");
         ssl.add("Test2");
