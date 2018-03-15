@@ -18,9 +18,9 @@ public class SimpleLinkedSet<T> implements Iterable<T> {
     }
 
     public boolean checkForDuplicates(T e) {
-        Iterator<T> iterator = dll.iterator();
-        while (iterator.hasNext()) {
-            if (e == iterator.next()) {
+        Iterator<T> iter = dll.iterator();
+        while (iter.hasNext()) {
+            if (e == iter.next()) {
                 return true;
             }
         }
