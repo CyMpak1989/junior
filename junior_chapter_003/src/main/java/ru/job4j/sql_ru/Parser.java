@@ -13,15 +13,12 @@ public class Parser {
         try {
             document = Jsoup.connect("http://www.sql.ru/forum/job-offers/").get();
             Elements elements = document.getElementsByAttributeValue("class", "postslisttopic");
-
+            //Elements elements = document.getElementsByTag("tr");
+            System.out.println(elements.size());
             for (Element element : elements) {
-                //System.out.println(element.getElementsByAttribute("href").text());
-                if ((element.getElementsByAttribute("href").text()).contains("Java")) {
-                    String text = element.getElementsContainingText("href").text();
-                    System.out.println(String.format("%s -> %s", text, element.getElementsByAttribute("href")));
-//                    System.out.println(element.getElementsByAttribute("href").text());
-                }
-
+                String url = element.getElementsByTag("a").attr("href");
+                String text = element.getElementsByTag("a").eachText().get(0);
+                System.out.println(url + " " + text);
             }
 
         } catch (IOException e) {
