@@ -1,6 +1,7 @@
 package ru.job4j.wnn;
 
 import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,6 +11,7 @@ import java.util.Queue;
  * @version 1.0.
  * @since 0.1.
  */
+@ThreadSafe
 public class SimpleBlockingQueue<T> {
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
