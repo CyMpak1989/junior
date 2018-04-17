@@ -1,5 +1,6 @@
 package ru.job4j.sql_ru;
 
+import ru.job4j.sql_ru.bd.ConnectionSQL;
 import ru.job4j.sql_ru.items.Url;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -15,6 +16,10 @@ public class Parser {
     }
 
     public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/sql_ru";
+        String username = "postgres";
+        String password = "postgres";
+        ConnectionSQL connectionSQL = new ConnectionSQL(url, username, password);
         Parser parser = new Parser();
         ScheduledExecutorService service = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
         service.scheduleWithFixedDelay(new PageScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
