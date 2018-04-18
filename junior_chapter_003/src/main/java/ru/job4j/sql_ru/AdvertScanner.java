@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.job4j.sql_ru.bd.DB;
+import ru.job4j.sql_ru.bd.DataBase;
 import ru.job4j.sql_ru.items.Url;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class AdvertScanner implements Runnable {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("d MMM yy, HH:mm");
     private static final SimpleDateFormat DATE_PREPARE = new SimpleDateFormat("d MMM yy");
     private ArrayBlockingQueue<Url> urlQueue;
-    private DB db;
+    private DataBase dataBase;
 
     public AdvertScanner(ArrayBlockingQueue<Url> urlQueue) {
         this.urlQueue = urlQueue;
@@ -43,7 +43,7 @@ public class AdvertScanner implements Runnable {
                     long dateUnix = transferDate(element.getElementsByAttributeValue("class", "altCol").last().text()).getTimeInMillis();
                     if (Pattern.compile("[j,J]ava\\s?(?!\\s?[s,S]cript)").matcher(urlText).find()) {
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(2018, Calendar.JANUARY, 1);
+                        calendar.set(2007, Calendar.JANUARY, 1);
                         if (dateUnix > calendar.getTimeInMillis() || dateUnix == calendar.getTimeInMillis()) {
                             System.out.println(String.format("Вакансия: %s (%s) %s", urlText, date, url));
                         }

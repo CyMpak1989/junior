@@ -26,5 +26,8 @@ public class Parser {
         service.scheduleWithFixedDelay(new AdvertScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
         service.scheduleWithFixedDelay(new AdvertScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
         service.scheduleWithFixedDelay(new AdvertScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
+        service.scheduleWithFixedDelay(new AdvertScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
+        service.scheduleWithFixedDelay(new AdvertScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
+        service.scheduleWithFixedDelay(new AdvertScanner(parser.getQueue()), 0, 1, TimeUnit.DAYS);
     }
 }
