@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.job4j.sql_ru.bd.DataBase;
 import ru.job4j.sql_ru.items.Url;
+import ru.job4j.sql_ru.items.Vacancy;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,13 +18,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class AdvertScanner implements Runnable {
+
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("d MMM yy, HH:mm");
     private static final SimpleDateFormat DATE_PREPARE = new SimpleDateFormat("d MMM yy");
     private ArrayBlockingQueue<Url> urlQueue;
     private DataBase dataBase;
 
-    public AdvertScanner(ArrayBlockingQueue<Url> urlQueue) {
+    public AdvertScanner(ArrayBlockingQueue<Url> urlQueue, DataBase dataBase) {
         this.urlQueue = urlQueue;
+        this.dataBase = dataBase;
     }
 
     @Override
@@ -43,9 +46,14 @@ public class AdvertScanner implements Runnable {
                     long dateUnix = transferDate(element.getElementsByAttributeValue("class", "altCol").last().text()).getTimeInMillis();
                     if (Pattern.compile("[j,J]ava\\s?(?!\\s?[s,S]cript)").matcher(urlText).find()) {
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(2007, Calendar.JANUARY, 1);
+                        if (dataBase.getMaxDate() == 0) {
+                            calendar.set(2007, Calendar.JANUARY, 1);
+                        } else {
+                            calendar.setTimeInMillis(dataBase.getMaxDate());
+                        }
                         if (dateUnix > calendar.getTimeInMillis() || dateUnix == calendar.getTimeInMillis()) {
-                            System.out.println(String.format("Вакансия: %s (%s) %s", urlText, date, url));
+                            dataBase.addData(new Vacancy(urlText, url, "Test", "Автор", date));
+                            //System.out.println(String.format("Вакансия: %s (%s) %s", urlText, date, url));
                         }
                     }
                 }

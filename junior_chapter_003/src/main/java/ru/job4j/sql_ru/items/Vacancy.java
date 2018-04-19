@@ -1,18 +1,28 @@
 package ru.job4j.sql_ru.items;
 
-public class Vacancy {
-    private String url;
-    private String theme;
-    private String author;
-    private long date;
-    private String textVacabcy;
+import java.util.Date;
 
-    public Vacancy(String url, String theme, String author, long date, String textVacabcy) {
+public class Vacancy {
+    private String title;
+    private String url;
+    private String text;
+    private String author;
+    private Date date;
+
+    public Vacancy(String title, String url, String text, String author, Date date) {
+        this.title = title;
         this.url = url;
-        this.theme = theme;
+        this.text = text;
         this.author = author;
         this.date = date;
-        this.textVacabcy = textVacabcy;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUrl() {
@@ -23,12 +33,12 @@ public class Vacancy {
         this.url = url;
     }
 
-    public String getTheme() {
-        return theme;
+    public String getText() {
+        return text;
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getAuthor() {
@@ -39,19 +49,11 @@ public class Vacancy {
         this.author = author;
     }
 
-    public long getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getTextVacabcy() {
-        return textVacabcy;
-    }
-
-    public void setTextVacabcy(String textVacabcy) {
-        this.textVacabcy = textVacabcy;
     }
 }

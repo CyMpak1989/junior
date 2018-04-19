@@ -2,6 +2,7 @@ package ru.job4j.sql_ru.bd;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.sql_ru.items.Vacancy;
 
 import java.sql.*;
 
@@ -45,7 +46,17 @@ public class DataBase {
         return maxDate;
     }
 
-    private void addData() {
-
+    public void addData(Vacancy vacancy) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO vacancy(title, url, text, autor, date) VALUES (?, ?, ?, ?, ?)");
+            ps.setString(1, vacancy.getTitle());
+            ps.setString(2, vacancy.getUrl());
+            ps.setString(3, vacancy.getText());
+            ps.setString(4, vacancy.getAuthor());
+            ps.setTimestamp(5, new Timestamp(vacancy.getDate().getTime()));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

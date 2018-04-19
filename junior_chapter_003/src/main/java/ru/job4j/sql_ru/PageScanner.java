@@ -26,7 +26,7 @@ public class PageScanner implements Runnable {
             Elements elements = elementsSortOptions.select("tr");
             Element element = elements.get(1);
             int index = Integer.parseInt(element.getElementsByTag("a").eachText().get(9));
-            for (int i = 1; i < index; i++) {
+            for (int i = index; i >= 1; i--) {
                 urlQueue.put(new Url(URL + "/" + i));
             }
         } catch (IOException e) {
