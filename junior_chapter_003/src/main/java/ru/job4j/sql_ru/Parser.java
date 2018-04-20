@@ -3,6 +3,7 @@ package ru.job4j.sql_ru;
 import ru.job4j.sql_ru.bd.ConnectionSQL;
 import ru.job4j.sql_ru.bd.DataBase;
 import ru.job4j.sql_ru.items.Url;
+import ru.job4j.sql_ru.setting.LoadSetting;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
@@ -17,11 +18,8 @@ public class Parser {
     }
 
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/sql_ru";
-        String username = "postgres";
-        String password = "postgres";
-
-        ConnectionSQL connectionSQL = new ConnectionSQL(url, username, password);
+        LoadSetting.load();
+        ConnectionSQL connectionSQL = new ConnectionSQL(LoadSetting.URL, LoadSetting.USER, LoadSetting.PASSWORD);
         DataBase dataBase = new DataBase(connectionSQL.getConnection());
         Parser parser = new Parser();
         ScheduledExecutorService service = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());

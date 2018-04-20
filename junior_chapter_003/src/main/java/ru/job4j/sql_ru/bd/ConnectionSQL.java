@@ -26,8 +26,6 @@ public class ConnectionSQL {
     public ConnectionSQL(String url, String username, String password) {
         try {
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Соединение c БД установлено.");
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

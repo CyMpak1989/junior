@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 import ru.job4j.sql_ru.bd.DataBase;
 import ru.job4j.sql_ru.items.Url;
 import ru.job4j.sql_ru.items.Vacancy;
+import ru.job4j.sql_ru.setting.LoadSetting;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -44,16 +45,20 @@ public class AdvertScanner implements Runnable {
                     String urlText = urlAndText.first().getElementsByTag("a").eachText().get(0);
                     Date date = transferDate(element.getElementsByAttributeValue("class", "altCol").last().text()).getTime();
                     long dateUnix = transferDate(element.getElementsByAttributeValue("class", "altCol").last().text()).getTimeInMillis();
+                    String autor = element.getElementsByAttributeValue("class", "altCol").eachText().get(0);
                     if (Pattern.compile("[j,J]ava\\s?(?!\\s?[s,S]cript)").matcher(urlText).find()) {
                         Calendar calendar = Calendar.getInstance();
                         if (dataBase.getMaxDate() == 0) {
-                            calendar.set(2007, Calendar.JANUARY, 1);
+                            calendar.set(LoadSetting.YEAR, LoadSetting.MONTH, LoadSetting.DATE);
                         } else {
                             calendar.setTimeInMillis(dataBase.getMaxDate());
                         }
                         if (dateUnix > calendar.getTimeInMillis() || dateUnix == calendar.getTimeInMillis()) {
-                            dataBase.addData(new Vacancy(urlText, url, "Test", "Автор", date));
-                            //System.out.println(String.format("Вакансия: %s (%s) %s", urlText, date, url));
+                            Document documentText = Jsoup.connect(url).get();
+                            Elements elementsForumTableText = documentText.getElementsByAttributeValue("class", "msgTable");
+                            Elements elementText = elementsForumTableText.first().getElementsByAttributeValue("class", "msgBody");
+                            String text = elementText.eachText().get(1);
+                            dataBase.addData(new Vacancy(urlText, url, text, autor, date));
                         }
                     }
                 }
