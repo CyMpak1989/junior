@@ -20,7 +20,7 @@ public class LoadSetting {
 
     public void load() {
         final PropertiesParser ServerSettings = new PropertiesParser(configFile);
-        url = ServerSettings.getString("Url", "jdbc:postgresql://localhost:5432/sqlru");
+        url = ServerSettings.getString("Url", "jdbc:postgresql://localhost:5432/sql_ru");
         user = ServerSettings.getString("User", "postgres");
         password = ServerSettings.getString("Password", "postgres");
         year = Integer.parseInt(ServerSettings.getString("Year", "2007"));
