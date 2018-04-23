@@ -1,13 +1,13 @@
-package ru.job4j.sql_ru;
+package ru.job4j.sqlru;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.job4j.sql_ru.bd.DataBase;
-import ru.job4j.sql_ru.items.Url;
-import ru.job4j.sql_ru.items.Vacancy;
-import ru.job4j.sql_ru.setting.LoadSetting;
+import ru.job4j.sqlru.bd.DataBase;
+import ru.job4j.sqlru.items.Url;
+import ru.job4j.sqlru.items.Vacancy;
+import ru.job4j.sqlru.setting.LoadSetting;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -24,8 +24,9 @@ public class AdvertScanner implements Runnable {
     private static final SimpleDateFormat DATE_PREPARE = new SimpleDateFormat("d MMM yy");
     private ArrayBlockingQueue<Url> urlQueue;
     private DataBase dataBase;
+    private LoadSetting loadSetting;
 
-    public AdvertScanner(ArrayBlockingQueue<Url> urlQueue, DataBase dataBase) {
+    public AdvertScanner(ArrayBlockingQueue<Url> urlQueue, DataBase dataBase, LoadSetting loadSetting) {
         this.urlQueue = urlQueue;
         this.dataBase = dataBase;
     }
@@ -49,7 +50,7 @@ public class AdvertScanner implements Runnable {
                     if (Pattern.compile("[j,J]ava\\s?(?!\\s?[s,S]cript)").matcher(urlText).find()) {
                         Calendar calendar = Calendar.getInstance();
                         if (dataBase.getMaxDate() == 0) {
-                            calendar.set(LoadSetting.YEAR, LoadSetting.MONTH, LoadSetting.DATE);
+                            calendar.set(loadSetting.year, loadSetting.month, loadSetting.date);
                         } else {
                             calendar.setTimeInMillis(dataBase.getMaxDate());
                         }

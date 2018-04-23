@@ -1,4 +1,4 @@
-package ru.job4j.sql_ru.items;
+package ru.job4j.sqlru.items;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package ru.job4j.sql_ru.bd;
+package ru.job4j.sqlru.bd;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

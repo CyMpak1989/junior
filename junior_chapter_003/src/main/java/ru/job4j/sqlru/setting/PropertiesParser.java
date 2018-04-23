@@ -1,4 +1,4 @@
-package ru.job4j.sql_ru.setting;
+package ru.job4j.sqlru.setting;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,38 +20,29 @@ public class PropertiesParser {
     private final Properties properties = new Properties();
     private final File file;
 
-    public PropertiesParser(String name)
-    {
+    public PropertiesParser(String name) {
         this(new File(name));
     }
 
-    public PropertiesParser(File file)
-    {
+    public PropertiesParser(File file) {
         this.file = file;
-        try (FileInputStream fileInputStream = new FileInputStream(file))
-        {
-            try (InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, Charset.defaultCharset()))
-            {
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            try (InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, Charset.defaultCharset())) {
                 properties.load(inputStreamReader);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }
 
-    private String getValue(String key)
-    {
+    private String getValue(String key) {
         String value = properties.getProperty(key);
         return value != null ? value.trim() : null;
     }
 
-    public String getString(String key, String defaultValue)
-    {
+    public String getString(String key, String defaultValue) {
         String value = getValue(key);
-        if (value == null)
-        {
+        if (value == null) {
             return defaultValue;
         }
         return value;

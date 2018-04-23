@@ -1,8 +1,8 @@
-package ru.job4j.sql_ru.bd;
+package ru.job4j.sqlru.bd;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.job4j.sql_ru.items.Vacancy;
+import ru.job4j.sqlru.items.Vacancy;
 
 import java.sql.*;
 

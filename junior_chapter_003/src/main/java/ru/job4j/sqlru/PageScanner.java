@@ -1,10 +1,10 @@
-package ru.job4j.sql_ru;
+package ru.job4j.sqlru;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.job4j.sql_ru.items.Url;
+import ru.job4j.sqlru.items.Url;
 
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
