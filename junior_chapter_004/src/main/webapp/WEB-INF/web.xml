@@ -1,9 +1,8 @@
 <web-app>
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
-        <servlet-class>job4j.servlets.EchoServlet</servlet-class>
+        <servlet-class>ru.job4j.servlets.EchoServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>EchoServlet</servlet-name>
         <url-pattern>/echo</url-pattern>

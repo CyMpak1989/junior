@@ -1,4 +1,4 @@
-package job4j.servlets.EchoServlet;
+package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +21,9 @@ public class EchoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
-        printWriter.append("Hello world!!!");
-        printWriter.flush();
+        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+        writer.append("Hello world!!!");
+        writer.flush();
+        System.out.println("Опа ответ");
     }
 }
