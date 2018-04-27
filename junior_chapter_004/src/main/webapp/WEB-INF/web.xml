@@ -25,4 +25,13 @@
         <servlet-name>ListServlet</servlet-name>
         <url-pattern>/list</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeletServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.DeletServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
 </web-app>

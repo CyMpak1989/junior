@@ -141,4 +141,14 @@ public class UserStore {
         }
         return users;
     }
+
+    public void deleteUser(String id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?");
+            ps.setInt(1, Integer.parseInt(id));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+    }
 }

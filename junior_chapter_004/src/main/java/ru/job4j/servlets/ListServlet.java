@@ -22,35 +22,45 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ListServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(ListServlet.class);
     private final UserStore users = UserStore.getInstance();
-    private List<User> userList = new CopyOnWriteArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html; en");
+        resp.setContentType("text/html");
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<table border=\"1\">");
+        stringBuilder.append("<table border=\"1\">\n");
         stringBuilder.append("    <tr>\n" +
-                "        <td>id</td>\n" +
-                "        <td>login</td>\n" +
-                "        <td>name</td>\n" +
-                "        <td>email</td>\n" +
-                "        <td>date</td>\n" +
-                "        <td>edit</td>\n" +
-                "        <td>delete</td>\n" +
-                "    </tr>");
+                "        <td>Id</td>\n" +
+                "        <td>Login</td>\n" +
+                "        <td>Name</td>\n" +
+                "        <td>Email</td>\n" +
+                "        <td>Date</td>\n" +
+                "        <td>Edit</td>\n" +
+                "        <td>Delete</td>\n" +
+                "    </tr>" +
+                "\n");
         for (User user : users.getAllUsers()) {
-            stringBuilder.append("<tr>");
-            stringBuilder.append("<td>" + user.getId() + "</td>");
-            stringBuilder.append("<td>" + user.getLogin() + "</td>");
-            stringBuilder.append("<td>" + user.getName() + "</td>");
-            stringBuilder.append("<td>" + user.getEmail() + "</td>");
-            stringBuilder.append("<td>" + user.getCreateDate().getTime() + "</td>");
-            stringBuilder.append("<td>" + "edit" + "</td>");
-            stringBuilder.append("<td>" + "delete" + "</td>");
-            stringBuilder.append("</tr>");
+            stringBuilder.append("    <tr>\n");
+            stringBuilder.append("        <td>" + user.getId() + "</td>\n");
+            stringBuilder.append("        <td>" + user.getLogin() + "</td>\n");
+            stringBuilder.append("        <td>" + user.getName() + "</td>\n");
+            stringBuilder.append("        <td>" + user.getEmail() + "</td>\n");
+            stringBuilder.append("        <td>" + user.getCreateDate().getTime() + "</td>\n");
+            stringBuilder.append("        <td>\n");
+            stringBuilder.append("            <form method=\"get\" action=\"" + req.getContextPath() +
+                    "/edit?id=" + user.getId() + "\">\n" +
+                    "                <button type=\"submit\">Edit</button>\n" +
+                    "            </form>\n");
+            stringBuilder.append("        </td>\n");
+            stringBuilder.append("        <td>\n");
+            stringBuilder.append("            <form method=\"get\" action=\"" + req.getContextPath() +
+                    "/delete?id=" + user.getId() + "\">\n" +
+                    "                <button type=\"submit\">Delete</button>\n" +
+                    "            </form>\n");
+            stringBuilder.append("        </td>\n");
+            stringBuilder.append("    </tr>\n");
         }
-        stringBuilder.append("</table>");
+        stringBuilder.append("</table>\n");
 
         printWriter.append("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
