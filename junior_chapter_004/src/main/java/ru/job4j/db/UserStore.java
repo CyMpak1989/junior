@@ -6,6 +6,8 @@ import ru.job4j.model.User;
 
 import java.sql.*;
 import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 25.04.2018.
@@ -117,5 +119,26 @@ public class UserStore {
             LOG.error(e.getMessage(), e);
         }
         return resault;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new CopyOnWriteArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String login = rs.getString("login");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                long date = rs.getTimestamp("date").getTime();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(date);
+                users.add(new User(id, login, name, email, calendar));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return users;
     }
 }

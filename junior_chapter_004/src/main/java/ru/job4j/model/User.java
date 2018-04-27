@@ -12,6 +12,7 @@ import java.util.Calendar;
  */
 public class User {
     private static final Logger LOG = LoggerFactory.getLogger(User.class);
+    private int id;
     private String name;
     private String login;
     private String email;
@@ -22,6 +23,19 @@ public class User {
         this.login = login;
         this.email = email;
         this.createDate = createDate;
+    }
+
+
+    public User(int id, String login, String name, String email, Calendar createDate) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = createDate;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

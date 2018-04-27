@@ -16,4 +16,13 @@
         <servlet-name>UsersServlet</servlet-name>
         <url-pattern>/user</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ListServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.ListServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListServlet</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
 </web-app>
