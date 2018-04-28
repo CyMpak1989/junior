@@ -44,8 +44,9 @@ public class UserStore {
      */
     private void createTable() {
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(SQLQuery.CREATE_TABLE_USERS);
+            try (Statement statement = connection.createStatement()) {
+                statement.executeUpdate(SQLQuery.CREATE_TABLE_USERS);
+            }
             LOG.debug("Таблица создана или уже имеется.");
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -56,13 +57,14 @@ public class UserStore {
         User userTest = getUserLogin(user.getLogin());
         try {
             if (userTest == null) {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO users (login, name, email, date) VALUES (?, ?, ?, ?)");
-                ps.setString(1, user.getLogin());
-                ps.setString(2, user.getName());
-                ps.setString(3, user.getEmail());
-                ps.setTimestamp(4, new Timestamp(user.getCreateDate().getTimeInMillis()));
-                ps.executeUpdate();
-                LOG.debug("Добавлен новый пользователь: " + user.getLogin());
+                try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users (login, name, email, date) VALUES (?, ?, ?, ?)")) {
+                    ps.setString(1, user.getLogin());
+                    ps.setString(2, user.getName());
+                    ps.setString(3, user.getEmail());
+                    ps.setTimestamp(4, new Timestamp(user.getCreateDate().getTimeInMillis()));
+                    ps.executeUpdate();
+                    LOG.debug("Добавлен новый пользователь: " + user.getLogin());
+                }
                 return true;
             } else {
                 LOG.error("This login is already busy.");
@@ -76,17 +78,18 @@ public class UserStore {
     public User getUserLogin(String login) {
         User user = null;
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login = ?");
-            ps.setString(1, login);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String login1 = rs.getString("login");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                long date = rs.getTimestamp("date").getTime();
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(date);
-                user = new User(name, login1, email, calendar);
+            try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login = ?")) {
+                ps.setString(1, login);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String login1 = rs.getString("login");
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    long date = rs.getTimestamp("date").getTime();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(date);
+                    user = new User(name, login1, email, calendar);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,12 +100,13 @@ public class UserStore {
     public int updateUser(User user) {
         int resault = 0;
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE login = ?");
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getLogin());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getLogin());
-            resault = ps.executeUpdate();
+            try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE login = ?")) {
+                ps.setString(1, user.getName());
+                ps.setString(2, user.getLogin());
+                ps.setString(3, user.getEmail());
+                ps.setString(4, user.getLogin());
+                resault = ps.executeUpdate();
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -112,9 +116,10 @@ public class UserStore {
     public int daleteUser(String login) {
         int resault = 0;
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE login = ?");
-            ps.setString(1, login);
-            resault = ps.executeUpdate();
+            try (PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE login = ?")) {
+                ps.setString(1, login);
+                resault = ps.executeUpdate();
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -124,17 +129,18 @@ public class UserStore {
     public List<User> getAllUsers() {
         List<User> users = new CopyOnWriteArrayList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String login = rs.getString("login");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                long date = rs.getTimestamp("date").getTime();
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(date);
-                users.add(new User(id, login, name, email, calendar));
+            try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String login = rs.getString("login");
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    long date = rs.getTimestamp("date").getTime();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(date);
+                    users.add(new User(id, login, name, email, calendar));
+                }
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -144,9 +150,10 @@ public class UserStore {
 
     public void deleteUser(String id) {
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?");
-            ps.setInt(1, Integer.parseInt(id));
-            ps.executeUpdate();
+            try (PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+                ps.setInt(1, Integer.parseInt(id));
+                ps.executeUpdate();
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

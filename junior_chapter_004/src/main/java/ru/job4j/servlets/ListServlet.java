@@ -26,6 +26,7 @@ public class ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        resp.setCharacterEncoding("UTF-8");
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<table border=\"1\">\n");
@@ -47,14 +48,16 @@ public class ListServlet extends HttpServlet {
             stringBuilder.append("        <td>" + user.getEmail() + "</td>\n");
             stringBuilder.append("        <td>" + user.getCreateDate().getTime() + "</td>\n");
             stringBuilder.append("        <td>\n");
-            stringBuilder.append("            <form method=\"get\" action=\"" + req.getContextPath() +
-                    "/edit?id=" + user.getId() + "\">\n" +
+            stringBuilder.append("            <form method=\"GET\" action=\"" + req.getContextPath() +
+                    "/edit\">\n" +
+                    "                <input type='hidden' name='id' value='" + user.getId() + "'>\n" +
                     "                <button type=\"submit\">Edit</button>\n" +
                     "            </form>\n");
             stringBuilder.append("        </td>\n");
             stringBuilder.append("        <td>\n");
-            stringBuilder.append("            <form method=\"get\" action=\"" + req.getContextPath() +
-                    "/delete?id=" + user.getId() + "\">\n" +
+            stringBuilder.append("            <form method=\"GET\" action=\"" + req.getContextPath() +
+                    "/delete\">\n" +
+                    "                <input type='hidden' name='id' value='" + user.getId() + "'>\n" +
                     "                <button type=\"submit\">Delete</button>\n" +
                     "            </form>\n");
             stringBuilder.append("        </td>\n");
@@ -69,6 +72,7 @@ public class ListServlet extends HttpServlet {
                 "    <title>Title</title>\n" +
                 "</head>\n" +
                 "<body>\n" +
+                "<h2><a href='" + req.getContextPath() + "/create'>Add a new user.</a></h2>" +
                 stringBuilder.toString() +
                 "</body>\n" +
                 "</html>");
