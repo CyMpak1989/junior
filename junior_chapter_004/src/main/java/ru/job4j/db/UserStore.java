@@ -51,6 +51,11 @@ public class UserStore {
         }
     }
 
+    /**
+     * Метод добавления пользователя в БД.
+     * @param user объект пользователя.
+     * @return true если все успешно.
+     */
     public boolean addNewUser(User user) {
         User userTest = getUserLogin(user.getLogin());
         try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users (login, name, email, date) VALUES (?, ?, ?, ?)")) {
