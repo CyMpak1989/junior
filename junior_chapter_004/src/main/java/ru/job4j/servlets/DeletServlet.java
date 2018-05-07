@@ -25,8 +25,6 @@ public class DeletServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
         String id = req.getParameter("id");
-        String login = req.getParameter("login");
-        String name = req.getParameter("name");
         printWriter.append("<!DOCTYPE html>"
                 + "<html lang='en'>"
                 + "<head>"

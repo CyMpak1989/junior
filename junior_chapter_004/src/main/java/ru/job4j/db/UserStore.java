@@ -76,13 +76,14 @@ public class UserStore {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     String login1 = rs.getString("login");
                     String name = rs.getString("name");
                     String email = rs.getString("email");
                     long date = rs.getTimestamp("date").getTime();
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(date);
-                    user = new User(name, login1, email, calendar);
+                    user = new User(id, login1, name, email, calendar);
                 }
             }
         } catch (SQLException e) {
@@ -98,6 +99,20 @@ public class UserStore {
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getLogin());
+            resault = ps.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return resault;
+    }
+
+    public int updateUserId(User user) {
+        int resault = 0;
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE id = ?")) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getLogin());
+            ps.setString(3, user.getEmail());
+            ps.setInt(4, user.getId());
             resault = ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
