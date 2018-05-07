@@ -53,6 +53,7 @@ public class UserStore {
 
     /**
      * Метод добавления пользователя в БД.
+     *
      * @param user объект пользователя.
      * @return true если все успешно.
      */
@@ -75,6 +76,12 @@ public class UserStore {
         return false;
     }
 
+    /**
+     * Метод получения пользователя по логину.
+     *
+     * @param login логин пользователя.
+     * @return вернем объект пользователя.
+     */
     public User getUserLogin(String login) {
         User user = null;
         try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login = ?")) {
@@ -97,6 +104,12 @@ public class UserStore {
         return user;
     }
 
+    /**
+     * Метод обновелния пользователя.
+     *
+     * @param user объект пользователя.
+     * @return вернем 1 если все хорошо.
+     */
     public int updateUser(User user) {
         int resault = 0;
         try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE login = ?")) {
@@ -111,6 +124,12 @@ public class UserStore {
         return resault;
     }
 
+    /**
+     * Обновление пользователя по ИД.
+     *
+     * @param user объект пользователя.
+     * @return вернем 1 если все хорошо.
+     */
     public int updateUserId(User user) {
         int resault = 0;
         try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE id = ?")) {
@@ -125,6 +144,12 @@ public class UserStore {
         return resault;
     }
 
+    /**
+     * Метод удаления пользователя.
+     *
+     * @param login логин пользователя.
+     * @return вернем 1 ели все хорошо.
+     */
     public int daleteUser(String login) {
         int resault = 0;
         try (PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE login = ?")) {
@@ -136,6 +161,11 @@ public class UserStore {
         return resault;
     }
 
+    /**
+     * Метод получения списка всех пользователей.
+     *
+     * @return вернем List User.
+     */
     public List<User> getAllUsers() {
         List<User> users = new CopyOnWriteArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")) {
@@ -157,6 +187,11 @@ public class UserStore {
         return users;
     }
 
+    /**
+     * Метод удаления пользователя по ИД.
+     *
+     * @param id ИД пользователя.
+     */
     public void deleteUser(String id) {
         try (PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
             ps.setInt(1, Integer.parseInt(id));
