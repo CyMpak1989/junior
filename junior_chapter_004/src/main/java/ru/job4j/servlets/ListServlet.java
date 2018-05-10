@@ -25,57 +25,6 @@ public class ListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding("UTF-8");
-        PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<table border=\"1\">\n");
-        stringBuilder.append("    <tr>\n"
-                + "        <td>Id</td>\n"
-                + "        <td>Login</td>\n"
-                + "        <td>Name</td>\n"
-                + "        <td>Email</td>\n"
-                + "        <td>Date</td>\n"
-                + "        <td>Edit</td>\n"
-                + "        <td>Delete</td>\n"
-                + "    </tr>"
-                + "\n");
-        for (User user : users.getAllUsers()) {
-            stringBuilder.append("    <tr>\n");
-            stringBuilder.append("        <td>" + user.getId() + "</td>\n");
-            stringBuilder.append("        <td>" + user.getLogin() + "</td>\n");
-            stringBuilder.append("        <td>" + user.getName() + "</td>\n");
-            stringBuilder.append("        <td>" + user.getEmail() + "</td>\n");
-            stringBuilder.append("        <td>" + user.getCreateDate().getTime() + "</td>\n");
-            stringBuilder.append("        <td>\n");
-            stringBuilder.append("            <form method=\"GET\" action=\"" + req.getContextPath()
-                    + "/edit\">\n"
-                    + "                <input type='hidden' name='login' value='" + user.getLogin() + "'>\n"
-                    + "                <button type=\"submit\">Edit</button>\n"
-                    + "            </form>\n");
-            stringBuilder.append("        </td>\n");
-            stringBuilder.append("        <td>\n");
-            stringBuilder.append("            <form method=\"GET\" action=\"" + req.getContextPath()
-                    + "/delete\">\n"
-                    + "                <input type='hidden' name='id' value='" + user.getId() + "'>\n"
-                    + "                <button type=\"submit\">Delete</button>\n"
-                    + "            </form>\n");
-            stringBuilder.append("        </td>\n");
-            stringBuilder.append("    </tr>\n");
-        }
-        stringBuilder.append("</table>\n");
-
-        printWriter.append("<!DOCTYPE html>\n"
-                + "<html lang=\"en\">\n"
-                + "<head>\n"
-                + "    <meta charset=\"UTF-8\">\n"
-                + "    <title>Title</title>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "<h2><a href='" + req.getContextPath() + "/create'>Add a new user.</a></h2>"
-                + stringBuilder.toString()
-                + "</body>\n"
-                + "</html>");
-        printWriter.flush();
+        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
     }
 }
