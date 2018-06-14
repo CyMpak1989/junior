@@ -18,4 +18,29 @@ public class ValidateService implements Validate {
     public static ValidateService getInstance() {
         return INSTANCE;
     }
+
+    @Override
+    public void addValidate(String name) {
+
+    }
+
+    @Override
+    public void updateValidate(int id, String name) {
+
+    }
+
+    @Override
+    public void deleteValidate(int id) {
+
+    }
+
+    @Override
+    public void findAllValidate() {
+
+    }
+
+    @Override
+    public void findByIdValidate() {
+
+    }
 }

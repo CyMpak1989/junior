@@ -6,4 +6,13 @@ package ru.job4j.service;
  * @since 0.1.
  */
 public interface Validate {
+    void addValidate(String name);
+
+    void updateValidate(int id, String name);
+
+    void deleteValidate(int id);
+
+    void findAllValidate();
+
+    void findByIdValidate();
 }

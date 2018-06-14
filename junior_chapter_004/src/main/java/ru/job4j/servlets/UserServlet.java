@@ -27,6 +27,16 @@ public class UserServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        if (req.getParameter("action") == "add") {
+            logic.addValidate(req.getParameter("name"));
+            //Вернуть что-то пользователю
+        } else if (req.getParameter("action") == "update") {
+            logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"));
+            //Вернуть что-то пользователю
+        } else if (req.getParameter("action") == "delete") {
+            logic.deleteValidate(Integer.parseInt(req.getParameter("id")));
+            //Вернуть что-то пользователю
+
+        }
     }
 }
