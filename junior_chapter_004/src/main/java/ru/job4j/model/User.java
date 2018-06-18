@@ -18,27 +18,9 @@ public class User {
     private String email;
     private Calendar createDate;
 
-    public User(String name, String login, String email, Calendar createDate) {
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = createDate;
-    }
-
-
-    public User(int id, String login, String name, String email, Calendar createDate) {
+    public User(int id, String name) {
         this.id = id;
         this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = createDate;
-    }
-
-    public User(int id, String name, String login, String email) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
     }
 
     public int getId() {
@@ -47,6 +29,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLogin() {
@@ -63,11 +49,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{"
-                + "name='" + name + '\''
-                + ", login='" + login + '\''
-                + ", email='" + email + '\''
-                + ", createDate=" + createDate.getTime()
-                + '}';
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

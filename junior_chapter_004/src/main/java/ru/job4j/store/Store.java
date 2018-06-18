@@ -2,6 +2,8 @@ package ru.job4j.store;
 
 import ru.job4j.model.User;
 
+import java.util.List;
+
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 13.06.2018.
  * @version 1.0.
@@ -14,7 +16,7 @@ public interface Store {
 
     void deleteStore(int id);
 
-    void findAllStore();
+    List<User> findAllStore();
 
     void findByIdStore();
 }

@@ -17,6 +17,7 @@ public class MemoreStore implements Store {
     private static final Logger LOG = LoggerFactory.getLogger(MemoreStore.class);
 
     private List<User> userList = new CopyOnWriteArrayList<>();
+    private int id = 1;
 
     public static MemoreStore getInstance() {
         return INSTANCE;
@@ -24,12 +25,17 @@ public class MemoreStore implements Store {
 
     @Override
     public void addStore(String name) {
-
+        userList.add(new User(id, name));
+        id++;
     }
 
     @Override
     public void updateStore(int id, String name) {
-
+        for (User user : userList) {
+            if (user.getId() == id) {
+                user.setName(name);
+            }
+        }
     }
 
     @Override
@@ -38,8 +44,8 @@ public class MemoreStore implements Store {
     }
 
     @Override
-    public void findAllStore() {
-
+    public List<User> findAllStore() {
+        return userList;
     }
 
     @Override
