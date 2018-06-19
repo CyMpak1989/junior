@@ -14,9 +14,9 @@ public interface Validate {
 
     String updateValidate(int id, String name);
 
-    void deleteValidate(int id);
+    String deleteValidate(int id);
 
     List<User> findAllValidate();
 
-    void findByIdValidate();
+    boolean findByIdValidate(int id);
 }

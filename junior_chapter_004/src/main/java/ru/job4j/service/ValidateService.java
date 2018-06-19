@@ -36,18 +36,20 @@ public class ValidateService implements Validate {
 
     @Override
     public String updateValidate(int id, String name) {
-        for (User user : logic.findAllStore()) {
-            if (user.getId() == id) {
-                logic.updateStore(id, name);
-                return "The user is successfully updated!";
-            }
+        if (findByIdValidate(id)) {
+            logic.updateStore(id, name);
+            return "The user is successfully updated!";
         }
         return "User with this id is not found!";
     }
 
     @Override
-    public void deleteValidate(int id) {
-
+    public String deleteValidate(int id) {
+        if (findByIdValidate(id)) {
+            logic.deleteStore(id);
+            return "User successfully removed!";
+        }
+        return "User with this id is not found!";
     }
 
     @Override
@@ -62,7 +64,10 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public void findByIdValidate() {
-
+    public boolean findByIdValidate(int id) {
+        if (logic.findByIdStore(id) == null) {
+            return false;
+        }
+        return true;
     }
 }

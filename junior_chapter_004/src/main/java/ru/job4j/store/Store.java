@@ -18,5 +18,5 @@ public interface Store {
 
     List<User> findAllStore();
 
-    void findByIdStore();
+    User findByIdStore(int id);
 }

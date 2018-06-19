@@ -43,8 +43,7 @@ public class UserServlet extends HttpServlet {
         } else if (req.getParameter("action").equals("update")) {
             printWriter.append(logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name")));
         } else if (req.getParameter("action").equals("delete")) {
-            logic.deleteValidate(Integer.parseInt(req.getParameter("id")));
-            //Вернуть что-то пользователю
+            printWriter.append(logic.deleteValidate(Integer.parseInt(req.getParameter("id"))));
         }
         printWriter.flush();
     }

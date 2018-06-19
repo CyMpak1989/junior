@@ -40,7 +40,11 @@ public class MemoreStore implements Store {
 
     @Override
     public void deleteStore(int id) {
-
+        for (User user : userList) {
+            if (user.getId() == id) {
+                userList.remove(user);
+            }
+        }
     }
 
     @Override
@@ -49,7 +53,13 @@ public class MemoreStore implements Store {
     }
 
     @Override
-    public void findByIdStore() {
-
+    public User findByIdStore(int id) {
+        User userResault = null;
+        for (User user : userList) {
+            if (user.getId() == id) {
+                userResault = user;
+            }
+        }
+        return userResault;
     }
 }
