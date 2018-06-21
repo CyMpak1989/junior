@@ -23,6 +23,14 @@ public class User {
         this.name = name;
     }
 
+    public User(int id, String name, String login, String email, Calendar createDate) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = createDate;
+    }
+
     public int getId() {
         return id;
     }

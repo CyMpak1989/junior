@@ -24,32 +24,32 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public String addValidate(String name) {
+    public boolean addValidate(String name) {
         for (User user : logic.findAllStore()) {
             if (user.getName().equals(name)) {
-                return "A user with this name exists!";
+                return false;
             }
         }
         logic.addStore(name);
-        return "The user has been added successfully!";
+        return true;
     }
 
     @Override
-    public String updateValidate(int id, String name) {
+    public boolean updateValidate(int id, String name) {
         if (findByIdValidate(id)) {
             logic.updateStore(id, name);
-            return "The user is successfully updated!";
+            return true;
         }
-        return "User with this id is not found!";
+        return false;
     }
 
     @Override
-    public String deleteValidate(int id) {
+    public boolean deleteValidate(int id) {
         if (findByIdValidate(id)) {
             logic.deleteStore(id);
-            return "User successfully removed!";
+            return true;
         }
-        return "User with this id is not found!";
+        return false;
     }
 
     @Override

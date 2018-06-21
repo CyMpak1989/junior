@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,7 +26,7 @@ public class MemoreStore implements Store {
 
     @Override
     public void addStore(String name) {
-        userList.add(new User(id, name));
+        userList.add(new User(id, name, "не реализован", "не реализован", Calendar.getInstance()));
         id++;
     }
 

@@ -39,11 +39,23 @@ public class UserServlet extends HttpServlet {
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
 
         if (req.getParameter("action").equals("add")) {
-            printWriter.append(logic.addValidate(req.getParameter("name")));
+            if (logic.addValidate(req.getParameter("name"))) {
+                printWriter.append("The user has been added successfully!");
+            } else {
+                printWriter.append("A user with this name exists!");
+            }
         } else if (req.getParameter("action").equals("update")) {
-            printWriter.append(logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name")));
+            if (logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"))) {
+                printWriter.append("The user is successfully updated!");
+            } else {
+                printWriter.append("User with this id is not found!");
+            }
         } else if (req.getParameter("action").equals("delete")) {
-            printWriter.append(logic.deleteValidate(Integer.parseInt(req.getParameter("id"))));
+            if (logic.deleteValidate(Integer.parseInt(req.getParameter("id")))) {
+                printWriter.append("User successfully removed!");
+            } else {
+                printWriter.append("User with this id is not found!");
+            }
         }
         printWriter.flush();
     }

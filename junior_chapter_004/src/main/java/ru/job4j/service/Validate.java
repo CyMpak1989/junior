@@ -10,11 +10,11 @@ import java.util.List;
  * @since 0.1.
  */
 public interface Validate {
-    String addValidate(String name);
+    boolean addValidate(String name);
 
-    String updateValidate(int id, String name);
+    boolean updateValidate(int id, String name);
 
-    String deleteValidate(int id);
+    boolean deleteValidate(int id);
 
     List<User> findAllValidate();
 
