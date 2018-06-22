@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,8 +26,8 @@ public class MemoreStore implements Store {
     }
 
     @Override
-    public void addStore(String name) {
-        userList.add(new User(id, name, "не реализован", "не реализован", Calendar.getInstance()));
+    public void addStore(String name, String login, String email) {
+        userList.add(new User(id, name, login, email, Calendar.getInstance()));
         id++;
     }
 
@@ -55,12 +56,14 @@ public class MemoreStore implements Store {
 
     @Override
     public User findByIdStore(int id) {
-        User userResault = null;
         for (User user : userList) {
+            System.out.println("Зашли в цикл");
             if (user.getId() == id) {
-                userResault = user;
+                System.out.println("Dthyekb");
+                return user;
             }
         }
-        return userResault;
+        System.out.println("Вернули Null");
+        return null;
     }
 }

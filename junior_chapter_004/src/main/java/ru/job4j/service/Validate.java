@@ -10,7 +10,7 @@ import java.util.List;
  * @since 0.1.
  */
 public interface Validate {
-    boolean addValidate(String name);
+    boolean addValidate(String name, String login, String email);
 
     boolean updateValidate(int id, String name);
 

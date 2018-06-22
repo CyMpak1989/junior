@@ -12,21 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Vladimir Lembikov (cympak2009@mail.ru) on 21.06.2018.
+ * @author Vladimir Lembikov (cympak2009@mail.ru) on 22.06.2018.
  * @version 1.0.
  * @since 0.1.
  */
-public class UserCreateServlet extends HttpServlet {
-    private static final Logger LOG = LoggerFactory.getLogger(UserCreateServlet.class);
+public class UserDeleteServlet extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(UserDeleteServlet.class);
     private Validate logic = ValidateService.getInstance();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logic.addValidate(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"));
+        logic.deleteValidate(Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }

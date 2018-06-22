@@ -2,8 +2,10 @@ package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.model.User;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
+import ru.job4j.store.MemoreStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,9 +21,12 @@ import java.io.IOException;
 public class UserUpdateServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UserUpdateServlet.class);
     private Validate logic = ValidateService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
+        User user = MemoreStore.getInstance().findByIdStore(Integer.parseInt(req.getParameter("id")));
+        System.out.println(user);
+        resp.sendRedirect(String.format("%s/edit.jsp", req.getContextPath()));
     }
 
     @Override

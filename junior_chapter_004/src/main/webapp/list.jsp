@@ -26,13 +26,13 @@
         <td><%=user.getEmail()%></td>
         <td><%=user.getCreateDate().getTime()%></td>
         <td>
-            <form method="GET" action="<%=request.getContextPath()%>/edit.jsp">
+            <form method="GET" action="<%=request.getContextPath()%>/edit">
                 <input type="hidden" name="id" value="<%=user.getId()%>">
                 <button type="submit">Edit</button>
             </form>
         </td>
         <td>
-            <form method="GET" action="<%=request.getContextPath()%>/delete.jsp">
+            <form method="POST" action="<%=request.getContextPath()%>/delete">
                 <input type="hidden" name="id" value="<%=user.getId()%>">
                 <button type="submit">Delete</button>
             </form>

@@ -24,13 +24,13 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public boolean addValidate(String name) {
+    public boolean addValidate(String name, String login, String email) {
         for (User user : logic.findAllStore()) {
             if (user.getName().equals(name)) {
                 return false;
             }
         }
-        logic.addStore(name);
+        logic.addStore(name, login, email);
         return true;
     }
 

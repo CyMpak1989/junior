@@ -10,7 +10,7 @@ import java.util.List;
  * @since 0.1.
  */
 public interface Store {
-    void addStore(String name);
+    void addStore(String name, String login, String email);
 
     void updateStore(int id, String name);
 
