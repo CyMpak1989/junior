@@ -14,7 +14,7 @@ import java.io.IOException;
  * @version 1.0.
  * @since 0.1.
  */
-public class UsersServlet extends HttpServlet{
+public class UsersServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UsersServlet.class);
 
     @Override
