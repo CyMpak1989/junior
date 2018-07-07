@@ -35,9 +35,9 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public boolean updateValidate(int id, String name) {
+    public boolean updateValidate(int id, String name, String login, String email) {
         if (findByIdValidate(id)) {
-            logic.updateStore(id, name);
+            logic.updateStore(id, name, login, email);
             return true;
         }
         return false;

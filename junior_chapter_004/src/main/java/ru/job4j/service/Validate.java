@@ -12,7 +12,7 @@ import java.util.List;
 public interface Validate {
     boolean addValidate(String name, String login, String email);
 
-    boolean updateValidate(int id, String name);
+    boolean updateValidate(int id, String name, String login, String email);
 
     boolean deleteValidate(int id);
 

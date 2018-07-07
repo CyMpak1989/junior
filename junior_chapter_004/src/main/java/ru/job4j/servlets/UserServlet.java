@@ -45,7 +45,8 @@ public class UserServlet extends HttpServlet {
                 printWriter.append("A user with this name exists!");
             }
         } else if (req.getParameter("action").equals("update")) {
-            if (logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"))) {
+            if (logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name")
+                    , req.getParameter("login"), req.getParameter("email"))) {
                 printWriter.append("The user is successfully updated!");
             } else {
                 printWriter.append("User with this id is not found!");

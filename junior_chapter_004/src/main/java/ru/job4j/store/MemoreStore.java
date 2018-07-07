@@ -32,10 +32,12 @@ public class MemoreStore implements Store {
     }
 
     @Override
-    public void updateStore(int id, String name) {
+    public void updateStore(int id, String name, String login, String email) {
         for (User user : userList) {
             if (user.getId() == id) {
                 user.setName(name);
+                user.setLogin(login);
+                user.setEmail(email);
             }
         }
     }
@@ -57,13 +59,10 @@ public class MemoreStore implements Store {
     @Override
     public User findByIdStore(int id) {
         for (User user : userList) {
-            System.out.println("Зашли в цикл");
             if (user.getId() == id) {
-                System.out.println("Dthyekb");
                 return user;
             }
         }
-        System.out.println("Вернули Null");
         return null;
     }
 }

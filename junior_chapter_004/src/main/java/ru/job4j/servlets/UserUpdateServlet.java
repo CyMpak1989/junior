@@ -24,14 +24,13 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = MemoreStore.getInstance().findByIdStore(Integer.parseInt(req.getParameter("id")));
-        System.out.println(user);
-        resp.sendRedirect(String.format("%s/edit.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/edit.jsp?id=%s", req.getContextPath(), req.getParameter("id")));
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"));
+        logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name")
+                , req.getParameter("login"), req.getParameter("email"));
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }
