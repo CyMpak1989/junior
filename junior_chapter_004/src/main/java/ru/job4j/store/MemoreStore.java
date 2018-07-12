@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 13.06.2018.
@@ -19,7 +20,7 @@ public class MemoreStore implements Store {
     private static final Logger LOG = LoggerFactory.getLogger(MemoreStore.class);
 
     private List<User> userList = new CopyOnWriteArrayList<>();
-    private int id = 1;
+    private AtomicInteger counter = new AtomicInteger(1);
 
     public static MemoreStore getInstance() {
         return INSTANCE;
@@ -27,8 +28,7 @@ public class MemoreStore implements Store {
 
     @Override
     public void addStore(String name, String login, String email) {
-        userList.add(new User(id, name, login, email, Calendar.getInstance()));
-        id++;
+        userList.add(new User(counter.getAndIncrement(), name, login, email, Calendar.getInstance()));
     }
 
     @Override
@@ -58,11 +58,12 @@ public class MemoreStore implements Store {
 
     @Override
     public User findByIdStore(int id) {
+        User resault = null;
         for (User user : userList) {
             if (user.getId() == id) {
-                return user;
+                resault = user;
             }
         }
-        return null;
+        return resault;
     }
 }

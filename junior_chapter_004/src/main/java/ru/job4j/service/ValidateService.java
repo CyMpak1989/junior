@@ -25,31 +25,34 @@ public class ValidateService implements Validate {
 
     @Override
     public boolean addValidate(String name, String login, String email) {
+        boolean resault = true;
         for (User user : logic.findAllStore()) {
             if (user.getName().equals(name)) {
-                return false;
+                resault = false;
             }
         }
         logic.addStore(name, login, email);
-        return true;
+        return resault;
     }
 
     @Override
     public boolean updateValidate(int id, String name, String login, String email) {
+        boolean resault = false;
         if (findByIdValidate(id)) {
             logic.updateStore(id, name, login, email);
-            return true;
+            resault = true;
         }
-        return false;
+        return resault;
     }
 
     @Override
     public boolean deleteValidate(int id) {
+        boolean resault = false;
         if (findByIdValidate(id)) {
             logic.deleteStore(id);
-            return true;
+            resault = true;
         }
-        return false;
+        return resault;
     }
 
     @Override
@@ -65,9 +68,6 @@ public class ValidateService implements Validate {
 
     @Override
     public boolean findByIdValidate(int id) {
-        if (logic.findByIdStore(id) == null) {
-            return false;
-        }
-        return true;
+        return logic.findByIdStore(id) == null ? false : true;
     }
 }
