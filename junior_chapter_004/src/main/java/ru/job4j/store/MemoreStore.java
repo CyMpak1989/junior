@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 
-import java.net.Socket;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -20,7 +19,7 @@ public class MemoreStore implements Store {
     private static final Logger LOG = LoggerFactory.getLogger(MemoreStore.class);
 
     private List<User> userList = new CopyOnWriteArrayList<>();
-    private AtomicInteger counter = new AtomicInteger(1);
+    private final AtomicInteger counter = new AtomicInteger(1);
 
     public static MemoreStore getInstance() {
         return INSTANCE;

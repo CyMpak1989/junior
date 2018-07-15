@@ -3,6 +3,7 @@ package ru.job4j.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
+import ru.job4j.store.DbStore;
 import ru.job4j.store.MemoreStore;
 import ru.job4j.store.Store;
 
@@ -17,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ValidateService implements Validate {
     private static final ValidateService INSTANCE = new ValidateService();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateService.class);
-    private final Store logic = MemoreStore.getInstance();
+    private final Store logic = DbStore.getInstance();
 
     public static ValidateService getInstance() {
         return INSTANCE;
