@@ -1,8 +1,8 @@
 <%@ page import="ru.job4j.model.User" %>
-<%@ page import="ru.job4j.store.MemoreStore" %>
 <%@ page import="ru.job4j.store.Store" %>
+<%@ page import="ru.job4j.store.DbStore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%Store logic = MemoreStore.getInstance();%>
+<%Store logic = DbStore.getInstance();%>
 <%User user = logic.findByIdStore(Integer.parseInt(request.getParameter("id")));%>
 <html>
 <head>
