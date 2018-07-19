@@ -60,4 +60,9 @@ public class UserServlet extends HttpServlet {
         }
         printWriter.flush();
     }
+
+    @Override
+    public void destroy() {
+        logic.close();
+    }
 }

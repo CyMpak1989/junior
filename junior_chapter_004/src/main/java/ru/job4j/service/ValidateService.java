@@ -71,4 +71,9 @@ public class ValidateService implements Validate {
     public boolean findByIdValidate(int id) {
         return logic.findByIdStore(id) == null ? false : true;
     }
+
+    @Override
+    public void close() {
+        logic.closePoolConnections();
+    }
 }

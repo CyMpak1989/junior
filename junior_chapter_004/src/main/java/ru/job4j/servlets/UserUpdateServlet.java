@@ -31,4 +31,9 @@ public class UserUpdateServlet extends HttpServlet {
                 req.getParameter("login"), req.getParameter("email"));
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
+
+    @Override
+    public void destroy() {
+        logic.close();
+    }
 }

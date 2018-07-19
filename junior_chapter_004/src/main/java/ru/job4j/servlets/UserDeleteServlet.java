@@ -19,9 +19,15 @@ import java.io.IOException;
 public class UserDeleteServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UserDeleteServlet.class);
     private Validate logic = ValidateService.getInstance();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logic.deleteValidate(Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+    }
+
+    @Override
+    public void destroy() {
+        logic.close();
     }
 }

@@ -65,4 +65,9 @@ public class MemoreStore implements Store {
         }
         return resault;
     }
+
+    @Override
+    public void closePoolConnections() {
+
+    }
 }

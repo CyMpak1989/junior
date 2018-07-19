@@ -1,6 +1,7 @@
 package ru.job4j.service;
 
 import ru.job4j.model.User;
+import ru.job4j.store.Store;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface Validate {
     List<User> findAllValidate();
 
     boolean findByIdValidate(int id);
+
+    void close();
 }

@@ -19,4 +19,6 @@ public interface Store {
     List<User> findAllStore();
 
     User findByIdStore(int id);
+
+    void closePoolConnections();
 }

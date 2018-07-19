@@ -26,6 +26,15 @@ public class DbStore implements Store {
         return INSTANCE;
     }
 
+    @Override
+    public void closePoolConnections() {
+        try {
+            SOURCE.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public DbStore() {
         SOURCE.setUrl("jdbc:postgresql://localhost:5432/dbstore");
         SOURCE.setUsername("postgres");
