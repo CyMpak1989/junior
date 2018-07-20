@@ -2,6 +2,8 @@ package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.service.Validate;
+import ru.job4j.service.ValidateService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +18,12 @@ import java.io.IOException;
  */
 public class UsersServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UsersServlet.class);
+    private Validate logic = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
+//        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
+        req.setAttribute("users", logic.findAllValidate());
+        req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
     }
 }

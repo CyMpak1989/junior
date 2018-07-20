@@ -2,8 +2,11 @@ package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.model.User;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
+import ru.job4j.store.DbStore;
+import ru.job4j.store.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +25,10 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(String.format("%s/edit.jsp?id=%s", req.getContextPath(), req.getParameter("id")));
+//        resp.sendRedirect(String.format("%s/edit.jsp?id=%s", req.getContextPath(), req.getParameter("id")));
+        User user = DbStore.getInstance().findByIdStore(Integer.parseInt(req.getParameter("id")));
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
     }
 
     @Override

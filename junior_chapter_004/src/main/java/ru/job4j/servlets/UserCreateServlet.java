@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
-import ru.job4j.store.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,9 +19,11 @@ import java.io.IOException;
 public class UserCreateServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UserCreateServlet.class);
     private Validate logic = ValidateService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
+//        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
+        req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
     }
 
     @Override

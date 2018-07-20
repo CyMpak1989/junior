@@ -4,7 +4,7 @@
     <title>Create new user!</title>
 </head>
 <body>
-<form method="POST" action="<%=request.getContextPath()%>/create">
+<form method="POST" action="${pageContext.servletContext.contextPath}/create">
     Login:
     <input type="text" name="login">
     Name:
@@ -13,6 +13,6 @@
     <input type="text" name="email">
     <button type="submit">Create</button>
 </form>
-<h2><a href="<%=request.getContextPath()%>/list.jsp">Back</a></h2>
+<h2><a href="${pageContext.servletContext.contextPath}/list">Back</a></h2>
 </body>
 </html>
