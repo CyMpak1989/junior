@@ -25,8 +25,9 @@ public class MemoreStore implements Store {
         return INSTANCE;
     }
 
+    //false
     @Override
-    public void addStore(String name, String login, String email) {
+    public void addStore(String name, String login, String email, String password) {
         userList.add(new User(counter.getAndIncrement(), name, login, email, Calendar.getInstance()));
     }
 
@@ -69,5 +70,11 @@ public class MemoreStore implements Store {
     @Override
     public void closePoolConnections() {
 
+    }
+
+    //false
+    @Override
+    public boolean isCredentional(String login, String password) {
+        return false;
     }
 }

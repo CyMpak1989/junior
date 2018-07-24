@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -22,8 +23,12 @@ public class UsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
-        req.setAttribute("users", logic.findAllValidate());
-        req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("login") == null) {
+            resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
+        } else {
+            req.setAttribute("users", logic.findAllValidate());
+            req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
+        }
     }
 }

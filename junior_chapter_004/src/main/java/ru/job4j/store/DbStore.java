@@ -55,7 +55,8 @@ public class DbStore implements Store {
             sb.append("name   VARCHAR(100), ");
             sb.append("login  VARCHAR(100), ");
             sb.append("email  VARCHAR(100), ");
-            sb.append("created TIMESTAMP);");
+            sb.append("created TIMESTAMP, ");
+            sb.append("password VARCHAR(100));");
             statement.execute(sb.toString());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,13 +64,14 @@ public class DbStore implements Store {
     }
 
     @Override
-    public void addStore(String name, String login, String email) {
+    public void addStore(String name, String login, String email, String password) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("INSERT INTO users(name, login, email, created) VALUES (?,?,?,?);")) {
+             PreparedStatement ps = connection.prepareStatement("INSERT INTO users(name, login, email, created, password) VALUES (?,?,?,?,?);")) {
             ps.setString(1, name);
             ps.setString(2, login);
             ps.setString(3, email);
             ps.setTimestamp(4, new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            ps.setString(5, password);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,5 +150,25 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public boolean isCredentional(String login, String password) {
+        boolean resulte = false;
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password FROM Users WHERE (login = ?);")) {
+            ps.setString(1, login);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String loginDb = resultSet.getString("login");
+                String passwordDb = resultSet.getString("password");
+                if (login.equals(loginDb) && password.equals(passwordDb)) {
+                    resulte = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resulte;
     }
 }

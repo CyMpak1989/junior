@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 import ru.job4j.store.DbStore;
-import ru.job4j.store.MemoreStore;
 import ru.job4j.store.Store;
 
 import java.util.List;
@@ -25,14 +24,14 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public boolean addValidate(String name, String login, String email) {
+    public boolean addValidate(String name, String login, String email, String password) {
         boolean resault = true;
         for (User user : logic.findAllStore()) {
             if (user.getName().equals(name)) {
                 resault = false;
             }
         }
-        logic.addStore(name, login, email);
+        logic.addStore(name, login, email, password);
         return resault;
     }
 
@@ -73,7 +72,14 @@ public class ValidateService implements Validate {
     }
 
     @Override
+    public boolean isCredentional(String login, String password) {
+        return logic.isCredentional(login, password);
+    }
+
+    @Override
     public void close() {
         logic.closePoolConnections();
     }
+
+
 }

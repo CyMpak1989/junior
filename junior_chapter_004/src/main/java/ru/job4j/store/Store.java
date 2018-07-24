@@ -10,7 +10,7 @@ import java.util.List;
  * @since 0.1.
  */
 public interface Store {
-    void addStore(String name, String login, String email);
+    void addStore(String name, String login, String email, String password);
 
     void updateStore(int id, String name, String login, String email);
 
@@ -21,5 +21,7 @@ public interface Store {
     User findByIdStore(int id);
 
     void closePoolConnections();
+
+    boolean isCredentional(String login, String password);
 
 }

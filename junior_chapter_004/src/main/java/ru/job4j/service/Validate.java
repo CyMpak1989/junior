@@ -11,7 +11,7 @@ import java.util.List;
  * @since 0.1.
  */
 public interface Validate {
-    boolean addValidate(String name, String login, String email);
+    boolean addValidate(String name, String login, String email, String password);
 
     boolean updateValidate(int id, String name, String login, String email);
 
@@ -20,6 +20,8 @@ public interface Validate {
     List<User> findAllValidate();
 
     boolean findByIdValidate(int id);
+
+    boolean isCredentional(String login, String password);
 
     void close();
 }

@@ -39,7 +39,7 @@ public class UserServlet extends HttpServlet {
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
 
         if (req.getParameter("action").equals("add")) {
-            if (logic.addValidate(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"))) {
+            if (logic.addValidate(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), null)) {
                 printWriter.append("The user has been added successfully!");
             } else {
                 printWriter.append("A user with this name exists!");

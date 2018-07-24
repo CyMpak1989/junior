@@ -22,13 +22,16 @@ public class UserCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
         req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logic.addValidate(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"));
+        String name = req.getParameter("name");
+        String login = req.getParameter("login");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        logic.addValidate(name, login, email, password);
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 
