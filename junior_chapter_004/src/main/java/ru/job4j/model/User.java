@@ -17,6 +17,7 @@ public class User {
     private String login;
     private String email;
     private Calendar createDate;
+    private String password;
 
     public User(int id, String name) {
         this.id = id;
@@ -27,12 +28,25 @@ public class User {
 
     }
 
+    public User(int id, String name, String login, String email, Calendar createDate, String password) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = createDate;
+        this.password = password;
+    }
+
     public User(int id, String name, String login, String email, Calendar createDate) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setId(int id) {

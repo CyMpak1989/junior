@@ -21,4 +21,5 @@ public interface Store {
     User findByIdStore(int id);
 
     void closePoolConnections();
+
 }
