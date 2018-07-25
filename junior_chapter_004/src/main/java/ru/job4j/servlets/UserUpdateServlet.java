@@ -25,7 +25,6 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.sendRedirect(String.format("%s/edit.jsp?id=%s", req.getContextPath(), req.getParameter("id")));
         User user = DbStore.getInstance().findByIdStore(Integer.parseInt(req.getParameter("id")));
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
@@ -34,7 +33,7 @@ public class UserUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"),
-                req.getParameter("login"), req.getParameter("email"));
+                req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 

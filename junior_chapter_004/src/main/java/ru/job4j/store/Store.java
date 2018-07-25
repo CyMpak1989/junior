@@ -12,7 +12,7 @@ import java.util.List;
 public interface Store {
     void addStore(String name, String login, String email, String password);
 
-    void updateStore(int id, String name, String login, String email);
+    void updateStore(int id, String name, String login, String email, String password);
 
     void deleteStore(int id);
 

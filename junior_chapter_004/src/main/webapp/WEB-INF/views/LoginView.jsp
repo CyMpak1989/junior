@@ -20,7 +20,7 @@
 <form method="POST" action="${pageContext.servletContext.contextPath}/signin">
     Login : <input type="text" name="login"><br/>
     Password : <input type="password" name="password"><br/>
-    <input type="submit">
+    <input type="submit" value="Войти">
 </form>
 </body>
 </html>

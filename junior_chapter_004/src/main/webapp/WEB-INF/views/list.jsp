@@ -6,6 +6,9 @@
 </head>
 <body>
 <h2><a href="${pageContext.servletContext.contextPath}/create">Add a new user.</a></h2>
+<form method="get" action="${pageContext.servletContext.contextPath}/signout">
+    <input type="submit" value="Выход">
+</form>
 <table border="1">
     <tr>
         <th>Id</th>

@@ -79,13 +79,14 @@ public class DbStore implements Store {
     }
 
     @Override
-    public void updateStore(int id, String name, String login, String email) {
+    public void updateStore(int id, String name, String login, String email, String password) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET name=?, login=?, email=? WHERE (id = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET name=?, login=?, email=?, password=? WHERE (id = ?);")) {
             ps.setString(1, name);
             ps.setString(2, login);
             ps.setString(3, email);
-            ps.setInt(4, id);
+            ps.setString(4, password);
+            ps.setInt(5, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,7 +109,7 @@ public class DbStore implements Store {
         List<User> userList = new CopyOnWriteArrayList<>();
         try (Connection connection = SOURCE.getConnection();
              Statement st = connection.createStatement()) {
-            ResultSet resultSet = st.executeQuery("SELECT id, name, login, email, created FROM Users;");
+            ResultSet resultSet = st.executeQuery("SELECT id, name, login, email, created, password FROM Users;");
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getInt("id"));
@@ -119,6 +120,7 @@ public class DbStore implements Store {
                 Timestamp timestamp = new Timestamp(resultSet.getTimestamp("created").getTime());
                 calendar.setTime(new Date(timestamp.getTime()));
                 user.setCreateDate(calendar);
+                user.setPassword(resultSet.getString("password"));
                 userList.add(user);
             }
 
@@ -132,7 +134,7 @@ public class DbStore implements Store {
     public User findByIdStore(int id) {
         User user = new User();
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created FROM Users WHERE (id = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password FROM Users WHERE (id = ?);")) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -144,6 +146,7 @@ public class DbStore implements Store {
                 Timestamp timestamp = new Timestamp(resultSet.getTimestamp("created").getTime());
                 calendar.setTime(new Date(timestamp.getTime()));
                 user.setCreateDate(calendar);
+                user.setPassword(resultSet.getString("password"));
             }
 
         } catch (SQLException e) {

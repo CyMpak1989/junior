@@ -32,7 +32,7 @@ public class MemoreStore implements Store {
     }
 
     @Override
-    public void updateStore(int id, String name, String login, String email) {
+    public void updateStore(int id, String name, String login, String email, String password) {
         for (User user : userList) {
             if (user.getId() == id) {
                 user.setName(name);
