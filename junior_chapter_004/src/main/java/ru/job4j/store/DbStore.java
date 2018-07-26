@@ -50,13 +50,23 @@ public class DbStore implements Store {
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement()) {
             StringBuilder sb = new StringBuilder();
+            //Создаем таблицу для ролей пользователей.
+            sb.append("CREATE TABLE IF NOT EXISTS users_role");
+            sb.append("(id   SERIAL PRIMARY KEY,");
+            sb.append("role VARCHAR(20));");
+            //Добавляем 2 роли пользователей.
+//            sb.append("INSERT INTO users_role (role) VALUES ('Administrator');");
+//            sb.append("INSERT INTO users_role (role) VALUES ('User');");
+            //Создаем таблицу пользователей.
             sb.append("CREATE TABLE IF NOT EXISTS users");
             sb.append("(id     SERIAL PRIMARY KEY, ");
             sb.append("name   VARCHAR(100), ");
             sb.append("login  VARCHAR(100), ");
             sb.append("email  VARCHAR(100), ");
             sb.append("created TIMESTAMP, ");
-            sb.append("password VARCHAR(100));");
+            sb.append("password VARCHAR(100), ");
+            sb.append("type_role INTEGER REFERENCES users_role (id));");
+//            sb.append("INSERT INTO users (name, login, email, created, password, type_role) VALUES ('root', 'root', 'root@root.ru', '2018-02-05 12:00:00', 'root', 1);");
             statement.execute(sb.toString());
         } catch (SQLException e) {
             e.printStackTrace();

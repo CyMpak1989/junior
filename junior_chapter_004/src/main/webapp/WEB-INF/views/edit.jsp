@@ -1,4 +1,3 @@
-<%@ page import="ru.job4j.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -13,6 +12,13 @@
     E-mail : <input type="text" name="email" value="<c:out value="${user.email}"></c:out>">
     Password : <input type="text" name="email" value="<c:out value="${user.password}"></c:out>">
     <button type="submit">Edit</button>
+</form>
+<form action="${pageContext.servletContext.contextPath}/editrole">
+    <select name="role">
+        <option value="1">Administrator</option>
+        <option selected value="2">User</option>
+    </select>
+    <input type="submit" value="Изменить роль">
 </form>
 <h2><a href="${pageContext.servletContext.contextPath}/list">Back</a></h2></body>
 </body>
