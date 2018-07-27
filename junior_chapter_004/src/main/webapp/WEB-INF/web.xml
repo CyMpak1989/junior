@@ -72,6 +72,14 @@
         <servlet-name>Signout</servlet-name>
         <url-pattern>/signout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>EditRoleUser</servlet-name>
+        <servlet-class>ru.job4j.servlets.EditUserRoleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditRoleUser</servlet-name>
+        <url-pattern>/editrole</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>ru.job4j.servlets.AuthFilter</filter-class>

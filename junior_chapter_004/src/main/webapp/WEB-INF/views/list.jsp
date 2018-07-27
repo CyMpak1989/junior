@@ -18,6 +18,7 @@
         <th>Date</th>
         <th>Edit</th>
         <th>Delete</th>
+        <th>Edit role</th>
     </tr>
     <tr>
         <c:forEach items="${users}" var="user">
@@ -28,15 +29,21 @@
         <td><c:out value="${user.email}"></c:out></td>
         <td><c:out value="${user.getCreateDate().getTime()}"></c:out></td>
         <td>
-            <form method="GET" action="${pageContext.servletContext.contextPath}/edit">
+            <form method="get" action="${pageContext.servletContext.contextPath}/edit">
                 <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
                 <button type="submit">Edit</button>
             </form>
         </td>
         <td>
-            <form method="POST" action="${pageContext.servletContext.contextPath}/delete">
+            <form method="post" action="${pageContext.servletContext.contextPath}/delete">
                 <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
                 <button type="submit">Delete</button>
+            </form>
+        </td>
+        <td>
+            <form method="get" action="${pageContext.servletContext.contextPath}/editrole">
+                <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+                <button type="submit">Edit role</button>
             </form>
         </td>
     </tr>

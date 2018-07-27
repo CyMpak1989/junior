@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 
 import java.sql.*;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -183,5 +182,34 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return resulte;
+    }
+
+    public int getUserRole(int id) {
+        int type_role = 0;
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password, type_role FROM Users WHERE (id = ?);")) {
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                type_role = Integer.parseInt(resultSet.getString("type_role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return type_role;
+    }
+
+    public Map<Integer, String> getAllRole() {
+        Map<Integer, String> allRole = new HashMap<>();
+        try (Connection connection = SOURCE.getConnection();
+             Statement st = connection.createStatement()) {
+            ResultSet resultSet = st.executeQuery("SELECT id, role FROM users_role;");
+            while (resultSet.next()) {
+                allRole.put(resultSet.getInt("id"), resultSet.getString("role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allRole;
     }
 }

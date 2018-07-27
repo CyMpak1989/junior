@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
+import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 24.07.2018.
@@ -30,10 +32,11 @@ public class SigninController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-
+        Map<Integer, String> allRole = DbStore.getInstance().getAllRole();
         if (logic.isCredentional(login, password)) {
             HttpSession session = req.getSession();
             session.setAttribute("login", login);
+            session.setAttribute("allRole", allRole);
             resp.sendRedirect(String.format("%s/list", req.getContextPath()));
         } else {
             req.setAttribute("error", "Credentional invalid");
