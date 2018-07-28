@@ -12,8 +12,8 @@
     <title>Edit user role.</title>
 </head>
 <body>
-<form action="/action_page.php">
-    <select name="cars">
+<form method="post" action="${pageContext.servletContext.contextPath}/editrole">
+    <select name="update_role">
         <c:forEach items="${allRole}" var="type">
             <c:if test="${type.key == role}">
                 <option selected value="${type.key}">${type.value}</option>
@@ -23,8 +23,9 @@
             </c:if>
         </c:forEach>
     </select>
+    <input type="hidden" name="id" value="${id}">
     <br><br>
-    <input type="submit" value="Edit role">
+    <input type="submit" value="Изменить роль">
 </form>
 </body>
 </html>

@@ -32,11 +32,9 @@ public class SigninController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        Map<Integer, String> allRole = DbStore.getInstance().getAllRole();
         if (logic.isCredentional(login, password)) {
             HttpSession session = req.getSession();
             session.setAttribute("login", login);
-            session.setAttribute("allRole", allRole);
             resp.sendRedirect(String.format("%s/list", req.getContextPath()));
         } else {
             req.setAttribute("error", "Credentional invalid");

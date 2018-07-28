@@ -199,6 +199,21 @@ public class DbStore implements Store {
         return type_role;
     }
 
+    public int getUserRoleByLogin(String login) {
+        int type_role = 0;
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password, type_role FROM Users WHERE (login = ?);")) {
+            ps.setString(1, login);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                type_role = Integer.parseInt(resultSet.getString("type_role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return type_role;
+    }
+
     public Map<Integer, String> getAllRole() {
         Map<Integer, String> allRole = new HashMap<>();
         try (Connection connection = SOURCE.getConnection();
@@ -211,5 +226,16 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return allRole;
+    }
+
+    public void updateUserRole(String id, String role) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET type_role=? WHERE (id = ?);")) {
+            ps.setInt(1, Integer.parseInt(role));
+            ps.setInt(2, Integer.parseInt(id));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
