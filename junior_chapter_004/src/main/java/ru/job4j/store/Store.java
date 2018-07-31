@@ -14,7 +14,7 @@ public interface Store {
 
     void updateStore(int id, String name, String login, String email, String password);
 
-    void deleteStore(int id);
+    boolean deleteStore(int id);
 
     List<User> findAllStore();
 

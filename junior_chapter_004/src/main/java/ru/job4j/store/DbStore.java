@@ -75,12 +75,13 @@ public class DbStore implements Store {
     @Override
     public void addStore(String name, String login, String email, String password) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("INSERT INTO users(name, login, email, created, password) VALUES (?,?,?,?,?);")) {
+             PreparedStatement ps = connection.prepareStatement("INSERT INTO users(name, login, email, created, password, type_role) VALUES (?,?,?,?,?,?);")) {
             ps.setString(1, name);
             ps.setString(2, login);
             ps.setString(3, email);
             ps.setTimestamp(4, new Timestamp(Calendar.getInstance().getTimeInMillis()));
             ps.setString(5, password);
+            ps.setInt(6, 2);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,14 +104,17 @@ public class DbStore implements Store {
     }
 
     @Override
-    public void deleteStore(int id) {
+    public boolean deleteStore(int id) {
+        boolean resault = false;
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement ps = connection.prepareStatement("DELETE FROM Users WHERE (id = ?);")) {
             ps.setInt(1, id);
             ps.executeUpdate();
+            resault = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resault;
     }
 
     @Override

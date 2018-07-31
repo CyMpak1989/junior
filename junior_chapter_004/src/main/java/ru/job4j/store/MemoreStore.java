@@ -43,12 +43,15 @@ public class MemoreStore implements Store {
     }
 
     @Override
-    public void deleteStore(int id) {
+    public boolean deleteStore(int id) {
+        boolean resault = false;
         for (User user : userList) {
             if (user.getId() == id) {
                 userList.remove(user);
+                resault = true;
             }
         }
+        return resault;
     }
 
     @Override
