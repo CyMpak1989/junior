@@ -15,10 +15,10 @@
 <form method="post" action="${pageContext.servletContext.contextPath}/editrole">
     <select name="update_role">
         <c:forEach items="${allRole}" var="type">
-            <c:if test="${type.key == role}">
+            <c:if Test="${type.key == role}">
                 <option selected value="${type.key}">${type.value}</option>
             </c:if>
-            <c:if test="${type.key != role}">
+            <c:if Test="${type.key != role}">
                 <option value="${type.key}">${type.value}</option>
             </c:if>
         </c:forEach>

@@ -189,33 +189,33 @@ public class DbStore implements Store {
     }
 
     public int getUserRole(int id) {
-        int type_role = 0;
+        int typeRole = 0;
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password, type_role FROM Users WHERE (id = ?);")) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                type_role = Integer.parseInt(resultSet.getString("type_role"));
+                typeRole = Integer.parseInt(resultSet.getString("type_role"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return type_role;
+        return typeRole;
     }
 
     public int getUserRoleByLogin(String login) {
-        int type_role = 0;
+        int typeRole = 0;
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password, type_role FROM Users WHERE (login = ?);")) {
             ps.setString(1, login);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                type_role = Integer.parseInt(resultSet.getString("type_role"));
+                typeRole = Integer.parseInt(resultSet.getString("type_role"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return type_role;
+        return typeRole;
     }
 
     public Map<Integer, String> getAllRole() {
