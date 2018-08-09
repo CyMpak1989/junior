@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import org.junit.Test;
+import ru.job4j.model.User;
 import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
@@ -25,15 +26,22 @@ public class UserCreateServletTest {
         UserCreateServlet userCreateServlet = new UserCreateServlet();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
+        DbStore dbStore = mock(DbStore.class);
+
+        User user = new User();
+        user.setLogin("user2");
 
         when(request.getParameter("name")).thenReturn("user2");
         when(request.getParameter("login")).thenReturn("user2");
         when(request.getParameter("email")).thenReturn("user2@user2.ru");
         when(request.getParameter("password")).thenReturn("user2");
 
+        when(dbStore.findByIdStore(6)).thenReturn(user);
+
         userCreateServlet.doPost(request, response);
 
-        assertThat(DbStore.getInstance().findByIdStore(6).getLogin(), is("user2"));
+
+        assertThat(dbStore.findByIdStore(6).getLogin(), is("user2"));
     }
 
 }

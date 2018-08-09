@@ -1,7 +1,6 @@
 package ru.job4j.servlets;
 
 import org.junit.Test;
-import ru.job4j.model.User;
 import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
@@ -11,6 +10,8 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertNull;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,12 +26,16 @@ public class UserDeleteServletTest {
         UserDeleteServlet userDeleteServlet = new UserDeleteServlet();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
+        DbStore dbStore = mock(DbStore.class);
 
         when(request.getParameter("id")).thenReturn("13");
+        when(dbStore.deleteStore(13)).thenReturn(true);
 
         userDeleteServlet.doPost(request, response);
 
         assertNull(DbStore.getInstance().findByIdStore(13).getLogin());
+
+        assertThat(dbStore.deleteStore(13), is(true));
     }
 
 }
