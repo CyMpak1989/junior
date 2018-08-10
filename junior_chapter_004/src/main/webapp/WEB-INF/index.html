@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var name = $('#name').val();
+            var surname = $('#surname').val();
+            var sex = $('#sex').val();
+            var description = $('#description').val();
+            if (name == '') {
+                alert($('#name').attr('placeholder'));
+                return false;
+            } else if (surname == '') {
+                alert($('#surname').attr('placeholder'));
+                return false;
+            } else if (sex == '') {
+                alert($('#sex').attr('placeholder'));
+                return false;
+            } else if (description == '') {
+                alert($('#description').attr('placeholder'));
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -35,7 +58,8 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="description">Описание:</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="description" placeholder="Введите описание" name="description">
+                <input type="text" class="form-control" id="description" placeholder="Введите описание"
+                       name="description">
             </div>
         </div>
         <div class="form-group">
@@ -47,7 +71,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Отправить</button>
+                <button type="submit" class="btn btn-default" onclick="return validate();">Отправить</button>
             </div>
         </div>
     </form>

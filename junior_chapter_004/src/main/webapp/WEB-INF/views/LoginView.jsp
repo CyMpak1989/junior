@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<c:if Test="${error !=''}">
+<c:if test="${error !=''}">
     <div style="background-color: red">
         <c:out value="${error}"></c:out>
     </div>
