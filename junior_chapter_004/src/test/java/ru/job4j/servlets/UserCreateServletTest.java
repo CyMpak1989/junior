@@ -26,8 +26,8 @@ public class UserCreateServletTest {
         UserCreateServlet userCreateServlet = new UserCreateServlet();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-        DbStore dbStore = mock(DbStore.class);
-
+        DbStore dbStore = DbStore.getInstance();
+        mock(dbStore.getClass());
         User user = new User();
         user.setLogin("user2");
 
