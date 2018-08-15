@@ -12,7 +12,7 @@ public class JsonController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.append("[{'login':'test2', 'email':'email2'}, {'login':'test2', 'email':'email2'}]");
+        writer.append("[{\"name\":\"test2\", \"surname\":\"test2\", \"sex\":\"test2\", \"description\":\"test2\"}]");
         writer.flush();
     }
 
