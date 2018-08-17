@@ -35,7 +35,7 @@ public class JsonController extends HttpServlet {
         String surname = req.getParameter("surname");
         String sex = req.getParameter("sex");
         String description = req.getParameter("description");
-        String jsonText = "{\"name\":\"" + name + "\", \"surname\":\"" + surname + "\", \"sex\":\"" + sex + "\", \"description\":\"" + description + "\"}";
+        String jsonText = String.format("{\"name\":\"%s\", \"surname\":\"%s\", \"sex\":\"%s\", \"description\":\"%s\"}", name, surname, sex, description);
         SimpleUser resault = mapper.readValue(jsonText, SimpleUser.class);
         STORE.put(counter.getAndIncrement(), resault);
     }
