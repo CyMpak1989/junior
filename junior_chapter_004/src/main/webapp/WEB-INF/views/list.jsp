@@ -52,38 +52,37 @@
             <th>Email</th>
             <th>Date</th>
             <th>Edit</th>
-            <%--<th>Delete</th>--%>
-            <%--<th>Edit role</th>--%>
+            <th>Delete</th>
+            <th>Edit role</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${users}" var="user">
-
-            <tr>
-                <td><c:out value="${user.id}"></c:out></td>
-                <td><c:out value="${user.login}"></c:out></td>
-                <td><c:out value="${user.name}"></c:out></td>
-                <td><c:out value="${user.email}"></c:out></td>
-                <td><c:out value="${user.getCreateDate().getTime()}"></c:out></td>
+            <form method="get" action="${pageContext.servletContext.contextPath}/edit">
+                <tr>
+                    <td><c:out value="${user.id}"></c:out></td>
+                    <td><c:out value="${user.login}"></c:out></td>
+                    <td><c:out value="${user.name}"></c:out></td>
+                    <td><c:out value="${user.email}"></c:out></td>
+                    <td><c:out value="${user.getCreateDate().getTime()}"></c:out></td>
                     <td>
-                    <form method="get" action="${pageContext.servletContext.contextPath}/edit">
-                    <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
-                    <button class="btn btn-primary btn-xs" type="submit">Edit</button>
-                    </form>
+                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+                        <button class="btn btn-primary btn-xs" type="submit">Edit</button>
                     </td>
-                    <%--<td>--%>
-                    <%--<form method="post" action="${pageContext.servletContext.contextPath}/delete">--%>
-                    <%--<input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">--%>
-                    <%--<button type="submit">Delete</button>--%>
-                    <%--</form>--%>
-                    <%--</td>--%>
-                    <%--<td>--%>
-                    <%--<form method="get" action="${pageContext.servletContext.contextPath}/editrole">--%>
-                    <%--<input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">--%>
-                    <%--<button type="submit">Edit role</button>--%>
-                    <%--</form>--%>
-                    <%--</td>--%>
-            </tr>
+                    <td>
+                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+                        <button class="btn btn-primary btn-xs" type="submit" formmethod="get"
+                                formaction="${pageContext.servletContext.contextPath}/delete">Delete
+                        </button>
+                    </td>
+                    <td>
+                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+                        <button class="btn btn-primary btn-xs" type="submit" formmethod="get"
+                                formaction="${pageContext.servletContext.contextPath}/editrole">Edit role
+                        </button>
+                    </td>
+                </tr>
+            </form>
         </c:forEach>
         </tbody>
     </table>
