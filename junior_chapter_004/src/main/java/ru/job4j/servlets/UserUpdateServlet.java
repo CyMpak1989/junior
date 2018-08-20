@@ -6,13 +6,13 @@ import ru.job4j.model.User;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
 import ru.job4j.store.DbStore;
-import ru.job4j.store.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 21.06.2018.
@@ -25,6 +25,7 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         User user = DbStore.getInstance().findByIdStore(Integer.parseInt(req.getParameter("id")));
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
@@ -32,8 +33,17 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"),
-                req.getParameter("login"), req.getParameter("email"), req.getParameter("password"));
+        req.setCharacterEncoding("UTF-8");
+        int id = Integer.parseInt(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String login = req.getParameter("login");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String countries = req.getParameter("countries");
+        String citi = req.getParameter("citi");
+        User updateUser = new User(id, name, login, email, Calendar.getInstance(), password, countries, citi);
+        logic.updateValidate(updateUser);
+
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 

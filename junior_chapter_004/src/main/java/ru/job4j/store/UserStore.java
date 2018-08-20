@@ -9,10 +9,10 @@ import java.util.List;
  * @version 1.0.
  * @since 0.1.
  */
-public interface Store {
-    void addStore(String name, String login, String email, String password);
+public interface UserStore {
+    void addStore(User user);
 
-    void updateStore(int id, String name, String login, String email, String password);
+    void updateStore(User user);
 
     boolean deleteStore(int id);
 

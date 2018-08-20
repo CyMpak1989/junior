@@ -20,10 +20,6 @@
             margin-left: 10px;
             margin-right: 10px;
         }
-
-        .text {
-            margin: 0 auto;
-        }
     </style>
 </head>
 <body>
@@ -46,39 +42,44 @@
     <table class="table table-striped table-bordered">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Login</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Edit</th>
-            <th>Delete</th>
-            <th>Edit role</th>
+            <th>#</th>
+            <th>Логин</th>
+            <th>Имя</th>
+            <th>Электронная почта</th>
+            <th>Страна</th>
+            <th>Город</th>
+            <th>Дата создания</th>
+            <th>Редактировать</th>
+            <th>Удалить</th>
+            <th>Редактировать роль</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${users}" var="user">
             <form method="get" action="${pageContext.servletContext.contextPath}/edit">
+                <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
                 <tr>
                     <td><c:out value="${user.id}"></c:out></td>
                     <td><c:out value="${user.login}"></c:out></td>
                     <td><c:out value="${user.name}"></c:out></td>
                     <td><c:out value="${user.email}"></c:out></td>
+                    <td><c:out value="${user.countries}"></c:out></td>
+                    <td><c:out value="${user.citi}"></c:out></td>
                     <td><c:out value="${user.getCreateDate().getTime()}"></c:out></td>
                     <td>
-                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
-                        <button class="btn btn-primary btn-xs" type="submit">Edit</button>
+
+                        <button class="btn btn-primary btn-xs" type="submit">Редактировать</button>
                     </td>
                     <td>
-                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
-                        <button class="btn btn-primary btn-xs" type="submit" formmethod="get"
-                                formaction="${pageContext.servletContext.contextPath}/delete">Delete
+
+                        <button class="btn btn-primary btn-xs" type="submit" formmethod="post"
+                                formaction="${pageContext.servletContext.contextPath}/delete">Удалить
                         </button>
                     </td>
                     <td>
-                        <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
+
                         <button class="btn btn-primary btn-xs" type="submit" formmethod="get"
-                                formaction="${pageContext.servletContext.contextPath}/editrole">Edit role
+                                formaction="${pageContext.servletContext.contextPath}/editrole">Редактировать роль
                         </button>
                     </td>
                 </tr>

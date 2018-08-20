@@ -1,7 +1,6 @@
 package ru.job4j.service;
 
 import ru.job4j.model.User;
-import ru.job4j.store.Store;
 
 import java.util.List;
 
@@ -11,9 +10,9 @@ import java.util.List;
  * @since 0.1.
  */
 public interface Validate {
-    boolean addValidate(String name, String login, String email, String password);
+    boolean addValidate(User user);
 
-    boolean updateValidate(int id, String name, String login, String email, String password);
+    boolean updateValidate(User user);
 
     boolean deleteValidate(int id);
 

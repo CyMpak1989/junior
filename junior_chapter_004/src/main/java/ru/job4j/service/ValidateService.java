@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 import ru.job4j.store.DbStore;
-import ru.job4j.store.Store;
+import ru.job4j.store.UserStore;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -17,29 +17,32 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ValidateService implements Validate {
     private static final ValidateService INSTANCE = new ValidateService();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateService.class);
-    private final Store logic = DbStore.getInstance();
+    private final UserStore logic = DbStore.getInstance();
 
     public static ValidateService getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public boolean addValidate(String name, String login, String email, String password) {
+    public boolean addValidate(User user) {
         boolean resault = true;
-        for (User user : logic.findAllStore()) {
-            if (user.getName().equals(name)) {
+        for (User users : logic.findAllStore()) {
+            if (users.getLogin().equals(user.getLogin())) {
                 resault = false;
+                break;
             }
         }
-        logic.addStore(name, login, email, password);
+        if (resault) {
+            logic.addStore(user);
+        }
         return resault;
     }
 
     @Override
-    public boolean updateValidate(int id, String name, String login, String email, String password) {
+    public boolean updateValidate(User user) {
         boolean resault = false;
-        if (findByIdValidate(id)) {
-            logic.updateStore(id, name, login, email, password);
+        if (findByIdValidate(user.getId())) {
+            logic.updateStore(user);
             resault = true;
         }
         return resault;

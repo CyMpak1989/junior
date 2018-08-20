@@ -2,14 +2,17 @@ package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.model.User;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
+import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 21.06.2018.
@@ -22,16 +25,21 @@ public class UserCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        logic.addValidate(name, login, email, password);
+        String countries = req.getParameter("countries");
+        String citi = req.getParameter("citi");
+        User newUser = new User(name, login, email, Calendar.getInstance(), password, countries, citi);
+        logic.addValidate(newUser);
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 

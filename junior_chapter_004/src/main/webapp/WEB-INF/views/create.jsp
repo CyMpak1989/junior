@@ -7,6 +7,62 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var login = $('#login').val();
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            if (login == '') {
+                alert($('#login').attr('placeholder'));
+                return false;
+            } else if (name == '') {
+                alert($('#name').attr('placeholder'));
+                return false;
+            } else if (email == '') {
+                alert($('#email').attr('placeholder'));
+                return false;
+            } else if (password == '') {
+                alert($('#password').attr('placeholder'));
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function loadCities() {
+            $.ajax('./address', {
+                type: 'POST',
+                dataType: 'json',
+                data: {"country": $('#selectCountry').val()},
+                complete: function (data) {
+                    var cities = JSON.parse(data.responseText);
+                    var result = "";
+                    for (i = 0; i !== cities.length; ++i) {
+                        result += "<option value = \"" + cities[i] + "\">" + cities[i] + "</option>";
+                    }
+                    var citiesDiv = document.getElementById("selectCity");
+                    citiesDiv.innerHTML = result;
+                }
+            })
+        }
+
+        $(
+            $.ajax('./address', {
+                type: 'GET',
+                dataType: 'json',
+                complete: function (data) {
+                    var countries = JSON.parse(data.responseText);
+                    var result = "<option value=\"\">Select country:</option>";
+                    for (var i = 0; i !== countries.length; ++i) {
+                        result += "<option value=\"" + countries[i] + "\">" + countries[i] + "</option>";
+                    }
+                    var countriesDiv = document.getElementById("selectCountry");
+                    countriesDiv.innerHTML = result;
+                }
+            })
+        );
+    </script>
     <style type="text/css">
         #create-form {
             position: absolute;
@@ -58,12 +114,30 @@
         </div>
         <div class="input-group">
             <span class="input-group-addon">
+            <span class="glyphicon glyphicon-globe"></span>
+            </span>
+            <select class="form-control" id="selectCountry" name="countries" onchange="loadCities();">
+
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">
+            <span class="glyphicon glyphicon-globe"></span>
+            </span>
+            <select class="form-control" id="selectCity" name="citi">
+                <option hidden>Select city: </option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">
             <span class="glyphicon glyphicon-lock"></span>
             </span>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Создать</button>
-        <button type="submit" class="btn btn-primary" formmethod="get" formaction="${pageContext.servletContext.contextPath}/list">Отмена</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate();">Создать</button>
+        <a href="${pageContext.servletContext.contextPath}/list">
+            <button type="button" class="btn btn-primary">Отмена</button>
+        </a>
     </form>
 </div>
 </body>

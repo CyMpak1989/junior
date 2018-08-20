@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @version 1.0.
  * @since 0.1.
  */
-public class DbStore implements Store {
+public class DbStore implements UserStore, AddressStore {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DbStore INSTANCE = new DbStore();
 
@@ -53,9 +53,32 @@ public class DbStore implements Store {
             sb.append("CREATE TABLE IF NOT EXISTS users_role");
             sb.append("(id   SERIAL PRIMARY KEY,");
             sb.append("role VARCHAR(20));");
+
             //Добавляем 2 роли пользователей.
 //            sb.append("INSERT INTO users_role (role) VALUES ('Administrator');");
 //            sb.append("INSERT INTO users_role (role) VALUES ('User');");
+
+            //Создаем таблицу для стран пользователей.
+            sb.append("CREATE TABLE IF NOT EXISTS countries");
+            sb.append("(id   SERIAL PRIMARY KEY,");
+            sb.append("name VARCHAR(20));");
+
+            //Добавляем 2 страны пользователей.
+//            sb.append("INSERT INTO countries (name) VALUES ('USA');");
+//            sb.append("INSERT INTO countries (name) VALUES ('Russia');");
+
+            //Создаем таблицу для городов пользователей.
+            sb.append("CREATE TABLE IF NOT EXISTS cities");
+            sb.append("(id   SERIAL PRIMARY KEY,");
+            sb.append("name VARCHAR(20), ");
+            sb.append("country_id INTEGER REFERENCES countries (id));");
+
+            //Добавляем по 2 города каждой стране.
+//            sb.append("INSERT INTO cities (name, country_id) VALUES ('Moscow', 2);");
+//            sb.append("INSERT INTO cities (name, country_id) VALUES ('Ekaterinburg', 2);");
+//            sb.append("INSERT INTO cities (name, country_id) VALUES ('New York', 1);");
+//            sb.append("INSERT INTO cities (name, country_id) VALUES ('San Francisco', 1);");
+
             //Создаем таблицу пользователей.
             sb.append("CREATE TABLE IF NOT EXISTS users");
             sb.append("(id     SERIAL PRIMARY KEY, ");
@@ -64,8 +87,9 @@ public class DbStore implements Store {
             sb.append("email  VARCHAR(100), ");
             sb.append("created TIMESTAMP, ");
             sb.append("password VARCHAR(100), ");
-            sb.append("type_role INTEGER REFERENCES users_role (id));");
-//            sb.append("INSERT INTO users (name, login, email, created, password, type_role) VALUES ('root', 'root', 'root@root.ru', '2018-02-05 12:00:00', 'root', 1);");
+            sb.append("type_role INTEGER REFERENCES users_role (id), ");
+            sb.append("citi_id INTEGER REFERENCES cities (id));");
+//            sb.append("INSERT INTO users (name, login, email, created, password, type_role, citi_id) VALUES ('root', 'root', 'root@root.ru', '2018-02-05 12:00:00', 'root', 1, 2);");
             statement.execute(sb.toString());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,15 +97,16 @@ public class DbStore implements Store {
     }
 
     @Override
-    public void addStore(String name, String login, String email, String password) {
+    public void addStore(User user) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("INSERT INTO users(name, login, email, created, password, type_role) VALUES (?,?,?,?,?,?);")) {
-            ps.setString(1, name);
-            ps.setString(2, login);
-            ps.setString(3, email);
-            ps.setTimestamp(4, new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            ps.setString(5, password);
+             PreparedStatement ps = connection.prepareStatement("INSERT INTO users(name, login, email, created, password, type_role, citi_id) VALUES (?,?,?,?,?,?,(SELECT id FROM cities WHERE cities.name = ?));")) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getLogin());
+            ps.setString(3, user.getEmail());
+            ps.setTimestamp(4, new Timestamp(user.getCreateDate().getTimeInMillis()));
+            ps.setString(5, user.getPassword());
             ps.setInt(6, 2);
+            ps.setString(7, user.getCiti());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,14 +114,17 @@ public class DbStore implements Store {
     }
 
     @Override
-    public void updateStore(int id, String name, String login, String email, String password) {
+    public void updateStore(User user) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET name=?, login=?, email=?, password=? WHERE (id = ?);")) {
-            ps.setString(1, name);
-            ps.setString(2, login);
-            ps.setString(3, email);
-            ps.setString(4, password);
-            ps.setInt(5, id);
+             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET name=?, login=?, email=?, created=?, password=?, citi_id=(SELECT c.id FROM cities AS c WHERE c.name = ?)\n" +
+                     "WHERE (id = ?);")) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getLogin());
+            ps.setString(3, user.getEmail());
+            ps.setTimestamp(4, new Timestamp(user.getCreateDate().getTimeInMillis()));
+            ps.setString(5, user.getPassword());
+            ps.setString(6, user.getCiti());
+            ps.setInt(7, user.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,18 +150,22 @@ public class DbStore implements Store {
         List<User> userList = new CopyOnWriteArrayList<>();
         try (Connection connection = SOURCE.getConnection();
              Statement st = connection.createStatement()) {
-            ResultSet resultSet = st.executeQuery("SELECT id, name, login, email, created, password FROM Users;");
+            ResultSet resultSet = st.executeQuery("SELECT u.id, u.name, u.login, u.email, u.created, u.password, c.name AS citi, con.name AS countries\n" +
+                    "FROM users AS u\n" +
+                    "INNER JOIN cities AS c ON u.citi_id = c.id\n" +
+                    "INNER JOIN countries AS con ON con.id = c.country_id;");
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLogin(resultSet.getString("login"));
-                user.setEmail(resultSet.getString("email"));
-                Calendar calendar = Calendar.getInstance();
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("login");
+                String email = resultSet.getString("email");
+                Calendar createDate = Calendar.getInstance();
                 Timestamp timestamp = new Timestamp(resultSet.getTimestamp("created").getTime());
-                calendar.setTime(new Date(timestamp.getTime()));
-                user.setCreateDate(calendar);
-                user.setPassword(resultSet.getString("password"));
+                createDate.setTime(new Date(timestamp.getTime()));
+                String password = resultSet.getString("password");
+                String citi = resultSet.getString("citi");
+                String countries = resultSet.getString("countries");
+                User user = new User(id, name, login, email, createDate, password, countries, citi);
                 userList.add(user);
             }
 
@@ -145,21 +177,26 @@ public class DbStore implements Store {
 
     @Override
     public User findByIdStore(int id) {
-        User user = new User();
+        User user = null;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password FROM Users WHERE (id = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT u.id, u.name, u.login, u.email, u.created, u.password, c.name   AS citi, con.name AS countries\n" +
+                     "FROM users AS u\n" +
+                     "       INNER JOIN cities AS c ON u.citi_id = c.id\n" +
+                     "       INNER JOIN countries AS con ON con.id = c.country_id\n" +
+                     "WHERE (u.id = ?);")) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                user.setId(resultSet.getInt("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLogin(resultSet.getString("login"));
-                user.setEmail(resultSet.getString("email"));
-                Calendar calendar = Calendar.getInstance();
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("login");
+                String email = resultSet.getString("email");
+                Calendar createDate = Calendar.getInstance();
                 Timestamp timestamp = new Timestamp(resultSet.getTimestamp("created").getTime());
-                calendar.setTime(new Date(timestamp.getTime()));
-                user.setCreateDate(calendar);
-                user.setPassword(resultSet.getString("password"));
+                createDate.setTime(new Date(timestamp.getTime()));
+                String password = resultSet.getString("password");
+                String citi = resultSet.getString("citi");
+                String countries = resultSet.getString("countries");
+                user = new User(id, name, login, email, createDate, password, countries, citi);
             }
 
         } catch (SQLException e) {
@@ -172,7 +209,7 @@ public class DbStore implements Store {
     public boolean isCredentional(String login, String password) {
         boolean resulte = false;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password FROM Users WHERE (login = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT login, password FROM Users WHERE (login = ?);")) {
             ps.setString(1, login);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -191,7 +228,7 @@ public class DbStore implements Store {
     public int getUserRole(int id) {
         int typeRole = 0;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password, type_role FROM Users WHERE (id = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT type_role FROM Users WHERE (id = ?);")) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -206,7 +243,7 @@ public class DbStore implements Store {
     public int getUserRoleByLogin(String login) {
         int typeRole = 0;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT id, name, login, email, created, password, type_role FROM Users WHERE (login = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT type_role FROM Users WHERE (login = ?);")) {
             ps.setString(1, login);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -241,5 +278,36 @@ public class DbStore implements Store {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<String> findAllCountries() {
+        List<String> resultList = new ArrayList<>();
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT name FROM countries;")) {
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                resultList.add(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<String> findCitiesByCountry(String name) {
+        List<String> resultList = new ArrayList<>();
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT name FROM cities WHERE country_id = (SELECT id FROM countries WHERE name = ?);")) {
+            ps.setString(1, name);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                resultList.add(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 }

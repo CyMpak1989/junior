@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0.
  * @since 0.1.
  */
-public class MemoreStore implements Store {
+public class MemoreStore implements UserStore {
     private static final MemoreStore INSTANCE = new MemoreStore();
     private static final Logger LOG = LoggerFactory.getLogger(MemoreStore.class);
 
@@ -27,19 +27,19 @@ public class MemoreStore implements Store {
 
     //false
     @Override
-    public void addStore(String name, String login, String email, String password) {
-        userList.add(new User(counter.getAndIncrement(), name, login, email, Calendar.getInstance()));
+    public void addStore(User user) {
+        //userList.add(new User(counter.getAndIncrement(), name, login, email, Calendar.getInstance()));
     }
 
     @Override
-    public void updateStore(int id, String name, String login, String email, String password) {
-        for (User user : userList) {
-            if (user.getId() == id) {
-                user.setName(name);
-                user.setLogin(login);
-                user.setEmail(email);
-            }
-        }
+    public void updateStore(User user) {
+//        for (User user : userList) {
+//            if (user.getId() == id) {
+//                user.setName(name);
+//                user.setLogin(login);
+//                user.setEmail(email);
+//            }
+//        }
     }
 
     @Override

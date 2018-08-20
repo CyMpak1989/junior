@@ -55,13 +55,13 @@
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-user"></span>
             </span>
-            <input type="text" id="login1" name="login" class="form-control" placeholder="Login">
+            <input type="text" id="login" name="login" class="form-control" placeholder="Login">
         </div>
         <div class="input-group">
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-lock"></span>
             </span>
-            <input type="password" id="password1" name="password" class="form-control" placeholder="Password">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">Войти</button>
     </form>
