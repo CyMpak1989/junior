@@ -8,7 +8,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
+<<<<<<< HEAD
         $(
+=======
+        function loadUsers() {
+>>>>>>> cc95d7c... Task 58534
             $.ajax('./json', {
                 method: 'get',
                 complete: function (data) {
@@ -35,7 +39,28 @@
                     table.innerHTML = resault;
                 }
             })
+<<<<<<< HEAD
         );
+=======
+        }
+
+        $(loadUsers());
+
+        function createUser() {
+            $.ajax('./json', {
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    "name": document.getElementById("name").value,
+                    "surname": document.getElementById("surname").value,
+                    "sex": document.getElementById("sex").value,
+                    "description": document.getElementById("description").value
+                },
+                complite: loadUsers()
+            });
+            return false;
+        }
+>>>>>>> cc95d7c... Task 58534
 
         function validate() {
             var name = $('#name').val();
@@ -123,35 +148,9 @@
 </div>
 <div class="container-table">
     <input type="button" onclick="addRow();" value="Добавить строку">
+    <input type="button" onclick="createUser();" value="AJAX">
     <table class="table table-striped table-bordered" id="userTable">
-        <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Пол</th>
-            <th>Описание</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Иван</td>
-            <td>Иванов</td>
-            <td>Мужской</td>
-            <td>http://job4j.ru</td>
-        </tr>
-        <tr>
-            <td>Мария</td>
-            <td>Петрова</td>
-            <td>Женский</td>
-            <td>http://job4j.ru</td>
-        </tr>
-        <tr>
-            <td>Юлия</td>
-            <td>Иноземцева</td>
-            <td>Женский</td>
-            <td>http://job4j.ru</td>
-        </tr>
-        </tbody>
+
     </table>
 </div>
 </body>
