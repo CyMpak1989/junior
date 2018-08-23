@@ -25,11 +25,7 @@ public class JsonController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-<<<<<<< HEAD
-        writer.append("[{\"name\":\"test2\", \"surname\":\"test2\", \"sex\":\"test2\", \"description\":\"test2\"}]");
-=======
         mapper.writeValue(writer, STORE.values());
->>>>>>> cc95d7c... Task 58534
         writer.flush();
     }
 
