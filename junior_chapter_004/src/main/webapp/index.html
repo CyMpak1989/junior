@@ -8,37 +8,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        $(
-            function loadUsers() {
-                $.ajax('./json', {
-                    method: 'get',
-                    complete: function (data) {
-                        var resault = "<thead>"
-                            + "<tr>"
-                            + "<th>Имя</th>"
-                            + "<th>Фамилия</th>"
-                            + "<th>Пол</th>"
-                            + "<th>Описание</th>"
-                            + "</tr>"
-                            + "</thead>"
-                            + "<tbody>";
-                        var users = JSON.parse(data.responseText);
-                        for (var i = 0; i != users.length; i++) {
-                            resault += "<tr>"
-                                + "<th>" + users[i].name + "</th>"
-                                + "<th>" + users[i].surname + "</th>"
-                                + "<th>" + users[i].sex + "</th>"
-                                + "<th>" + users[i].description + "</th>"
-                                + "</tr>";
-                        }
-                        resault += "</tbody>"
-                        var table = document.getElementById("userTable");
-                        table.innerHTML = resault;
+        function loadUsers() {
+            $.ajax('./json', {
+                method: 'get',
+                complete: function (data) {
+                    var resault = "<thead>"
+                        + "<tr>"
+                        + "<th>Имя</th>"
+                        + "<th>Фамилия</th>"
+                        + "<th>Пол</th>"
+                        + "<th>Описание</th>"
+                        + "</tr>"
+                        + "</thead>"
+                        + "<tbody>";
+                    var users = JSON.parse(data.responseText);
+                    for (var i = 0; i != users.length; i++) {
+                        resault += "<tr>"
+                            + "<th>" + users[i].name + "</th>"
+                            + "<th>" + users[i].surname + "</th>"
+                            + "<th>" + users[i].sex + "</th>"
+                            + "<th>" + users[i].description + "</th>"
+                            + "</tr>";
                     }
-                })
-            }
-        );
-
+                    resault += "</tbody>"
+                    var table = document.getElementById("userTable");
+                    table.innerHTML = resault;
+                }
+            })
+        }
 
         $(loadUsers());
 
