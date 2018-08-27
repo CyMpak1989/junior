@@ -3,6 +3,7 @@ package ru.job4j.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
+import ru.job4j.model.UserBuilder;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
 
@@ -23,7 +24,7 @@ public class UserServlet extends HttpServlet {
     private final Validate logic = ValidateService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         logic.findAllValidate();
         resp.setContentType("text/html;");
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
@@ -34,31 +35,38 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
         PrintWriter printWriter = new PrintWriter(resp.getOutputStream());
 
-//        if (req.getParameter("action").equals("add")) {
-//            if (logic.addValidate(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), null)) {
-//                printWriter.append("The user has been added successfully!");
-//            } else {
-//                printWriter.append("A user with this name exists!");
-//            }
-//        } else if (req.getParameter("action").equals("update")) {
-//            if (logic.updateValidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"),
-//                    req.getParameter("login"), req.getParameter("email"), null)) {
-//                printWriter.append("The user is successfully updated!");
-//            } else {
-//                printWriter.append("User with this id is not found!");
-//            }
-//        } else if (req.getParameter("action").equals("delete")) {
-//            if (logic.deleteValidate(Integer.parseInt(req.getParameter("id")))) {
-//                printWriter.append("User successfully removed!");
-//            } else {
-//                printWriter.append("User with this id is not found!");
-//            }
-//        }
-//        printWriter.flush();
+        if (req.getParameter("action").equals("add")) {
+            User user = new UserBuilder()
+                    .setName(req.getParameter("name"))
+                    .setLogin(req.getParameter("login"))
+                    .setEmail(req.getParameter("email")).build();
+            if (logic.addValidate(user)) {
+                printWriter.append("The user has been added successfully!");
+            } else {
+                printWriter.append("A user with this name exists!");
+            }
+        } else if (req.getParameter("action").equals("update")) {
+            User user = new UserBuilder()
+                    .setName(req.getParameter("name"))
+                    .setLogin(req.getParameter("login"))
+                    .setEmail(req.getParameter("email")).build();
+            if (logic.updateValidate(user)) {
+                printWriter.append("The user is successfully updated!");
+            } else {
+                printWriter.append("User with this id is not found!");
+            }
+        } else if (req.getParameter("action").equals("delete")) {
+            if (logic.deleteValidate(Integer.parseInt(req.getParameter("id")))) {
+                printWriter.append("User successfully removed!");
+            } else {
+                printWriter.append("User with this id is not found!");
+            }
+        }
+        printWriter.flush();
     }
 
     @Override

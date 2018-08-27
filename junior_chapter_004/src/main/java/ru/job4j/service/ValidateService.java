@@ -25,14 +25,8 @@ public class ValidateService implements Validate {
 
     @Override
     public boolean addValidate(User user) {
-        boolean resault = true;
-        for (User users : logic.findAllStore()) {
-            if (users.getLogin().equals(user.getLogin())) {
-                resault = false;
-                break;
-            }
-        }
-        if (resault) {
+        boolean resault = DbStore.getInstance().findByLoginStore(user.getLogin());
+        if (!resault) {
             logic.addStore(user);
         }
         return resault;

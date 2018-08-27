@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
+import ru.job4j.model.UserBuilder;
 
 import java.sql.*;
 import java.util.*;
@@ -165,7 +166,16 @@ public class DbStore implements UserStore, AddressStore {
                 String password = resultSet.getString("password");
                 String citi = resultSet.getString("citi");
                 String countries = resultSet.getString("countries");
-                User user = new User(id, name, login, email, createDate, password, countries, citi);
+                User user = new UserBuilder()
+                        .setId(id)
+                        .setName(name)
+                        .setLogin(login)
+                        .setEmail(email)
+                        .setCreateDate(Calendar.getInstance())
+                        .setPassword(password)
+                        .setCountries(countries)
+                        .setCiti(citi)
+                        .build();
                 userList.add(user);
             }
 
@@ -173,6 +183,19 @@ public class DbStore implements UserStore, AddressStore {
             e.printStackTrace();
         }
         return userList;
+    }
+
+    public boolean findByLoginStore(String login) {
+        boolean resault = false;
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT id, login FROM users where login=?;")) {
+            ps.setString(1, login);
+            ResultSet resultSet = ps.executeQuery();
+            resault = resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resault;
     }
 
     @Override
@@ -196,7 +219,16 @@ public class DbStore implements UserStore, AddressStore {
                 String password = resultSet.getString("password");
                 String citi = resultSet.getString("citi");
                 String countries = resultSet.getString("countries");
-                user = new User(id, name, login, email, createDate, password, countries, citi);
+                user = new UserBuilder()
+                        .setId(id)
+                        .setName(name)
+                        .setLogin(login)
+                        .setEmail(email)
+                        .setCreateDate(Calendar.getInstance())
+                        .setPassword(password)
+                        .setCountries(countries)
+                        .setCiti(citi)
+                        .build();
             }
 
         } catch (SQLException e) {

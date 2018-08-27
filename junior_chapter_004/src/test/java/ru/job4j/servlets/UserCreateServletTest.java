@@ -2,6 +2,7 @@ package ru.job4j.servlets;
 
 import org.junit.Test;
 import ru.job4j.model.User;
+import ru.job4j.model.UserBuilder;
 import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
@@ -28,8 +29,9 @@ public class UserCreateServletTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
         DbStore dbStore = DbStore.getInstance();
         mock(dbStore.getClass());
-        User user = new User();
-        user.setLogin("user2");
+        User user = new UserBuilder()
+                .setLogin("user2")
+                .build();
 
         when(request.getParameter("name")).thenReturn("user2");
         when(request.getParameter("login")).thenReturn("user2");

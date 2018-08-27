@@ -3,6 +3,7 @@ package ru.job4j.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
+import ru.job4j.model.UserBuilder;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
 import ru.job4j.store.DbStore;
@@ -41,7 +42,16 @@ public class UserUpdateServlet extends HttpServlet {
         String password = req.getParameter("password");
         String countries = req.getParameter("countries");
         String citi = req.getParameter("citi");
-        User updateUser = new User(id, name, login, email, Calendar.getInstance(), password, countries, citi);
+        User updateUser = new UserBuilder()
+                .setId(id)
+                .setName(name)
+                .setLogin(login)
+                .setEmail(email)
+                .setCreateDate(Calendar.getInstance())
+                .setPassword(password)
+                .setCountries(countries)
+                .setCiti(citi)
+                .build();
         logic.updateValidate(updateUser);
 
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));

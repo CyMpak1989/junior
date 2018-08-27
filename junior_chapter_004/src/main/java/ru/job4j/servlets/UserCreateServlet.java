@@ -3,9 +3,9 @@ package ru.job4j.servlets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
+import ru.job4j.model.UserBuilder;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
-import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +38,15 @@ public class UserCreateServlet extends HttpServlet {
         String password = req.getParameter("password");
         String countries = req.getParameter("countries");
         String citi = req.getParameter("citi");
-        User newUser = new User(name, login, email, Calendar.getInstance(), password, countries, citi);
+        User newUser = new UserBuilder()
+                .setName(name)
+                .setLogin(login)
+                .setEmail(email)
+                .setCreateDate(Calendar.getInstance())
+                .setPassword(password)
+                .setCountries(countries)
+                .setCiti(citi)
+                .build();
         logic.addValidate(newUser);
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }

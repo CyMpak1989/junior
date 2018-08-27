@@ -22,98 +22,47 @@ public class User {
     private String countries;
     private String citi;
 
-    public User(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public User() {
-
-    }
-
-    public User(int id, String name, String login, String email, Calendar createDate, String password, String countries, String citi) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = createDate;
-        this.password = password;
-        this.countries = countries;
-        this.citi = citi;
-    }
-
-    public User(String name, String login, String email, Calendar createDate, String password, String countries, String citi) {
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = createDate;
-        this.password = password;
-        this.countries = countries;
-        this.citi = citi;
+    User(final UserBuilder userBuilder) {
+        this.id = userBuilder.getId();
+        this.name = userBuilder.getName();
+        this.login = userBuilder.getLogin();
+        this.email = userBuilder.getEmail();
+        this.createDate = userBuilder.getCreateDate();
+        this.password = userBuilder.getPassword();
+        this.countries = userBuilder.getCountries();
+        this.citi = userBuilder.getCiti();
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Calendar getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Calendar createDate) {
-        this.createDate = createDate;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getCountries() {
         return countries;
     }
 
-    public void setCountries(String countries) {
-        this.countries = countries;
-    }
-
     public String getCiti() {
         return citi;
-    }
-
-    public void setCiti(String citi) {
-        this.citi = citi;
     }
 
     @Override
