@@ -67,16 +67,20 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return id == user.id &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(createDate, user.createDate) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(citi, user.citi);
+        return id == user.id
+                && Objects.equals(name, user.name)
+                && Objects.equals(login, user.login)
+                && Objects.equals(email, user.email)
+                && Objects.equals(createDate, user.createDate)
+                && Objects.equals(password, user.password)
+                && Objects.equals(citi, user.citi);
     }
 
     @Override
@@ -86,15 +90,15 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
-                ", email='" + email + '\'' +
-                ", createDate=" + createDate +
-                ", password='" + password + '\'' +
-                ", countries='" + countries + '\'' +
-                ", citi='" + citi + '\'' +
-                '}';
+        return "User{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", login='" + login + '\''
+                + ", email='" + email + '\''
+                + ", createDate=" + createDate
+                + ", password='" + password + '\''
+                + ", countries='" + countries + '\''
+                + ", citi='" + citi + '\''
+                + '}';
     }
 }

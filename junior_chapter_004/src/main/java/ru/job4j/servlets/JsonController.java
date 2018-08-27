@@ -18,14 +18,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class JsonController extends HttpServlet {
     private Validate logic = ValidateService.getInstance();
     private static final Map<Integer, SimpleUser> STORE = new ConcurrentHashMap<>();
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final AtomicInteger counter = new AtomicInteger();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final AtomicInteger COUNTER = new AtomicInteger();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/json");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        mapper.writeValue(writer, STORE.values());
+        MAPPER.writeValue(writer, STORE.values());
         writer.flush();
     }
 
@@ -36,8 +36,8 @@ public class JsonController extends HttpServlet {
         String sex = req.getParameter("sex");
         String description = req.getParameter("description");
         String jsonText = String.format("{\"name\":\"%s\", \"surname\":\"%s\", \"sex\":\"%s\", \"description\":\"%s\"}", name, surname, sex, description);
-        SimpleUser resault = mapper.readValue(jsonText, SimpleUser.class);
-        STORE.put(counter.getAndIncrement(), resault);
+        SimpleUser resault = MAPPER.readValue(jsonText, SimpleUser.class);
+        STORE.put(COUNTER.getAndIncrement(), resault);
     }
 
     public static class SimpleUser {

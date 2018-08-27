@@ -117,8 +117,8 @@ public class DbStore implements UserStore, AddressStore {
     @Override
     public void updateStore(User user) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET name=?, login=?, email=?, created=?, password=?, citi_id=(SELECT c.id FROM cities AS c WHERE c.name = ?)\n" +
-                     "WHERE (id = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE Users SET name=?, login=?, email=?, created=?, password=?, citi_id=(SELECT c.id FROM cities AS c WHERE c.name = ?)\n"
+                     + "WHERE (id = ?);")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getEmail());
@@ -151,10 +151,10 @@ public class DbStore implements UserStore, AddressStore {
         List<User> userList = new CopyOnWriteArrayList<>();
         try (Connection connection = SOURCE.getConnection();
              Statement st = connection.createStatement()) {
-            ResultSet resultSet = st.executeQuery("SELECT u.id, u.name, u.login, u.email, u.created, u.password, c.name AS citi, con.name AS countries\n" +
-                    "FROM users AS u\n" +
-                    "INNER JOIN cities AS c ON u.citi_id = c.id\n" +
-                    "INNER JOIN countries AS con ON con.id = c.country_id;");
+            ResultSet resultSet = st.executeQuery("SELECT u.id, u.name, u.login, u.email, u.created, u.password, c.name AS citi, con.name AS countries\n"
+                    + "FROM users AS u\n"
+                    + "INNER JOIN cities AS c ON u.citi_id = c.id\n"
+                    + "INNER JOIN countries AS con ON con.id = c.country_id;");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -202,11 +202,11 @@ public class DbStore implements UserStore, AddressStore {
     public User findByIdStore(int id) {
         User user = null;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT u.id, u.name, u.login, u.email, u.created, u.password, c.name   AS citi, con.name AS countries\n" +
-                     "FROM users AS u\n" +
-                     "       INNER JOIN cities AS c ON u.citi_id = c.id\n" +
-                     "       INNER JOIN countries AS con ON con.id = c.country_id\n" +
-                     "WHERE (u.id = ?);")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT u.id, u.name, u.login, u.email, u.created, u.password, c.name   AS citi, con.name AS countries\n"
+                     + "FROM users AS u\n"
+                     + "       INNER JOIN cities AS c ON u.citi_id = c.id\n"
+                     + "       INNER JOIN countries AS con ON con.id = c.country_id\n"
+                     + "WHERE (u.id = ?);")) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
