@@ -224,7 +224,7 @@ public class DbStore implements UserStore, AddressStore {
                         .setName(name)
                         .setLogin(login)
                         .setEmail(email)
-                        .setCreateDate(Calendar.getInstance())
+                        .setCreateDate(createDate)
                         .setPassword(password)
                         .setCountries(countries)
                         .setCiti(citi)
