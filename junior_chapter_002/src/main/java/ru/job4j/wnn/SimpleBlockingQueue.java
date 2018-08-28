@@ -15,11 +15,30 @@ import java.util.Queue;
 public class SimpleBlockingQueue<T> {
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
+    private static final int SIZE = 5;
 
-    public void offer(T value) {
+    public synchronized void offer(T value) {
+        while (queue.size() == SIZE) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        queue.add(value);
+        notifyAll();
     }
 
-    public T peek() {
-        return null;
+    public synchronized T poll() {
+        while (queue.isEmpty()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        T resault = queue.poll();
+        notifyAll();
+        return resault;
     }
 }
