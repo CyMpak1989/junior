@@ -3,10 +3,16 @@ package ru.job4j.wnn;
 public class ParallelSearch {
     public static void main(String[] args) {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+
         final Thread consumer = new Thread(
                 () -> {
-                    while (true) {
-                        System.out.println(queue.poll());
+                    while (!Thread.currentThread().isInterrupted()) {
+                        try {
+                            System.out.println(queue.poll());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
         );
@@ -21,8 +27,8 @@ public class ParallelSearch {
                             e.printStackTrace();
                         }
                     }
+                    consumer.interrupt();
                 }
-
         ).start();
     }
 }

@@ -29,7 +29,11 @@ public class SimpleBlockingQueueTest {
             @Override
             public void run() {
                 for (int i = 0; i < 8; i++) {
-                    queue.poll();
+                    try {
+                        queue.poll();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
