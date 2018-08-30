@@ -21,6 +21,6 @@ public class NonBlockCache {
     }
 
     public void delete(Base model) {
-
+        cache.remove(model.getId(), model);
     }
 }
