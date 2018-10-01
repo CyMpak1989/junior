@@ -33,6 +33,10 @@ public class User {
         this.citi = userBuilder.getCiti();
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

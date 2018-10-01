@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.model.User;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,10 +16,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0.
  * @since 0.1.
  */
-public class MemoreStore implements UserStore {
+public class MemoreStore implements UserStore, AddressStore {
     private static final MemoreStore INSTANCE = new MemoreStore();
     private static final Logger LOG = LoggerFactory.getLogger(MemoreStore.class);
 
+    private final Map<Integer, User> userStore = new ConcurrentHashMap<>();
     private List<User> userList = new CopyOnWriteArrayList<>();
     private final AtomicInteger counter = new AtomicInteger(1);
 
@@ -25,49 +28,41 @@ public class MemoreStore implements UserStore {
         return INSTANCE;
     }
 
-    //false
+    @Override
+    public List<String> findAllCountries() {
+        return null;
+    }
+
+    @Override
+    public List<String> findCitiesByCountry(String name) {
+        return null;
+    }
+
     @Override
     public void addStore(User user) {
-        //userList.add(new User(counter.getAndIncrement(), name, login, email, Calendar.getInstance()));
+        user.setId(counter.getAndIncrement());
+        userStore.put(user.getId(), user);
     }
 
     @Override
     public void updateStore(User user) {
-//        for (User user : userList) {
-//            if (user.getId() == id) {
-//                user.setName(name);
-//                user.setLogin(login);
-//                user.setEmail(email);
-//            }
-//        }
+        userStore.put(user.getId(), user);
     }
 
     @Override
     public boolean deleteStore(int id) {
-        boolean resault = false;
-        for (User user : userList) {
-            if (user.getId() == id) {
-                userList.remove(user);
-                resault = true;
-            }
-        }
-        return resault;
+        userStore.remove(id);
+        return userStore.containsKey(id);
     }
 
     @Override
     public List<User> findAllStore() {
-        return userList;
+        return new ArrayList<>(userStore.values());
     }
 
     @Override
     public User findByIdStore(int id) {
-        User resault = null;
-        for (User user : userList) {
-            if (user.getId() == id) {
-                resault = user;
-            }
-        }
-        return resault;
+        return userStore.get(id);
     }
 
     @Override
@@ -75,9 +70,13 @@ public class MemoreStore implements UserStore {
 
     }
 
-    //false
     @Override
     public boolean isCredentional(String login, String password) {
+        for (User user : userStore.values()) {
+            if (user.getLogin().equals(login) || user.getPassword().equals(password)){
+                return true;
+            }
+        }
         return false;
     }
 }
