@@ -2,7 +2,8 @@ package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.job4j.store.DbStore;
+import ru.job4j.service.Validate;
+import ru.job4j.service.ValidateService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import java.io.IOException;
  */
 public class EditRoleFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(EditRoleFilter.class);
+    private Validate logic = ValidateService.getInstance();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,7 +31,7 @@ public class EditRoleFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
         session.getAttribute("login");
-        int currentRole = DbStore.getInstance().getUserRoleByLogin((String) session.getAttribute("login"));
+        int currentRole = logic.getUserRoleByLogin((String) session.getAttribute("login"));
         if (currentRole != 1) {
             ((HttpServletResponse) resp).sendRedirect(String.format("%s/list", request.getContextPath()));
             return;

@@ -6,7 +6,6 @@ import ru.job4j.model.User;
 import ru.job4j.model.UserBuilder;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
-import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ public class UserUpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
-        User user = DbStore.getInstance().findByIdStore(Integer.parseInt(req.getParameter("id")));
+        User user = logic.findByIdStore(Integer.parseInt(req.getParameter("id")));
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
     }

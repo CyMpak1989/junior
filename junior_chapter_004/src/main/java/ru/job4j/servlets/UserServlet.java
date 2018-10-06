@@ -7,7 +7,6 @@ import ru.job4j.model.UserBuilder;
 import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

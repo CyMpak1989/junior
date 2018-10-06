@@ -7,6 +7,7 @@ import ru.job4j.store.DbStore;
 import ru.job4j.store.UserStore;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -17,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ValidateService implements Validate {
     private static final ValidateService INSTANCE = new ValidateService();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateService.class);
-    private final UserStore logic = DbStore.getInstance();
+    private final DbStore logic = DbStore.getInstance();
 
     public static ValidateService getInstance() {
         return INSTANCE;
@@ -25,7 +26,7 @@ public class ValidateService implements Validate {
 
     @Override
     public boolean addValidate(User user) {
-        boolean resault = DbStore.getInstance().findByLoginStore(user.getLogin());
+        boolean resault = logic.findByLoginStore(user.getLogin());
         if (!resault) {
             logic.addStore(user);
         }
@@ -71,6 +72,36 @@ public class ValidateService implements Validate {
     @Override
     public boolean isCredentional(String login, String password) {
         return logic.isCredentional(login, password);
+    }
+
+    @Override
+    public User findByIdStore(int id) {
+        return logic.findByIdStore(id);
+    }
+
+    @Override
+    public List<String> findAllCountries() {
+        return logic.findAllCountries();
+    }
+
+    @Override
+    public int getUserRoleByLogin(String login) {
+        return logic.getUserRoleByLogin(login);
+    }
+
+    @Override
+    public int getUserRole(int id) {
+        return logic.getUserRole(id);
+    }
+
+    @Override
+    public Map<Integer, String> getAllRole() {
+        return logic.getAllRole();
+    }
+
+    @Override
+    public void updateUserRole(String id, String role) {
+        logic.updateUserRole(id, role);
     }
 
     @Override

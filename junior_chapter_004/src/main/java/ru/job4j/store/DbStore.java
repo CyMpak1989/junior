@@ -185,6 +185,7 @@ public class DbStore implements UserStore, AddressStore {
         return userList;
     }
 
+    @Override
     public boolean findByLoginStore(String login) {
         boolean resault = false;
         try (Connection connection = SOURCE.getConnection();
@@ -257,6 +258,7 @@ public class DbStore implements UserStore, AddressStore {
         return resulte;
     }
 
+    @Override
     public int getUserRole(int id) {
         int typeRole = 0;
         try (Connection connection = SOURCE.getConnection();
@@ -272,6 +274,7 @@ public class DbStore implements UserStore, AddressStore {
         return typeRole;
     }
 
+    @Override
     public int getUserRoleByLogin(String login) {
         int typeRole = 0;
         try (Connection connection = SOURCE.getConnection();
@@ -287,6 +290,7 @@ public class DbStore implements UserStore, AddressStore {
         return typeRole;
     }
 
+    @Override
     public Map<Integer, String> getAllRole() {
         Map<Integer, String> allRole = new HashMap<>();
         try (Connection connection = SOURCE.getConnection();
@@ -301,6 +305,7 @@ public class DbStore implements UserStore, AddressStore {
         return allRole;
     }
 
+    @Override
     public void updateUserRole(String id, String role) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement ps = connection.prepareStatement("UPDATE Users SET type_role=? WHERE (id = ?);")) {

@@ -2,7 +2,8 @@ package ru.job4j.servlets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.job4j.store.DbStore;
+import ru.job4j.service.Validate;
+import ru.job4j.service.ValidateService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,11 +19,12 @@ import java.util.Map;
  */
 public class EditUserRoleServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(EditUserRoleServlet.class);
+    private Validate logic = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int role = DbStore.getInstance().getUserRole(Integer.parseInt(req.getParameter("id")));
-        Map<Integer, String> allRole = DbStore.getInstance().getAllRole();
+        int role = logic.getUserRole(Integer.parseInt(req.getParameter("id")));
+        Map<Integer, String> allRole = logic.getAllRole();
         req.setAttribute("role", role);
         req.setAttribute("allRole", allRole);
         req.setAttribute("id", req.getParameter("id"));
@@ -31,7 +33,7 @@ public class EditUserRoleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DbStore.getInstance().updateUserRole(req.getParameter("id"), req.getParameter("update_role"));
+        logic.updateUserRole(req.getParameter("id"), req.getParameter("update_role"));
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }

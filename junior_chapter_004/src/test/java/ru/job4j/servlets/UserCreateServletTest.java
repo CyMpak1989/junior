@@ -1,9 +1,14 @@
 package ru.job4j.servlets;
 
 import org.junit.Test;
-import ru.job4j.model.User;
-import ru.job4j.model.UserBuilder;
-import ru.job4j.store.DbStore;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import ru.job4j.service.Validate;
+import ru.job4j.service.ValidateService;
+import ru.job4j.service.ValidateStub;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,29 +26,18 @@ import static org.mockito.Mockito.when;
  * @version 1.0.
  * @since 0.1.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ValidateService.class)
 public class UserCreateServletTest {
     @Test
-    public void addUser() throws ServletException, IOException {
-        UserCreateServlet userCreateServlet = new UserCreateServlet();
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        DbStore dbStore = DbStore.getInstance();
-        mock(dbStore.getClass());
-        User user = new UserBuilder()
-                .setLogin("user2")
-                .build();
-
-        when(request.getParameter("name")).thenReturn("user2");
-        when(request.getParameter("login")).thenReturn("user2");
-        when(request.getParameter("email")).thenReturn("user2@user2.ru");
-        when(request.getParameter("password")).thenReturn("user2");
-
-        when(dbStore.findByIdStore(6)).thenReturn(user);
-
-        userCreateServlet.doPost(request, response);
-
-
-        assertThat(dbStore.findByIdStore(6).getLogin(), is("user2"));
+    public void whenAddUserThenStoreIt() throws IOException, ServletException {
+        Validate validate = new ValidateStub();
+        PowerMockito.mockStatic(ValidateService.class);
+        Mockito.when(ValidateService.getInstance()).thenReturn((ValidateService) validate);
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse resp = mock(HttpServletResponse.class);
+        when(req.getParameter("name")).thenReturn("Petr Arsentev");
+        new UserCreateServlet().doPost(req, resp);
+        assertThat(validate.findAllValidate().iterator().next().getName(), is("Petr Arsentev"));
     }
-
 }
