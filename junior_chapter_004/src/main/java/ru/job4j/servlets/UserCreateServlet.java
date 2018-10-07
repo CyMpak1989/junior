@@ -21,7 +21,7 @@ import java.util.Calendar;
  */
 public class UserCreateServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UserCreateServlet.class);
-    private Validate logic = ValidateService.getInstance();
+    private final Validate logic = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

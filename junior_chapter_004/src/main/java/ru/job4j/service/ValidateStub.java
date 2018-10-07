@@ -24,6 +24,7 @@ public class ValidateStub implements Validate {
     public static ValidateStub getInstance() {
         return INSTANCE;
     }
+
     @Override
     public boolean addValidate(User user) {
         user.setId(counter.getAndIncrement());
