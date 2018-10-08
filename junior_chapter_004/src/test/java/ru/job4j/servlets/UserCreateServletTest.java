@@ -28,16 +28,17 @@ import static org.powermock.api.support.SuppressCode.suppressConstructor;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ValidateService.class})
 public class UserCreateServletTest {
-    @Before
-    public void testSingleton() {
-        suppressConstructor(ValidateService.class);
-        mockStatic(ValidateService.class);
-    }
+    private final Validate validate = ValidateStub.getInstance();
+//    @Before
+//    public void testSingleton() {
+//        suppressConstructor(ValidateService.class);
+//        mockStatic(ValidateService.class);
+//    }
 
     @Test
     public void whenAddUserThenStoreIt() throws Exception {
-        Validate validate = new ValidateStub();
-//        mockStatic(ValidateService.class);
+//        Validate validate = new ValidateStub();
+        mockStatic(ValidateService.class);
         Mockito.when(ValidateService.getInstance()).thenReturn((ValidateService) validate);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
@@ -45,6 +46,5 @@ public class UserCreateServletTest {
         new UserCreateServlet().doPost(req, resp);
         assertThat(validate.findAllValidate().iterator().next().getName(), is("Petr Arsentev"));
     }
-
 
 }
