@@ -16,11 +16,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 0.1.
  */
 public class ValidateService implements Validate {
-    private static final ValidateService INSTANCE = new ValidateService();
+    private static final Validate INSTANCE = new ValidateService();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateService.class);
     private final DbStore logic = DbStore.getInstance();
 
-    public static ValidateService getInstance() {
+    public static Validate getInstance() {
         return INSTANCE;
     }
 

@@ -16,12 +16,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 0.1.
  */
 public class ValidateStub implements Validate {
-    private static final ValidateStub INSTANCE = new ValidateStub();
+    private static final Validate INSTANCE = new ValidateStub();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateStub.class);
     private final Map<Integer, User> store = new HashMap<>();
     private final AtomicInteger counter = new AtomicInteger(1);
 
-    public static ValidateStub getInstance() {
+    public static Validate getInstance() {
         return INSTANCE;
     }
 
@@ -34,12 +34,13 @@ public class ValidateStub implements Validate {
 
     @Override
     public boolean updateValidate(User user) {
-        return false;
+        store.replace(user.getId(), user);
+        return true;
     }
 
     @Override
     public boolean deleteValidate(int id) {
-        return false;
+        return store.remove(id, store.get(id));
     }
 
     @Override

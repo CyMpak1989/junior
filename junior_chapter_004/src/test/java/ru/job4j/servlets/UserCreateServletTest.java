@@ -1,6 +1,5 @@
 package ru.job4j.servlets;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -18,7 +17,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.support.SuppressCode.suppressConstructor;
+
 
 /**
  * @author Vladimir Lembikov (cympak2009@mail.ru) on 31.07.2018.
@@ -26,25 +25,20 @@ import static org.powermock.api.support.SuppressCode.suppressConstructor;
  * @since 0.1.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ValidateService.class})
+@PrepareForTest(ValidateService.class)
 public class UserCreateServletTest {
-    private final Validate validate = ValidateStub.getInstance();
-//    @Before
-//    public void testSingleton() {
-//        suppressConstructor(ValidateService.class);
-//        mockStatic(ValidateService.class);
-//    }
-
     @Test
     public void whenAddUserThenStoreIt() throws Exception {
-//        Validate validate = new ValidateStub();
+        Validate validate = new ValidateStub();
         mockStatic(ValidateService.class);
-        Mockito.when(ValidateService.getInstance()).thenReturn((ValidateService) validate);
+        Mockito.when(ValidateService.getInstance()).thenReturn(validate);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
         when(req.getParameter("name")).thenReturn("Petr Arsentev");
+        when(req.getParameter("login")).thenReturn("Petr");
         new UserCreateServlet().doPost(req, resp);
         assertThat(validate.findAllValidate().iterator().next().getName(), is("Petr Arsentev"));
+        assertThat(validate.findAllValidate().iterator().next().getLogin(), is("Petr"));
     }
 
 }
