@@ -14,9 +14,8 @@ public class NonBlockCache {
             if (cache.get(k).getVersion() == model.getVersion()) {
                 model.setVersion(model.getVersion() + 1);
                 return model;
-            } else {
-                throw new OptimisticException("Model already update");
             }
+            throw new OptimisticException("Model already update");
         });
     }
 
