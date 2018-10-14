@@ -14,7 +14,7 @@ public class MatrixIteratorTest {
 
     @Before
     public void setUp() {
-        it = new MatrixIterator(new int[][]{{1, 2, 3},{}, {4, 5, 6}});
+        it = new MatrixIterator(new int[][]{{1, 2, 3}, {}, {4, 5, 6}});
     }
 
     @Test(expected = NoSuchElementException.class)
