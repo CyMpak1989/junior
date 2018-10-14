@@ -14,17 +14,25 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return values.length > i && values[i].length > j;
+        return values.length > i && values[i].length >= j;
     }
 
     @Override
     public Object next() {
         if (hasNext()) {
-            Object x = values[i][j++];
-            if (values[i].length == j) {
+            Object x = 0;
+            if (values[i].length == 0) {
                 i++;
                 j = 0;
+                x = values[i][j++];
+            } else {
+                 x = values[i][j++];
+                if (values[i].length == j) {
+                    i++;
+                    j = 0;
+                }
             }
+
             return x;
         } else {
             throw new NoSuchElementException("NoSuchElementException!");
